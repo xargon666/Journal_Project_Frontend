@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Macondo&display=swap");
 
 /* Phone Sizing */
-@media (max-width: 480px) {
+@media (max-width: 599px) {
   *,
   *::before,
   *::after {

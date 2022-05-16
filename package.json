@@ -1,13 +1,16 @@
 {
   "name": "journal_project_frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Description",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll",
+    "coverage": "jest --coverage",
+    "dev": "python -m http.server"
+
   },
   "repository": {
     "type": "git",
@@ -19,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/xargon666/Journal_Project_Frontend/issues"
   },
-  "homepage": "https://github.com/xargon666/Journal_Project_Frontend#readme"
+  "homepage": "https://github.com/xargon666/Journal_Project_Frontend#readme",
+  "devDependencies": {
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0"
+  }
 }
