@@ -24,9 +24,8 @@
     background-color: var(--theme-1);
     height: 7vh;
     width: 100vw;
-    box-shadow: 5px 10px var(--dark);
     padding: 1rem;
-    border-bottom: 0.2rem var(--dark) solid;
+    border-bottom: 0.4rem var(--theme-2) solid;
   }
 
   header img {
@@ -37,6 +36,9 @@
     font-family: "Macondo", cursive;
     line-height: 3rem;
     margin-left: 1rem;
+    font-size: 38px;
+    color: var(--dark);
+    font-weight: 1000;
   }
 
   /* ---------------- Post Stuff ------------------- */
