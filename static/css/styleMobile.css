@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Macondo&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Macondo&display=swap");
 
 /* Phone Sizing */
 @media (max-width: 480px) {
@@ -8,7 +8,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
   }
 
   :root {
@@ -18,18 +17,29 @@
     --light: #f6f8ff;
     --dark: #292f36;
   }
-
+  /* ---------------- Header Stuff ---------------- */
   header {
+    display: flex;
+
     background-color: var(--theme-1);
     height: 7vh;
     width: 100vw;
     box-shadow: 5px 10px var(--dark);
     padding: 1rem;
+    border-bottom: 0.2rem var(--dark) solid;
   }
 
-h1 {
-    font-family: 'Macondo', cursive;
-}
+  header img {
+    width: 3rem;
+  }
+
+  header h1 {
+    font-family: "Macondo", cursive;
+    line-height: 3rem;
+    margin-left: 1rem;
+  }
+
+  /* ---------------- Post Stuff ------------------- */
 
   .container {
     display: flex;
@@ -44,6 +54,9 @@ h1 {
     font-size: 16px;
     overflow: hidden;
     margin: 0.5rem;
+    -webkit-box-shadow: 5px 5px 5px 0px var(--dark),
+      5px 5px 15px 5px rgba(0, 0, 0, 0);
+    box-shadow: 5px 5px 5px 0px var(--dark);
   }
 
   .postTitle {
@@ -53,12 +66,16 @@ h1 {
   }
 
   .postBody {
-    padding: 1 rem;
+    margin: 1rem;
+    display: flex;
   }
-
   .preview {
     color: var(--dark);
+    flex:2;
   }
+  .postInfo {
+    flex:1;
+}
 
   .dateTime {
     color: var(--theme-3);
