@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 
 /* Phone Sizing */
-@media (max-width: 600px) {
+@media (max-width: 599px) {
   *,
   *::before,
   *::after {
