@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Macondo&display=swap');
+
 /* Phone Sizing */
 @media (max-width: 480px) {
-
-* {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-}
+    
+  }
 
   :root {
     --theme-1: #fde12d;
@@ -15,7 +21,15 @@
 
   header {
     background-color: var(--theme-1);
+    height: 7vh;
+    width: 100vw;
+    box-shadow: 5px 10px var(--dark);
+    padding: 1rem;
   }
+
+h1 {
+    font-family: 'Macondo', cursive;
+}
 
   .container {
     display: flex;
@@ -24,15 +38,22 @@
   }
 
   .post {
-    width: 100%;
+    width: auto;
     border: var(--dark) 1px solid;
-    border-radius: 30px;
+    border-radius: 15px;
     font-size: 16px;
+    overflow: hidden;
+    margin: 0.5rem;
   }
 
   .postTitle {
     background-color: var(--theme-2);
     color: var(--light);
+    padding: 0.5rem;
+  }
+
+  .postBody {
+    padding: 1 rem;
   }
 
   .preview {
