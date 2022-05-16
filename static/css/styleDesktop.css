@@ -47,6 +47,7 @@ html{
         position:fixed;
         top:80vh;
         left:80vw;
+        cursor: pointer;
     }
 
     #newPostBtn:hover{
@@ -76,12 +77,6 @@ html{
 
     }
 
-    /* postTitle postTitle
-    preview comments
-    preview dateTime
-    preview reactions */
-
-
     .postTitle{
         grid-area: postTitle;
         padding-bottom: 5px;
@@ -104,5 +99,8 @@ html{
         grid-area: reactions;
     }
     
-
+    #createPost{
+        height: 500px;
+        background-color: #fff;
+    }
 }

@@ -144,11 +144,6 @@
     position:fixed;
     top:80vh;
     left:80vw;
-    content:url('static\img\newPostBtn.png');
-}
-
-#newPostBtn:hover{
-    content:url('static\img\newPostBtnHover.png');
 }
 
 
