@@ -24,9 +24,13 @@ function hideMain(){
     mainSelector.style.display = "none"
 }
 
-function applyPostLink(){
+function applyPostEvent(){
 
 }
+
+function getPost(){}
+
+function newPost(){}
 
 
 // Btn-1 Returns 10 results
