@@ -1,9 +1,15 @@
-const newPostBtn = document.getElementById("newPostBtnDiv");
+const newPostBtn = document.querySelector(".newPostBtn");
+const cancelPostBtn = document.querySelector("#cancelBtn");
 
 newPostBtn.addEventListener('click', (e) => {
-    document.getElementById("createPost").style.display = 'block';
+    document.getElementById("createPost").style.display = 'flex';
+    document.getElementById("formBg").style.display = 'block';
+    newPostBtn.classList.toggle("newPostBtnDisabled", true);
 });
 
-function createNewPost(){
-    return 2;
-}
+cancelPostBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById("createPost").style.display = 'none';
+    document.getElementById("formBg").style.display = 'none';
+    newPostBtn.classList.toggle("newPostBtnDisabled", false);
+});

@@ -89,11 +89,24 @@
             </div>
         </div>
     </div class="container">
-    <div id="newPostBtnDiv">
-        <img id="newPostBtn" src="./static/img/newPostBtn.png" alt="Create new post">
+    <div id="formBg"></div>
+    <div id="createPost">
+        <form id="postForm">
+            <h2 id="formTitle">New post</h2>
+            <label for="postTitle">Title:</label>
+            <input type="text" id="postTitle" name="postTitle" maxlength="50" placeholder="Enter your title here...">
+            <br>
+            <label for="postContent">Post:</label>
+            <br>
+            <textarea id="postContent" name="postContent" rows="6" cols="50"
+                maxlength="500">Type your post here...</textarea>
+            <br>
+            <input id="submitBtn" type="submit" value="Submit">
+            <button id="cancelBtn">Cancel</button>
+        </form>
     </div>
 
-    <div id="createPost" style="display:none">
+    <div class="newPostBtn">
         
     </div>
 </body>

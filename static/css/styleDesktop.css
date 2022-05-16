@@ -40,7 +40,7 @@ html{
         width: 3rem;  
     }
 
-    #newPostBtn{
+    .newPostBtn{
         width: 5vw;
         min-width: 70px;
         float:bottom;
@@ -48,10 +48,15 @@ html{
         top:80vh;
         left:80vw;
         cursor: pointer;
+        content: url('https://i.imgur.com/ZxdNxY7.png');
     }
 
-    #newPostBtn:hover{
+    .newPostBtn:hover{
         content:url('https://i.imgur.com/Kx3v7UP.png');
+    }
+
+    .newPostBtnDisabled{
+        content:url('https://i.imgur.com/iMwDi2N.png');
     }
 
     .container{
@@ -99,8 +104,38 @@ html{
         grid-area: reactions;
     }
     
+    #postForm{
+        border-radius: 10px;
+        background-color: #303134;
+        opacity: 1;
+        padding:30px 50px 30px 50px;
+    }
+
     #createPost{
-        height: 500px;
-        background-color: #fff;
+        position:fixed;
+        top:0;
+        left:0;
+        display:none;
+        float: left;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #formBg{
+        position:fixed;
+        top:0;
+        left:0;
+        display:none;
+        float: left;
+        height: 100%;
+        width: 100%;
+        background-color: #202124;
+        opacity: 0.9;
+    }
+    
+    input, textarea, #formTitle{
+        margin-bottom: 10px;
     }
 }
