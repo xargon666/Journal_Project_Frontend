@@ -1,24 +1,9 @@
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  // search button script
 // index.html
 const mainSelector = document.querySelector('.container')
-const resultsURL = "./results.html"
 const port = 3000
+const siteURL = ``;
+
 
 function hideMain(){
     mainSelector.style.display = "none"
@@ -32,6 +17,74 @@ function getPost(){}
 
 function newPost(){}
 
+// index
+function getAllPosts(){
+    const route = "/postData"
+    fetch(`${siteURL}${route}`)
+        .then(r => r.json())
+        .then(appendPosts)
+        .catch(console.warn)
+};
+
+// create
+function createPost(){
+    const postData = {
+        title: "Something",
+        body: "Something",        
+    }
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(postData),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    const route = "/newPost"
+    fetch(`${siteURL}${route}`)
+    .then(r => r.json())
+    .then(appendPosts)
+    .catch(console.warn)
+}
+
+// helpers
+function appendPosts(posts){
+    posts.forEach(appendPost);
+}
+
+function appendPost(postData){
+    // Create Elements
+    let newPost = document.createElement('div')
+    let newPostBody = document.createElement('p')
+    let newPostTitle = document.createElement('h2')
+    let newPostComments = document.createElement('p')
+    let newPostDateTime = document.createElement('p')
+    let newPostReactions = document.createElement('p')
+    newPost.classList.add('post')
+    newPostBody.classList.add('postBody')
+    newPostComments.classList.add('comments')
+    newPostDateTime.classList.add('dateTime')
+    newPostReactions.classList.add('reactions')
+
+    // Populate
+    newPostTitle.textContent = postData.title;
+    newPostBody.textContent = postData.body.slice(0,25);
+    newPostComments.textContent = `Comments: ${postData.comments.length}`
+    newPostDateTime.textContent = postData.date
+    if (postData.reactions.laugh > 0){newPostReactions.textContent += `🤣 ${postData.reactions.laugh}`}
+    if (postData.reactions.laugh > 0){newPostReactions.textContent += `👍 ${postData.reactions.thumbUp}`}
+    if (postData.reactions.laugh > 0){newPostReactions.textContent += `💩 ${postData.reactions.poo}`}
+    
+    // Append
+    newPostTitle.appendChild('a')
+    newPostBody.appendChild(newPostTitle)
+    newPost.appendChild(newPostBody)
+    mainSelector.appendChild(newPost)
+}
+
+module.exports = {
+    getAllPosts
+}
 
 // Btn-1 Returns 10 results
 function btn1Fetch(e){
