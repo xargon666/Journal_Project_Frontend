@@ -1,0 +1,62 @@
+/* Phone Sizing */
+@media (max-width: 480px) {
+
+* {
+    box-sizing: border-box;
+}
+
+  :root {
+    --theme-1: #fde12d;
+    --theme-2: #ff7f11;
+    --theme-3: #5299d3;
+    --light: #f6f8ff;
+    --dark: #292f36;
+  }
+
+  header {
+    background-color: var(--theme-1);
+  }
+
+  .container {
+    display: flex;
+    flex-flow: column wrap;
+    background-color: var(--light);
+  }
+
+  .post {
+    width: 100%;
+    border: var(--dark) 1px solid;
+    border-radius: 30px;
+    font-size: 16px;
+  }
+
+  .postTitle {
+    background-color: var(--theme-2);
+    color: var(--light);
+  }
+
+  .preview {
+    color: var(--dark);
+  }
+
+  .dateTime {
+    color: var(--theme-3);
+  }
+  .comments {
+    color: var(--theme-3);
+  }
+  .reactions {
+    color: var(--theme-3);
+  }
+
+  .latest-post {
+    order: -1;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .dark-scheme {
+      background: var(--dark);
+      color: var(--light);
+    }
+  }
+}
