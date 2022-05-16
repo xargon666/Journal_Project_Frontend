@@ -1,11 +1,11 @@
 // search button script
 // index.html
+
+const port = 3000;
+const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
+const previewLength = 25;
 const mainSelector = document.querySelector(".container");
 const mainContainerDisplayState = mainSelector.style.display;
-const port = 3000;
-const siteBackendUrl = `https://journal-project-backend.herokuapp.com/`;
-const previewLength = 25;
-
 function hideMainToggle() {
   if (mainSelector.style.display != "none") {
     mainSelector.style.display = "none";
@@ -56,6 +56,7 @@ function createPost() {
 
 // helpers
 function appendPosts(posts) {
+  console.log(posts);
   posts.forEach(appendPost);
 }
 
@@ -74,25 +75,31 @@ function appendPost(postData) {
   newPostReactions.classList.add("reactions");
 
   // Populate
-  newPostTitle.textContent = postData.title;
-  newPostBody.textContent = postData.body.slice(0, previewLength); // create preview from message body
-  newPostComments.textContent = `Comments: ${postData.comments.length}`;
-  newPostDateTime.textContent = postData.date;
-  if (postData.reactions.laugh > 0) {
-    newPostReactions.textContent += `🤣 ${postData.reactions.laugh}`;
-  }
-  if (postData.reactions.laugh > 0) {
-    newPostReactions.textContent += `👍 ${postData.reactions.thumbUp}`;
-  }
-  if (postData.reactions.laugh > 0) {
-    newPostReactions.textContent += `💩 ${postData.reactions.poo}`;
-  }
 
+  postData.title && (newPostTitle.textContent = postData.title);
+  postData.body &&
+    (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
+  postData.comments &&
+    (newPostComments.textContent = `Comments: ${postData.comments.length}`);
+  postData.date && (newPostDateTime.textContent = postData.date);
+  if (postData.reactions) {
+    if (postData.reactions.laugh > 0) {
+      newPostReactions.textContent += `🤣 ${postData.reactions.laugh}`;
+    }
+    if (postData.reactions.laugh > 0) {
+      newPostReactions.textContent += `👍 ${postData.reactions.thumbUp}`;
+    }
+    if (postData.reactions.laugh > 0) {
+      newPostReactions.textContent += `💩 ${postData.reactions.poo}`;
+    }
+  }
   // Append
-  newPostTitle.appendChild("a");
-  newPostBody.appendChild(newPostTitle);
-  newPost.appendChild(newPostBody);
-  mainSelector.appendChild(newPost);
+  //   newPostTitle.appendChild("a");
+  if (newPostBody.textContent && newPostTitle.textContent) {
+    newPostBody.appendChild(newPostTitle);
+    newPost.appendChild(newPostBody);
+    mainSelector.appendChild(newPost);
+  }
 }
 
 module.exports = {
