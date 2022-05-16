@@ -16,7 +16,7 @@ html{
     box-sizing: border-box;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 750px) {
     header{
         float:top;
         position:fixed;
@@ -36,30 +36,7 @@ html{
         justify-content: center;
     }
 
-    #logo{
-        width: 3rem;  
-    }
-
-    .newPostBtn{
-        width: 5vw;
-        min-width: 70px;
-        float:bottom;
-        position:fixed;
-        top:80vh;
-        left:80vw;
-        cursor: pointer;
-        content: url('https://i.imgur.com/ZxdNxY7.png');
-    }
-
-    .newPostBtn:hover{
-        content:url('https://i.imgur.com/Kx3v7UP.png');
-    }
-
-    .newPostBtnDisabled{
-        content:url('https://i.imgur.com/iMwDi2N.png');
-    }
-
-    .container{
+     .container{
         width: 60vw;
     }
 
@@ -73,7 +50,7 @@ html{
         padding: 15px 20px 15px 20px;
         display: grid;
 
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 1fr 1fr;
         grid-template-rows: auto;
         grid-template-areas: 
           "postTitle reactions"
@@ -137,5 +114,20 @@ html{
     
     input, textarea, #formTitle{
         margin-bottom: 10px;
+    }
+}
+
+@media (min-width:1400px) {
+    .postBody{
+        padding: 15px 20px 15px 20px;
+        display: grid;
+
+        grid-template-columns: 3fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+          "postTitle reactions"
+          "preview preview"
+          "comments dateTime";
+
     }
 }

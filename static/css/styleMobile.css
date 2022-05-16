@@ -1,8 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Macondo&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 
+#logo{
+  width: 3rem;  
+}
+
+.newPostBtn{
+  width: 5vw;
+  min-width: 70px;
+  float:bottom;
+  position:fixed;
+  top:80vh;
+  right:10vw;
+  cursor: pointer;
+  content: url('https://i.imgur.com/ZxdNxY7.png');
+}
+
+.newPostBtn:hover{
+  content:url('https://i.imgur.com/Kx3v7UP.png');
+}
+
+.newPostBtnDisabled{
+  content:url('https://i.imgur.com/iMwDi2N.png');
+  cursor: default;
+}
+
 /* Phone Sizing */
-@media (max-width: 599px) {
+@media (max-width: 749px) {
   *,
   *::before,
   *::after {
@@ -57,9 +81,7 @@
     font-weight: 1000;
   }
 
-  #logo{
-    width: 3rem;  
-}
+
 
   /* ---------------- Post Stuff ------------------- */
 
@@ -135,16 +157,43 @@
     order: -1;
   }
 
-/*  ---------------- Button ---------------- */
-
-#newPostBtn{
-    width: 5vw;
-    min-width: 70px;
-    float:bottom;
-    position:fixed;
-    top:80vh;
-    left:80vw;
+/*------------------New post form-------------*/
+#postForm{
+  border-radius: 10px;
+  background-color: #303134;
+  opacity: 1;
+  padding:30px 50px 30px 50px;
 }
+
+#createPost{
+  position:fixed;
+  top:0;
+  left:0;
+  display:none;
+  float: left;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#formBg{
+  position:fixed;
+  top:0;
+  left:0;
+  display:none;
+  float: left;
+  height: 100%;
+  width: 100%;
+  background-color: #202124;
+  opacity: 0.9;
+}
+
+input, textarea, #formTitle{
+  margin-bottom: 10px;
+}
+
+
 
 
    @media (prefers-color-scheme: dark) {
