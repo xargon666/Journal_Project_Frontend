@@ -1,18 +1,33 @@
-// search button script
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ // search button script
 // index.html
-const btn1 = document.querySelector('#newPostBtn')
-const mainSelector.querySelector('.container')
+const mainSelector = document.querySelector('.container')
 const resultsURL = "./results.html"
+const port = 3000
 
 function hideMain(){
     mainSelector.style.display = "none"
 }
 
-// important bits
-const port = 3000
+function applyPostLink(){
 
-btn1.addEventListener('click',btn1Fetch)
-btn2.addEventListener('click',btn2Fetch)
+}
+
 
 // Btn-1 Returns 10 results
 function btn1Fetch(e){
@@ -23,15 +38,18 @@ function btn1Fetch(e){
     // specify source
     const source = "allfilms" // DATA SOURCE PAGE
 
-    // open new window...
-    // openResultsWindow()
-    console.log(targetElement)
     fetch(`http://localhost:${port}/${source}`)
     .then(response => response.json())
     .then(data => {
         try {        // do something with searchBar.textContent...
         for (let i = 0;i < 10;i++){
-            let newLi = document.createElement('li')
+            let newPost = document.createElement('div')
+            let newCommentContainer = document.createElement('div')
+            let newPostTitle = document.createElement('h1')
+            let newPostBody  = document.createElement('p')
+            let newPostDate = document.createElement('span')
+
+
             let output = `
             Title: ${data[i].title}
             Director: ${data[i].director}
