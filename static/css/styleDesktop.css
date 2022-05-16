@@ -1,0 +1,101 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+*,
+*::before,
+*::after{
+    padding:0;
+    margin:0;
+    box-sizing:inherit;
+    font-family: 'Montserrat', sans-serif;
+}
+
+html{
+    background-color: #202124;
+    color:#e8eaed;
+    box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+    header{
+        float:top;
+        position:fixed;
+        top:0;
+        width:100vw;
+        height:7vh;
+        left:0;
+        background-color: #202124;
+        display: flex;
+        justify-content: center;
+    }
+    body{
+        margin-top: 7vh;
+        padding-top:3vh;
+        display: flex;
+        justify-content: center;
+    }
+
+    #newPostBtn{
+        width: 5vw;
+        min-width: 70px;
+        float:bottom;
+        position:fixed;
+        top:80vh;
+        left:80vw;
+    }
+
+    #newPostBtn:hover{
+        content:url('https://i.imgur.com/Kx3v7UP.png');
+    }
+
+    .container{
+        width: 60vw;
+    }
+
+    .post{
+        border-radius: 10px;
+        background-color: #303134;
+        margin-bottom: 3vh;
+    }
+
+    .postBody{
+        padding: 15px 20px 15px 20px;
+        display: grid;
+
+        grid-template-columns: 3fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+          "postTitle reactions"
+          "preview preview"
+          "comments dateTime";
+
+    }
+    postTitle postTitle
+    preview comments
+    preview dateTime
+    preview reactions
+
+
+    .postTitle{
+        grid-area: postTitle;
+        padding-bottom: 5px;
+    }
+
+    .dateTime{
+        grid-area: dateTime;
+    }
+    
+    .preview{
+        grid-area: preview;
+        padding-bottom: 5px;
+    }
+    
+    .comments{
+        grid-area: comments;
+    }
+    
+    .reactions{
+        grid-area: reactions;
+    }
+    
+
+}
