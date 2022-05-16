@@ -26,12 +26,17 @@ html{
         background-color: #202124;
         display: flex;
         justify-content: center;
+        align-items: center;
     }
     body{
         margin-top: 7vh;
         padding-top:3vh;
         display: flex;
         justify-content: center;
+    }
+
+    #logo{
+        width: 3rem;  
     }
 
     #newPostBtn{
@@ -69,10 +74,11 @@ html{
           "comments dateTime";
 
     }
-    postTitle postTitle
+
+    /* postTitle postTitle
     preview comments
     preview dateTime
-    preview reactions
+    preview reactions */
 
 
     .postTitle{
