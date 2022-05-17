@@ -137,7 +137,16 @@ body .wrapper {
     cursor: pointer;
 }
 
+.commentsBodyHidden{
+    display: none;
+}
+
+.commentInput{
+    width:100%;
+}
+
 .commentsBody {
+    display: block;
     padding: 15px 20px 15px 20px;
 }
 
@@ -187,6 +196,7 @@ textarea,
 #formTitle {
     margin-bottom: 10px;
 }
+
 
 
 @media (min-width:1400px) {
