@@ -103,36 +103,34 @@ console.log(JSON.stringify(postData))
 
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
-    .then(data => {
-      console.log(data)
-      const allPosts = mainWrapper.querySelector(".post")
-      const targetPost = allPosts.find(post => post.id === `post-${postId}`)
-      const reactions = targetPost.querySelector('.reactions')
-      let targetReaction
-      switch(emojiId){
-        case 0:
-          targetReaction = reactions.querySelector('rofl').slice(2)++
-          break;
-        case 1:
-          targetReaction = reactions.querySelector('thumbsUp').slice(2)++
-          break;
-        case 2:
-          targetReaction = reactions.querySelector('hankey').slice(2)++
-          break;
-      }
-    })
-    .then(getAllPosts())
+    // .then(data => {
+    //   console.log(data)
+    //   const allPosts = mainWrapper.querySelector(".post")
+    //   const targetPost = allPosts.find(post => post.id === `post-${postId}`)
+    //   const reactions = targetPost.querySelector('.reactions')
+    //   let targetReaction
+    //   switch(emojiId){
+    //     case 0:
+    //       targetReaction = reactions.querySelector('rofl').slice(2)++
+    //       break;
+    //     case 1:
+    //       targetReaction = reactions.querySelector('thumbsUp').slice(2)++
+    //       break;
+    //     case 2:
+    //       targetReaction = reactions.querySelector('hankey').slice(2)++
+    //       break;
+    //   }
+    // })
+    // .then(getAllPosts())
     .catch(console.warn);
 }
 
 // helpers
 function appendPosts(posts) {
-  // console.log(posts);
   posts.forEach(appendPost);
 }
 
 function appendPost(postData) {
-  // console.log("appending post...");
   const mainWrapper = document.querySelector(".wrapper");
   // Create Elements
   let newPost = document.createElement("div");
@@ -169,17 +167,29 @@ function appendPost(postData) {
     (newPostComments.textContent = `Comments: ${postData.comments.length}`);
   postData.date && (newPostDateTime.textContent = postData.date);
   if (postData.reactions) {
-    if (postData.reactions.laugh > 0) {
-      rofl.textContent += `🤣 ${postData.reactions.laugh}`;
-      rofl.addEventListener('click', () => {sendReact(postData.id,0)})
+    if (postData.reactions.laugh) {
+      rofl.textContent += `${postData.reactions.laugh} 🤣`;
+      rofl.addEventListener('click', () => {
+        sendReact(postData.id,0)
+        rofl.textContent = `${parseInt(rofl.textContent, 10)+1} 🤣`
+      })
+      
     }
-    if (postData.reactions.laugh > 0) {
-      thumbsUp.textContent += `👍 ${postData.reactions.thumbUp}`;
-      thumbsUp.addEventListener('click', () => {sendReact(postData.id,1)})
+    if (postData.reactions.thumbUp) {
+      thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
+      thumbsUp.addEventListener('click', () => {
+        sendReact(postData.id,1)
+        thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10)+1} 👍`
+      })
+      
     }
-    if (postData.reactions.laugh > 0) {
-      hankey.textContent += `💩 ${postData.reactions.poo}`;
-      hankey.addEventListener('click', () => {sendReact(postData.id,2)})
+    if (postData.reactions.poo) {
+      hankey.textContent += `${postData.reactions.poo} 💩`;
+      hankey.addEventListener('click', () => {
+        sendReact(postData.id,2)
+        hankey.textContent = `${parseInt(hankey.textContent, 10)+1} 💩`
+      })
+      
     }
   }
 
@@ -195,13 +205,30 @@ function appendPost(postData) {
     newPostReactions.appendChild(hankey);
     newPostWrapper.appendChild(newPostReactions);
     newPost.appendChild(newPostWrapper);
-    mainWrapper.appendChild(newPost);
+    mainWrapper.insertAdjacentElement("afterBegin", newPost);
+
+    newPostComments.addEventListener("click", e => {
+      let out = newPostComments.parentNode.parentElement;
+      if (!out.contains(document.querySelector('.commentsBody'))) {
+        let div = document.createElement('div');
+        div.className = 'commentsBody';
+        let header = document.createElement('h3');
+        header.textContent = 'Comments';
+        div.appendChild(header);
+        out.insertAdjacentElement("beforeend", div);
+      }
+      else {
+        document.querySelector('.commentsBody').remove();
+      }
+    })
   }
 }
 
 module.exports = {
   getAllPosts,
 };
+
+
 
 },{}],2:[function(require,module,exports){
 const app = require('./app');
@@ -268,29 +295,7 @@ function init() {
                 document.getElementById("newPostFormImg").remove();
             }
         });
-    });
-
-    let comments = document.querySelectorAll('.comments');
-    comments.forEach(comment => {
-        comment.addEventListener("click", e => {
-            let out = comment.parentNode.parentElement;
-            console.log(out);
-            console.log(document.querySelector('.commentsBody'));
-            if(!out.contains(document.querySelector('.commentsBody'))){
-                let div = document.createElement('div');
-                div.className = 'commentsBody';
-                let header = document.createElement('h3');
-                header.textContent = 'Comments';
-                div.appendChild(header);
-                out.insertAdjacentElement("beforeend", div);
-            }
-            else{
-                document.querySelector('.commentsBody').remove();
-            }
-        })
-    })
-
-    
+    });    
 }
 
 },{"./app":1}]},{},[2]);
