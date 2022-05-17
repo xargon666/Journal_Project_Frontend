@@ -147,11 +147,11 @@ function appendPost(postData) {
   newPostDateTime.classList.add("dateTime");
   newPostReactions.classList.add("reactions");
 
-  let rofl = document.createElement("p");
+  let laugh = document.createElement("p");
   let thumbsUp = document.createElement("p");
   let hankey = document.createElement("p");
-  rofl.classList.add("roflCount");
-  rofl.classList.add("reaction");
+  laugh.classList.add("roflCount");
+  laugh.classList.add("reaction");
   thumbsUp.className = "thumbsUpCount";
   thumbsUp.classList.add("reaction");
   hankey.className = "hankeyCount";
@@ -167,10 +167,10 @@ function appendPost(postData) {
   postData.date && (newPostDateTime.textContent = postData.date);
   if (postData.reactions) {
     if (postData.reactions.laugh) {
-      rofl.textContent += `${postData.reactions.laugh} 🤣`;
-      rofl.addEventListener('click', () => {
+      laugh.textContent += `${postData.reactions.laugh} 🤣`;
+      laugh.addEventListener('click', () => {
         sendReact(postData.id,0)
-        rofl.textContent = `${parseInt(rofl.textContent, 10)+1} 🤣`
+        laugh.textContent = `${parseInt(laugh.textContent, 10)+1} 🤣`
       })
       
     }
@@ -199,7 +199,7 @@ function appendPost(postData) {
     newPostWrapper.appendChild(newPostBody);
     newPostWrapper.appendChild(newPostComments);
     newPostWrapper.appendChild(newPostDateTime);
-    newPostReactions.appendChild(rofl);
+    newPostReactions.appendChild(laugh);
     newPostReactions.appendChild(thumbsUp);
     newPostReactions.appendChild(hankey);
     newPostWrapper.appendChild(newPostReactions);
