@@ -2,9 +2,7 @@
 // search button script
 // index.html
 
-const port = 3000;
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
-const previewLength = 25;
 
 function hideMainToggle() {
   if (mainWrapper.style.display != "none") {
@@ -40,11 +38,32 @@ function getPost(id) {
 }
 
 // create
-function createPost() {
+function createPost(e) {
+  e.preventDefault()
   const route = "/posts";
-  const postData = {
-    title: "Something", // data source required
-    body: "Something", // data source required
+  const np = document.querySelector('#postForm');
+  let postTitle;
+  let postBody;
+  let postLink;
+  try {
+    np.querySelector('#formTitle').textContent && (postTitle = np.querySelector('#formTitle').textContent);
+    np.querySelector('#postContent').textContent && (postBody = np.querySelector('#postContent').textContent);
+    if (!postTitle || !postBody){
+      throw new Error("The post container no text content")
+    }
+  }
+  catch(err){
+    alert(err)
+    return
+  } 
+  np.querySelector('img') && (postLink = np.querySelector('img').src);
+
+  let postData = {
+    post: {
+      title: postTitle,
+      body: postBody,
+      link: postLink,
+    },
   };
 
   const options = {
@@ -74,15 +93,15 @@ function sendReact(postId, emojiId) {
 
   const postData = {
     post: {
-      id: postId
+      id: postId,
     },
     emoji: String(emojiId),
   };
 
-console.log(postData)
-console.log(postId);
-console.log(emojiId);
-console.log(JSON.stringify(postData))
+  console.log(postData);
+  console.log(postId);
+  console.log(emojiId);
+  console.log(JSON.stringify(postData));
 
   // const postData = {
   //   "post": {
@@ -91,7 +110,7 @@ console.log(JSON.stringify(postData))
   //   "emoji": "2"
   // }
 
-  console.log(postData)
+  console.log(postData);
   const options = {
     method: "POST",
     // body: postData,
@@ -162,34 +181,31 @@ function appendPost(postData) {
   postData.id && newPost.setAttribute("id", postData.id);
   postData.title && (newPostTitle.textContent = postData.title);
   postData.body &&
-    (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
+    (newPostBody.textContent = postData.body); // create preview from message body
   postData.comments &&
     (newPostComments.textContent = `Comments: ${postData.comments.length}`);
   postData.date && (newPostDateTime.textContent = postData.date);
   if (postData.reactions) {
     if (postData.reactions.laugh) {
       laugh.textContent += `${postData.reactions.laugh} 🤣`;
-      laugh.addEventListener('click', () => {
-        sendReact(postData.id,0)
-        laugh.textContent = `${parseInt(laugh.textContent, 10)+1} 🤣`
-      })
-      
+      laugh.addEventListener("click", () => {
+        sendReact(postData.id, 0);
+        laugh.textContent = `${parseInt(laugh.textContent, 10) + 1} 🤣`;
+      });
     }
     if (postData.reactions.thumbUp) {
       thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
-      thumbsUp.addEventListener('click', () => {
-        sendReact(postData.id,1)
-        thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10)+1} 👍`
-      })
-      
+      thumbsUp.addEventListener("click", () => {
+        sendReact(postData.id, 1);
+        thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`;
+      });
     }
     if (postData.reactions.poo) {
       hankey.textContent += `${postData.reactions.poo} 💩`;
-      hankey.addEventListener('click', () => {
-        sendReact(postData.id,2)
-        hankey.textContent = `${parseInt(hankey.textContent, 10)+1} 💩`
-      })
-      
+      hankey.addEventListener("click", () => {
+        sendReact(postData.id, 2);
+        hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
+      });
     }
   }
 
@@ -207,27 +223,26 @@ function appendPost(postData) {
     newPost.appendChild(newPostWrapper);
     mainWrapper.insertAdjacentElement("afterBegin", newPost);
 
-    newPostComments.addEventListener("click", e => {
-      if (!newPost.contains(document.querySelector('.commentsBody'))) {
-        let div = document.createElement('div');
-        div.className = 'commentsBody';
-        let header = document.createElement('h3');
-        header.textContent = 'Comments';
+    newPostComments.addEventListener("click", (e) => {
+      if (!newPost.contains(document.querySelector(".commentsBody"))) {
+        let div = document.createElement("div");
+        div.className = "commentsBody";
+        let header = document.createElement("h3");
+        header.textContent = "Comments";
         div.appendChild(header);
         newPost.insertAdjacentElement("beforeend", div);
+      } else {
+        document.querySelector(".commentsBody").remove();
       }
-      else {
-        document.querySelector('.commentsBody').remove();
-      }
-    })
+    });
   }
 }
 
 module.exports = {
   getAllPosts,
-};
-
-
+  createPost,
+  sendReact,
+}
 
 },{}],2:[function(require,module,exports){
 const app = require('./app');
@@ -236,21 +251,26 @@ document.addEventListener("DOMContentLoaded", init);
 
 
 function init() {
+    // Fetch all posts as soon as app is loaded
     app.getAllPosts();
     const newPostBtn = document.querySelector(".newPostBtn");
     const cancelPostBtn = document.querySelector("#cancelBtn");
     const addGifBtn = document.querySelector("#addGifBtn");
 
+    // giphy API key
     let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
 
-    // Fetch all posts as soon as app is loaded
-    
-
+    // create post button
     newPostBtn.addEventListener('click', (e) => {
         document.getElementById("createPost").style.display = 'flex';
         document.getElementById("formBg").style.display = 'block';
         newPostBtn.classList.toggle("newPostBtnDisabled", true);
-
+        
+        // send post data
+        const postForm = document.querySelector("#createPost > #postForm > form")
+        postForm.addEventListener('submit',createPost)
+        
+        // giphy
         addGifBtn.addEventListener('click', (e) => {
             e.preventDefault();
             document.getElementById("gifForm").style.display = 'block';

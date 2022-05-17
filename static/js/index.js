@@ -4,21 +4,26 @@ document.addEventListener("DOMContentLoaded", init);
 
 
 function init() {
+    // Fetch all posts as soon as app is loaded
     app.getAllPosts();
     const newPostBtn = document.querySelector(".newPostBtn");
     const cancelPostBtn = document.querySelector("#cancelBtn");
     const addGifBtn = document.querySelector("#addGifBtn");
 
+    // giphy API key
     let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
 
-    // Fetch all posts as soon as app is loaded
-    
-
+    // create post button
     newPostBtn.addEventListener('click', (e) => {
         document.getElementById("createPost").style.display = 'flex';
         document.getElementById("formBg").style.display = 'block';
         newPostBtn.classList.toggle("newPostBtnDisabled", true);
-
+        
+        // send post data
+        const postForm = document.querySelector("#createPost > #postForm > form")
+        postForm.addEventListener('submit',createPost)
+        
+        // giphy
         addGifBtn.addEventListener('click', (e) => {
             e.preventDefault();
             document.getElementById("gifForm").style.display = 'block';
