@@ -18,6 +18,9 @@ cancelPostBtn.addEventListener('click', (e) => {
     document.getElementById("createPost").style.display = 'none';
     document.getElementById("formBg").style.display = 'none';
     newPostBtn.classList.toggle("newPostBtnDisabled", false);
+    if(document.getElementById("newPostFormImg")){
+        document.getElementById("newPostFormImg").remove();
+    }
 });
 
 
