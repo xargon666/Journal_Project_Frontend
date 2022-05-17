@@ -35,6 +35,7 @@ function getPost(id) {
 
 // create
 function createPost() {
+  const route = "/posts";
   const postData = {
     title: "Something", // data source required
     body: "Something", // data source required
@@ -47,13 +48,24 @@ function createPost() {
       "Content-Type": "application/json",
     },
   };
-  const route = "/posts";
+
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
     .then(appendPost)
     .catch(console.warn);
 }
 
+function deletePost(postId) {
+  const route = "/posts"
+}
+
+function createComment(postId) {
+  const route = "/posts"
+}
+
+function sendReact(){
+  const route = "/posts/emojis"
+}
 // helpers
 function appendPosts(posts) {
   console.log(posts);
