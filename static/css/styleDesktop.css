@@ -16,7 +16,7 @@ html{
     box-sizing: border-box;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 750px) {
     header{
         float:top;
         position:fixed;
@@ -40,6 +40,7 @@ html{
         width: 60vw;
     }
 
+<<<<<<< HEAD
     #logo{
         width: 3rem;  
     }
@@ -58,6 +59,12 @@ html{
     }
 
 /* ------------------------ Post Stuff ------------------------ */
+=======
+     .container{
+        width: 60vw;
+    }
+
+>>>>>>> e42530b114e13913d46f3cadfc318993dae97f83
     .post{
         border-radius: 10px;
         background-color: #303134;
@@ -68,7 +75,7 @@ html{
         padding: 15px 20px 15px 20px;
         display: grid;
 
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 1fr 1fr;
         grid-template-rows: auto;
         grid-template-areas: 
           "postTitle reactions"
@@ -99,5 +106,53 @@ html{
         grid-area: reactions;
     }
     
+    #postForm{
+        border-radius: 10px;
+        background-color: #303134;
+        opacity: 1;
+        padding:30px 50px 30px 50px;
+    }
 
+    #createPost{
+        position:fixed;
+        top:0;
+        left:0;
+        display:none;
+        float: left;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #formBg{
+        position:fixed;
+        top:0;
+        left:0;
+        display:none;
+        float: left;
+        height: 100%;
+        width: 100%;
+        background-color: #202124;
+        opacity: 0.9;
+    }
+    
+    input, textarea, #formTitle{
+        margin-bottom: 10px;
+    }
+}
+
+@media (min-width:1400px) {
+    .postBody{
+        padding: 15px 20px 15px 20px;
+        display: grid;
+
+        grid-template-columns: 3fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+          "postTitle reactions"
+          "preview preview"
+          "comments dateTime";
+
+    }
 }
