@@ -1,8 +1,8 @@
 // search button script
 // index.html
 const ind = require('./index.js')
-// const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
-const siteBackendUrl = `http://localhost:3000`;
+const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
+// const siteBackendUrl = `http://localhost:3000`;
 
 function hideMainToggle() {
   if (mainWrapper.style.display != "none") {
