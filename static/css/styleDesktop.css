@@ -135,6 +135,10 @@ html{
         display: inline-flex;
     }
     
+    .reactions > .reaction:hover {
+        cursor: pointer
+    }
+
     #postForm{
         border-radius: 10px;
         background-color: #303134;

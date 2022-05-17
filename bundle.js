@@ -20,7 +20,7 @@ function hideMainToggle() {
 function getAllPosts() {
   //remove existing posts
   while (document.querySelector(".wrapper").firstElementChild) {
-    console.log("removing post...")
+    // console.log("removing post...")
     document.querySelector(".wrapper").firstElementChild.remove();
   }
   // pull data and run appendPosts
@@ -73,12 +73,28 @@ function sendReact(postId, emojiId) {
   const route = "/posts/emojis";
 
   const postData = {
-    post: postId,
-    emoji: emojiId,
+    post: {
+      id: postId
+    },
+    emoji: String(emojiId),
   };
 
+console.log(postData)
+console.log(postId);
+console.log(emojiId);
+console.log(JSON.stringify(postData))
+
+  // const postData = {
+  //   "post": {
+  //     "id": "ajdj-sds2-sdsd"
+  //       },
+  //   "emoji": "2"
+  // }
+
+  console.log(postData)
   const options = {
     method: "POST",
+    // body: postData,
     body: JSON.stringify(postData),
     headers: {
       "Content-Type": "application/json",
@@ -88,6 +104,7 @@ function sendReact(postId, emojiId) {
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
     .then(data => {
+      console.log(data)
       const allPosts = mainWrapper.querySelector(".post")
       const targetPost = allPosts.find(post => post.id === `post-${postId}`)
       const reactions = targetPost.querySelector('.reactions')
@@ -104,17 +121,18 @@ function sendReact(postId, emojiId) {
           break;
       }
     })
+    .then(getAllPosts())
     .catch(console.warn);
 }
 
 // helpers
 function appendPosts(posts) {
-  console.log(posts);
+  // console.log(posts);
   posts.forEach(appendPost);
 }
 
 function appendPost(postData) {
-  console.log("appending post...");
+  // console.log("appending post...");
   const mainWrapper = document.querySelector(".wrapper");
   // Create Elements
   let newPost = document.createElement("div");
@@ -135,12 +153,15 @@ function appendPost(postData) {
   let rofl = document.createElement("p");
   let thumbsUp = document.createElement("p");
   let hankey = document.createElement("p");
-  rofl.className = "roflCount";
+  rofl.classList.add("roflCount");
+  rofl.classList.add("reaction");
   thumbsUp.className = "thumbsUpCount";
+  thumbsUp.classList.add("reaction");
   hankey.className = "hankeyCount";
+  hankey.classList.add("reaction");
 
   // Populate
-  postData.id && newPost.setAttribute("id", `post-${postData.id}`);
+  postData.id && newPost.setAttribute("id", postData.id);
   postData.title && (newPostTitle.textContent = postData.title);
   postData.body &&
     (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
