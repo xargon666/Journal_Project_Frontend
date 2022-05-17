@@ -18,7 +18,7 @@ function hideMainToggle() {
 
 // index
 function getAllPosts() {
-const route = "/posts";
+  const route = "/posts";
   fetch(`${siteBackendUrl}${route}`)
     .then((r) => r.json())
     .then(appendPosts)
@@ -63,12 +63,11 @@ function createComment(postId) {
   const route = "/posts"
 }
 
-function sendReact(){
+function sendReact() {
   const route = "/posts/emojis"
 }
 // helpers
 function appendPosts(posts) {
-  console.log(posts);
   posts.forEach(appendPost);
 }
 
@@ -103,17 +102,9 @@ function appendPost(postData) {
   postData.body && (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
   postData.comments && (newPostComments.textContent = `Comments: ${postData.comments.length}`);
   postData.date && (newPostDateTime.textContent = postData.date);
-  if (postData.reactions) {
-    if (postData.reactions.laugh > 0) {
-      rofl.textContent += `🤣 ${postData.reactions.laugh},`;
-    }
-    if (postData.reactions.laugh > 0) {
-      thumbsUp.textContent += `👍 ${postData.reactions.thumbUp}, `;
-    }
-    if (postData.reactions.laugh > 0) {
-      hankey.textContent += `💩 ${postData.reactions.poo}`;
-    }
-  }
+  rofl.textContent += `${postData.reactions.laugh} 🤣`;
+  thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
+  hankey.textContent += `${postData.reactions.poo} 💩`;
 
   // Append
   //   newPostTitle.appendChild("a");
@@ -127,10 +118,39 @@ function appendPost(postData) {
     newPostReactions.appendChild(hankey);
     newPostWrapper.appendChild(newPostReactions);
     newPost.appendChild(newPostWrapper);
-    mainWrapper.appendChild(newPost);
+    mainWrapper.insertAdjacentElement("afterBegin", newPost);
+
+    newPostComments.addEventListener("click", e => {
+      let out = newPostComments.parentNode.parentElement;
+      if (!out.contains(document.querySelector('.commentsBody'))) {
+        let div = document.createElement('div');
+        div.className = 'commentsBody';
+        let header = document.createElement('h3');
+        header.textContent = 'Comments';
+        div.appendChild(header);
+        out.insertAdjacentElement("beforeend", div);
+      }
+      else {
+        document.querySelector('.commentsBody').remove();
+      }
+    })
+
+    rofl.addEventListener("click", e=>{
+      rofl.textContent = `${parseInt(rofl.textContent, 10)+1} 🤣`
+    })
+
+    thumbsUp.addEventListener("click", e=>{
+      thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10)+1} 👍`
+    })
+
+    hankey.addEventListener("click", e=>{
+      hankey.textContent = `${parseInt(hankey.textContent, 10)+1} 💩`
+    })
   }
 }
 
 module.exports = {
   getAllPosts,
 };
+
+

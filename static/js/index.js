@@ -62,27 +62,5 @@ function init() {
                 document.getElementById("newPostFormImg").remove();
             }
         });
-    });
-
-    let comments = document.querySelectorAll('.comments');
-    comments.forEach(comment => {
-        comment.addEventListener("click", e => {
-            let out = comment.parentNode.parentElement;
-            console.log(out);
-            console.log(document.querySelector('.commentsBody'));
-            if(!out.contains(document.querySelector('.commentsBody'))){
-                let div = document.createElement('div');
-                div.className = 'commentsBody';
-                let header = document.createElement('h3');
-                header.textContent = 'Comments';
-                div.appendChild(header);
-                out.insertAdjacentElement("beforeend", div);
-            }
-            else{
-                document.querySelector('.commentsBody').remove();
-            }
-        })
-    })
-
-    
+    });    
 }

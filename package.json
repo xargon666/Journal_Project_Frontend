@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "concurrently \"watchify ./static/js/index.js -o bundle.js\" \"python -m http.server 8000\"",
-    "bundle": "browserify ./static/js/index.js > bundle.js",
+    "bundle": "watchify ./static/js/index.js > bundle.js",
     "test": "jest --watchAll",
     "coverage": "jest --coverage"
   },
