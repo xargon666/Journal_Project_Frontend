@@ -99,11 +99,97 @@ body .wrapper {
 }
 
 /* ------------------------ Post Stuff ------------------------ */
-.post {
-    border-radius: 10px;
-    background-color: #303134;
-    margin-bottom: 3vh;
-}
+    .post{
+        border-radius: 10px;
+        background-color: #303134;
+        margin-bottom: 3vh;
+    }
+
+    .postWrapper{
+        padding: 15px 20px 15px 20px;
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+          "postTitle reactions"
+          "preview preview"
+          "comments dateTime";
+
+    }
+
+    .postTitle{
+        grid-area: postTitle;
+        padding-bottom: 5px;
+    }
+
+    .dateTime{
+        grid-area: dateTime;
+    }
+    
+    .preview{
+        grid-area: preview;
+        padding-bottom: 5px;
+    }
+    
+    .comments{
+        grid-area: comments;
+        cursor: pointer;
+    }
+
+    .commentsBody{
+        padding: 15px 20px 15px 20px;   
+    }
+
+    .comments:hover{
+        border-radius: 5px;
+        background-color: #202124;
+    }
+    
+    .reactions{
+        grid-area: reactions;
+        display: inline-flex;
+    }
+    
+    .reactions > .reaction:hover {
+        cursor: pointer
+    }
+
+    #postForm{
+        border-radius: 10px;
+        background-color: #303134;
+        opacity: 1;
+        padding:30px 50px 30px 50px;
+    }
+
+    #createPost{
+        position:fixed;
+        top:0;
+        left:0;
+        display:none;
+        float: left;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #formBg{
+        position:fixed;
+        top:0;
+        left:0;
+        display:none;
+        float: left;
+        height: 100%;
+        width: 100%;
+        background-color: #202124;
+        opacity: 0.9;
+    }
+    
+    input, textarea, #formTitle{
+        margin-bottom: 10px;
+    }
+
 
 .postWrapper {
     padding: 15px 20px 15px 20px;
