@@ -6,7 +6,6 @@ const port = 3000;
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 const previewLength = 25;
 
-
 function hideMainToggle() {
   if (mainWrapper.style.display != "none") {
     mainWrapper.style.display = "none";
@@ -19,7 +18,13 @@ function hideMainToggle() {
 
 // index
 function getAllPosts() {
-const route = "/posts";
+  //remove existing posts
+  while (document.querySelector(".wrapper").firstElementChild) {
+    console.log("removing post...")
+    document.querySelector(".wrapper").firstElementChild.remove();
+  }
+  // pull data and run appendPosts
+  const route = "/posts";
   fetch(`${siteBackendUrl}${route}`)
     .then((r) => r.json())
     .then(appendPosts)
@@ -57,16 +62,51 @@ function createPost() {
 }
 
 function deletePost(postId) {
-  const route = "/posts"
+  const route = "/posts";
 }
 
 function createComment(postId) {
-  const route = "/posts"
+  const route = "/posts";
 }
 
-function sendReact(){
-  const route = "/posts/emojis"
+function sendReact(postId, emojiId) {
+  const route = "/posts/emojis";
+
+  const postData = {
+    post: postId,
+    emoji: emojiId,
+  };
+
+  const options = {
+    method: "POST",
+    body: JSON.stringify(postData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch(`${siteBackendUrl}${route}`, options)
+    .then((r) => r.json())
+    .then(data => {
+      const allPosts = mainWrapper.querySelector(".post")
+      const targetPost = allPosts.find(post => post.id === `post-${postId}`)
+      const reactions = targetPost.querySelector('.reactions')
+      let targetReaction
+      switch(emojiId){
+        case 0:
+          targetReaction = reactions.querySelector('rofl').slice(2)++
+          break;
+        case 1:
+          targetReaction = reactions.querySelector('thumbsUp').slice(2)++
+          break;
+        case 2:
+          targetReaction = reactions.querySelector('hankey').slice(2)++
+          break;
+      }
+    })
+    .catch(console.warn);
 }
+
 // helpers
 function appendPosts(posts) {
   console.log(posts);
@@ -74,7 +114,7 @@ function appendPosts(posts) {
 }
 
 function appendPost(postData) {
-  console.log("appending post...")
+  console.log("appending post...");
   const mainWrapper = document.querySelector(".wrapper");
   // Create Elements
   let newPost = document.createElement("div");
@@ -100,19 +140,25 @@ function appendPost(postData) {
   hankey.className = "hankeyCount";
 
   // Populate
+  postData.id && newPost.setAttribute("id", `post-${postData.id}`);
   postData.title && (newPostTitle.textContent = postData.title);
-  postData.body && (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
-  postData.comments && (newPostComments.textContent = `Comments: ${postData.comments.length}`);
+  postData.body &&
+    (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
+  postData.comments &&
+    (newPostComments.textContent = `Comments: ${postData.comments.length}`);
   postData.date && (newPostDateTime.textContent = postData.date);
   if (postData.reactions) {
     if (postData.reactions.laugh > 0) {
-      rofl.textContent += `🤣 ${postData.reactions.laugh},`;
+      rofl.textContent += `🤣 ${postData.reactions.laugh}`;
+      rofl.addEventListener('click', () => {sendReact(postData.id,0)})
     }
     if (postData.reactions.laugh > 0) {
-      thumbsUp.textContent += `👍 ${postData.reactions.thumbUp}, `;
+      thumbsUp.textContent += `👍 ${postData.reactions.thumbUp}`;
+      thumbsUp.addEventListener('click', () => {sendReact(postData.id,1)})
     }
     if (postData.reactions.laugh > 0) {
       hankey.textContent += `💩 ${postData.reactions.poo}`;
+      hankey.addEventListener('click', () => {sendReact(postData.id,2)})
     }
   }
 
@@ -140,10 +186,10 @@ module.exports = {
 const app = require('./app');
 document.addEventListener("DOMContentLoaded", init);
 
-app.getAllPosts();
+
 
 function init() {
-
+    app.getAllPosts();
     const newPostBtn = document.querySelector(".newPostBtn");
     const cancelPostBtn = document.querySelector("#cancelBtn");
     const addGifBtn = document.querySelector("#addGifBtn");
