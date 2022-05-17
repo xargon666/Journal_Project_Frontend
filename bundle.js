@@ -199,13 +199,13 @@ function appendPost(postData) {
     newPostWrapper.appendChild(newPostReactions);
     newPost.appendChild(newPostWrapper);
     mainWrapper.insertAdjacentElement("afterBegin", newPost);
-
-    newPostComments.addEventListener("click", (e) => {
-      if (!newPost.contains(document.querySelector(".commentsBody"))) {
-        let div = document.createElement("div");
-        div.className = "commentsBody";
-        let header = document.createElement("h3");
-        header.textContent = "Comments";
+    // add comments interface
+    newPostComments.addEventListener("click", e => {
+      if (!newPost.contains(document.querySelector('.commentsBody'))) {
+        let div = document.createElement('div');
+        div.className = 'commentsBody';
+        let header = document.createElement('h3');
+        header.textContent = 'Comments';
         div.appendChild(header);
         newPost.insertAdjacentElement("beforeend", div);
       } else {
