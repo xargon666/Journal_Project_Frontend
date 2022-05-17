@@ -4,13 +4,14 @@
 const port = 3000;
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 const previewLength = 25;
-const mainSelector = document.querySelector(".container");
-const mainContainerDisplayState = mainSelector.style.display;
+const mainWrapper = document.querySelector(".wrapper");
+const mainWrapperDisplayState = mainWrapper.style.display;
+
 function hideMainToggle() {
-  if (mainSelector.style.display != "none") {
-    mainSelector.style.display = "none";
+  if (mainWrapper.style.display != "none") {
+    mainWrapper.style.display = "none";
   } else {
-    mainSelector.style.display = mainContainerDisplayState;
+    mainWrapper.style.display = mainWrapperDisplayState;
   }
 }
 
@@ -61,26 +62,25 @@ function appendPosts(posts) {
 }
 
 function appendPost(postData) {
+  console.log("appending post...")
   // Create Elements
   let newPost = document.createElement("div");
+  let newPostWrapper = document.createElement("div");
   let newPostBody = document.createElement("p");
   let newPostTitle = document.createElement("h2");
   let newPostComments = document.createElement("p");
   let newPostDateTime = document.createElement("p");
   let newPostReactions = document.createElement("p");
   newPost.classList.add("post");
-  newPostBody.classList.add("postBody");
+  newPostWrapper.classList.add("postWrapper");
   newPostComments.classList.add("comments");
   newPostDateTime.classList.add("dateTime");
   newPostReactions.classList.add("reactions");
 
   // Populate
-
   postData.title && (newPostTitle.textContent = postData.title);
-  postData.body &&
-    (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
-  postData.comments &&
-    (newPostComments.textContent = `Comments: ${postData.comments.length}`);
+  postData.body && (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
+  postData.comments && (newPostComments.textContent = `Comments: ${postData.comments.length}`);
   postData.date && (newPostDateTime.textContent = postData.date);
   if (postData.reactions) {
     if (postData.reactions.laugh > 0) {
@@ -93,12 +93,17 @@ function appendPost(postData) {
       newPostReactions.textContent += `💩 ${postData.reactions.poo}`;
     }
   }
+
   // Append
   //   newPostTitle.appendChild("a");
   if (newPostBody.textContent && newPostTitle.textContent) {
-    newPostBody.appendChild(newPostTitle);
-    newPost.appendChild(newPostBody);
-    mainSelector.appendChild(newPost);
+    newPostWrapper.appendChild(newPostTitle);
+    newPostWrapper.appendChild(newPostBody);
+    newPostWrapper.appendChild(newPostComments);
+    newPostWrapper.appendChild(newPostDateTime);
+    newPostWrapper.appendChild(newPostReactions);
+    newPost.appendChild(newPostWrapper);
+    mainWrapper.appendChild(newPost);
   }
 }
 
