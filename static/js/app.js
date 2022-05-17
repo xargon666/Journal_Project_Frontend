@@ -5,7 +5,6 @@ const port = 3000;
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 const previewLength = 25;
 
-
 function hideMainToggle() {
   if (mainWrapper.style.display != "none") {
     mainWrapper.style.display = "none";
@@ -18,6 +17,12 @@ function hideMainToggle() {
 
 // index
 function getAllPosts() {
+  //remove existing posts
+  while (document.querySelector(".wrapper").firstElementChild) {
+    // console.log("removing post...")
+    document.querySelector(".wrapper").firstElementChild.remove();
+  }
+  // pull data and run appendPosts
   const route = "/posts";
   fetch(`${siteBackendUrl}${route}`)
     .then((r) => r.json())
@@ -56,16 +61,69 @@ function createPost() {
 }
 
 function deletePost(postId) {
-  const route = "/posts"
+  const route = "/posts";
 }
 
 function createComment(postId) {
-  const route = "/posts"
+  const route = "/posts";
 }
 
-function sendReact() {
-  const route = "/posts/emojis"
+function sendReact(postId, emojiId) {
+  const route = "/posts/emojis";
+
+  const postData = {
+    post: {
+      id: postId
+    },
+    emoji: String(emojiId),
+  };
+
+console.log(postData)
+console.log(postId);
+console.log(emojiId);
+console.log(JSON.stringify(postData))
+
+  // const postData = {
+  //   "post": {
+  //     "id": "ajdj-sds2-sdsd"
+  //       },
+  //   "emoji": "2"
+  // }
+
+  console.log(postData)
+  const options = {
+    method: "POST",
+    // body: postData,
+    body: JSON.stringify(postData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch(`${siteBackendUrl}${route}`, options)
+    .then((r) => r.json())
+    // .then(data => {
+    //   console.log(data)
+    //   const allPosts = mainWrapper.querySelector(".post")
+    //   const targetPost = allPosts.find(post => post.id === `post-${postId}`)
+    //   const reactions = targetPost.querySelector('.reactions')
+    //   let targetReaction
+    //   switch(emojiId){
+    //     case 0:
+    //       targetReaction = reactions.querySelector('rofl').slice(2)++
+    //       break;
+    //     case 1:
+    //       targetReaction = reactions.querySelector('thumbsUp').slice(2)++
+    //       break;
+    //     case 2:
+    //       targetReaction = reactions.querySelector('hankey').slice(2)++
+    //       break;
+    //   }
+    // })
+    // .then(getAllPosts())
+    .catch(console.warn);
 }
+
 // helpers
 function appendPosts(posts) {
   posts.forEach(appendPost);
@@ -92,18 +150,47 @@ function appendPost(postData) {
   let rofl = document.createElement("p");
   let thumbsUp = document.createElement("p");
   let hankey = document.createElement("p");
-  rofl.className = "roflCount";
+  rofl.classList.add("roflCount");
+  rofl.classList.add("reaction");
   thumbsUp.className = "thumbsUpCount";
+  thumbsUp.classList.add("reaction");
   hankey.className = "hankeyCount";
+  hankey.classList.add("reaction");
 
   // Populate
+  postData.id && newPost.setAttribute("id", postData.id);
   postData.title && (newPostTitle.textContent = postData.title);
-  postData.body && (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
-  postData.comments && (newPostComments.textContent = `Comments: ${postData.comments.length}`);
+  postData.body &&
+    (newPostBody.textContent = postData.body.slice(0, previewLength)); // create preview from message body
+  postData.comments &&
+    (newPostComments.textContent = `Comments: ${postData.comments.length}`);
   postData.date && (newPostDateTime.textContent = postData.date);
-  rofl.textContent += `${postData.reactions.laugh} 🤣`;
-  thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
-  hankey.textContent += `${postData.reactions.poo} 💩`;
+  if (postData.reactions) {
+    if (postData.reactions.laugh) {
+      rofl.textContent += `${postData.reactions.laugh} 🤣`;
+      rofl.addEventListener('click', () => {
+        sendReact(postData.id,0)
+        rofl.textContent = `${parseInt(rofl.textContent, 10)+1} 🤣`
+      })
+      
+    }
+    if (postData.reactions.thumbUp) {
+      thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
+      thumbsUp.addEventListener('click', () => {
+        sendReact(postData.id,1)
+        thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10)+1} 👍`
+      })
+      
+    }
+    if (postData.reactions.poo) {
+      hankey.textContent += `${postData.reactions.poo} 💩`;
+      hankey.addEventListener('click', () => {
+        sendReact(postData.id,2)
+        hankey.textContent = `${parseInt(hankey.textContent, 10)+1} 💩`
+      })
+      
+    }
+  }
 
   // Append
   //   newPostTitle.appendChild("a");
@@ -131,18 +218,6 @@ function appendPost(postData) {
       else {
         document.querySelector('.commentsBody').remove();
       }
-    })
-
-    rofl.addEventListener("click", e=>{
-      rofl.textContent = `${parseInt(rofl.textContent, 10)+1} 🤣`;
-    })
-
-    thumbsUp.addEventListener("click", e=>{
-      thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10)+1} 👍`;
-    })
-
-    hankey.addEventListener("click", e=>{
-      hankey.textContent = `${parseInt(hankey.textContent, 10)+1} 💩`;
     })
   }
 }

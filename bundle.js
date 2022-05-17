@@ -233,10 +233,10 @@ module.exports = {
 const app = require('./app');
 document.addEventListener("DOMContentLoaded", init);
 
-app.getAllPosts();
+
 
 function init() {
-
+    app.getAllPosts();
     const newPostBtn = document.querySelector(".newPostBtn");
     const cancelPostBtn = document.querySelector("#cancelBtn");
     const addGifBtn = document.querySelector("#addGifBtn");
