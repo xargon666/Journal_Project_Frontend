@@ -98,22 +98,8 @@ function sendReact(postId, emojiId) {
     emoji: String(emojiId),
   };
 
-  console.log(postData);
-  console.log(postId);
-  console.log(emojiId);
-  console.log(JSON.stringify(postData));
-
-  // const postData = {
-  //   "post": {
-  //     "id": "ajdj-sds2-sdsd"
-  //       },
-  //   "emoji": "2"
-  // }
-
-  console.log(postData);
-  const options = {
+   const options = {
     method: "POST",
-    // body: postData,
     body: JSON.stringify(postData),
     headers: {
       "Content-Type": "application/json",
@@ -122,25 +108,6 @@ function sendReact(postId, emojiId) {
 
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
-    // .then(data => {
-    //   console.log(data)
-    //   const allPosts = mainWrapper.querySelector(".post")
-    //   const targetPost = allPosts.find(post => post.id === `post-${postId}`)
-    //   const reactions = targetPost.querySelector('.reactions')
-    //   let targetReaction
-    //   switch(emojiId){
-    //     case 0:
-    //       targetReaction = reactions.querySelector('rofl').slice(2)++
-    //       break;
-    //     case 1:
-    //       targetReaction = reactions.querySelector('thumbsUp').slice(2)++
-    //       break;
-    //     case 2:
-    //       targetReaction = reactions.querySelector('hankey').slice(2)++
-    //       break;
-    //   }
-    // })
-    // .then(getAllPosts())
     .catch(console.warn);
 }
 
