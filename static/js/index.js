@@ -1,4 +1,7 @@
+const app = require('./app');
 document.addEventListener("DOMContentLoaded", init);
+
+app.getAllPosts();
 
 function init() {
 
@@ -7,6 +10,9 @@ function init() {
     const addGifBtn = document.querySelector("#addGifBtn");
 
     let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
+
+    // Fetch all posts as soon as app is loaded
+    
 
     newPostBtn.addEventListener('click', (e) => {
         document.getElementById("createPost").style.display = 'flex';
@@ -77,4 +83,6 @@ function init() {
             }
         })
     })
+
+    
 }

@@ -7,10 +7,10 @@
     "test": "test"
   },
   "scripts": {
+    "dev": "concurrently \"watchify ./static/js/index.js -o bundle.js\" \"python -m http.server 8000\"",
+    "bundle": "browserify ./static/js/index.js > bundle.js",
     "test": "jest --watchAll",
-    "coverage": "jest --coverage",
-    "dev": "python -m http.server"
-
+    "coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/xargon666/Journal_Project_Frontend#readme",
   "devDependencies": {
+    "concurrently": "^7.2.0",
+    "watchify": "^4.0.0",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0"
   }

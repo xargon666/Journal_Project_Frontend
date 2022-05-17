@@ -2,24 +2,27 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="./static/css/styleMobile.css">
-    <link rel="stylesheet" type="text/css" href="./static/css/styleDesktop.css">
-    <script defer src="./static/js/script.js"></script>
     <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" type="text/css" href="./static/css/styleMobile.css"> -->
+    <link rel="stylesheet" type="text/css" href="./static/css/styleDesktop.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./static/img/favicon.ico" type="image/x-icon">
+    <!-- <script src="./static/js/app.js"></script> -->
+    <script defer src="./bundle.js"></script>
     <title>Journal Project</title>
 </head>
 
 <body>
+
     <header>
         <img id="logo" src="./static/img/lemon.png" alt="logo">
         <h1>Lemon Party</h1>
     </header>
-    <div class="container">
+    <div class="wrapper">
+
         <div class="post">
-            <div class="postBody">
+            <div class="postWrapper">
                 <h2 class="postTitle">Post Title</h2>
                 <p class="preview">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda debitis libero at
                     sapiente animi fuga corporis non quod minima nostrum?</p>
@@ -28,76 +31,17 @@
                 <div class="reactions">
                     <p>Reactions: </p>
                     &nbsp
-                    <p id="roflCount">0</p>
+                    <p class="roflCount">0</p>
                     &nbsp 🤣, &nbsp
-                    <p id="thumbsUpCount">0</p>
+                    <p class="thumbsUpCount">0</p>
                     &nbsp 👍,&nbsp
-                    <p id="hankeyCount">0</p>
+                    <p class="hankeyCount">0</p>
                     &nbsp 💩
                 </div>
                 
             </div>
         </div>
-        <div class="post">
-            <div class="postBody">
-                <h2 class="postTitle">Post Title</h2>
-                <p class="preview">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda debitis libero at
-                    sapiente animi fuga corporis non quod minima nostrum?</p>
-                <p class="comments">Comments: x</p>
-                <p class="dateTime">date time</p>
-                <p class="reactions">Reactions: x 🤣, x 👍, x 💩</p>
-            </div>
-        </div>
-        <div class="post">
-            <div class="postBody">
-                <h2 class="postTitle">Post Title</h2>
-                <p class="preview">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda debitis libero at
-                    sapiente animi fuga corporis non quod minima nostrum?</p>
-                <p class="comments">Comments: x</p>
-                <p class="dateTime">date time</p>
-                <p class="reactions">Reactions: x 🤣, x 👍, x 💩</p>
-            </div>
-        </div>
-        <div class="post">
-            <div class="postBody">
-                <h2 class="postTitle">Post Title</h2>
-                <p class="preview">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda debitis libero at
-                    sapiente animi fuga corporis non quod minima nostrum?</p>
-                <p class="comments">Comments: x</p>
-                <p class="dateTime">date time</p>
-                <p class="reactions">Reactions: x 🤣, x 👍, x 💩</p>
-            </div>
-        </div>
-        <div class="post">
-            <div class="postBody">
-                <h2 class="postTitle">Post Title</h2>
-                <p class="preview">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda debitis libero at
-                    sapiente animi fuga corporis non quod minima nostrum?</p>
-                <p class="comments">Comments: x</p>
-                <p class="dateTime">date time</p>
-                <p class="reactions">Reactions: x 🤣, x 👍, x 💩</p>
-            </div>
-        </div>
-        <div class="post">
-            <div class="postBody">
-                <h2 class="postTitle">Post Title</h2>
-                <p class="preview">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda debitis libero at
-                    sapiente animi fuga corporis non quod minima nostrum?</p>
-                <p class="comments">Comments: x</p>
-                <p class="dateTime">date time</p>
-                <p class="reactions">Reactions: x 🤣, x 👍, x 💩</p>
-            </div>
-        </div>
-        <div class="post">
-            <div class="postBody">
-                <h2 class="postTitle">Post Title</h2>
-                <p class="preview">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda debitis libero at
-                    sapiente animi fuga corporis non quod minima nostrum?</p>
-                <p class="comments">Comments: x</p>
-                <p class="dateTime">date time</p>
-                <p class="reactions">Reactions: x 🤣, x 👍, x 💩</p>
-            </div>
-        </div>
+        
     </div class="container">
     <div id="formBg"></div>
     <div id="createPost">
@@ -125,7 +69,7 @@
     </div>
 
     <div class="newPostBtn">
-        dsf
+        
     </div>
 </body>
 

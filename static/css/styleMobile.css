@@ -89,7 +89,7 @@
 
   /* ---------------- Post Stuff ------------------- */
 
-  .container {
+  .wrapper {
     display: flex;
     flex-flow: column wrap;
     background-color: var(--light);

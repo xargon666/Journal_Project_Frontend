@@ -6,7 +6,7 @@
 *::after{
     padding:0;
     margin:0;
-    box-sizing:inherit;
+    box-sizing:border-box;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -15,6 +15,34 @@ html{
     color:#e8eaed;
     box-sizing: border-box;
 }
+
+#logo{
+    width: 3rem;  
+  }
+  
+  .newPostBtn{
+    width: 5vw;
+    min-width: 70px;
+    float:bottom;
+    position:fixed;
+    top:80vh;
+    right:10vw;
+    cursor: pointer;
+    content: url('https://i.imgur.com/ZxdNxY7.png');
+  }
+  
+  .newPostBtn:hover{
+    content:url('https://i.imgur.com/Kx3v7UP.png');
+  }
+  
+  .newPostBtnDisabled{
+    content:url('https://i.imgur.com/iMwDi2N.png');
+    cursor: default;
+  }
+  
+  .newPostBtnDisabled:hover{
+    content:url('https://i.imgur.com/iMwDi2N.png');
+  }
 
 @media (min-width: 820px) {
     header{
@@ -35,18 +63,33 @@ html{
         display: flex;
         justify-content: center;
     }
-
-     .container{
+    
+    body .wrapper{
         width: 60vw;
     }
+   
 
+    #newPostBtn{
+        width: 5vw;
+        min-width: 70px;
+        float:bottom;
+        position:fixed;
+        top:80vh;
+        left:80vw;
+    }
+
+    #newPostBtn:hover{
+        content:url('https://i.imgur.com/Kx3v7UP.png');
+    }
+
+/* ------------------------ Post Stuff ------------------------ */
     .post{
         border-radius: 10px;
         background-color: #303134;
         margin-bottom: 3vh;
     }
 
-    .postBody{
+    .postWrapper{
         padding: 15px 20px 15px 20px;
         display: grid;
 
@@ -139,6 +182,5 @@ html{
           "postTitle reactions"
           "preview preview"
           "comments dateTime";
-
     }
 }
