@@ -1,8 +1,6 @@
 const app = require('./app');
 document.addEventListener("DOMContentLoaded", init);
 
-
-
 function init() {
     // Fetch all posts as soon as app is loaded
     app.getAllPosts();
@@ -23,6 +21,7 @@ function init() {
         const postForm = document.querySelector("#createPost > #postForm > form")
         postForm.addEventListener('submit',(e) => {
             app.createPost(e)
+            closeCreatePost(e)
         })
         
         // giphy
@@ -61,13 +60,22 @@ function init() {
         });
 
         cancelPostBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById("createPost").style.display = 'none';
-            document.getElementById("formBg").style.display = 'none';
-            newPostBtn.classList.toggle("newPostBtnDisabled", false);
-            if (document.getElementById("newPostFormImg")) {
-                document.getElementById("newPostFormImg").remove();
-            }
+            closeCreatePost(e)
         });
     });    
+
+    function closeCreatePost(e){
+        console.log("closing create post window")
+        e.preventDefault();
+        document.getElementById("createPost").style.display = 'none';
+        document.getElementById("formBg").style.display = 'none';
+        newPostBtn.classList.toggle("newPostBtnDisabled", false);
+        if (document.getElementById("newPostFormImg")) {
+            document.getElementById("newPostFormImg").remove();
+        }
+    }
+
+    module.exports = { closeCreatePost, }
 }
+
+

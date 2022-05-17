@@ -1,7 +1,8 @@
 // search button script
 // index.html
-
-const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
+const ind = require('./index.js')
+// const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
+const siteBackendUrl = `http://localhost:3000`;
 
 function hideMainToggle() {
   if (mainWrapper.style.display != "none") {
@@ -55,15 +56,15 @@ function createPost(e) {
     alert(err)
     return
   } 
+
   np.querySelector('#newPostFormImg') && (postLink = np.querySelector('#newPostFormImg').src);
   
   let postData = {
-    post: {
       title: postTitle,
       body: postBody,
       link: postLink,
-    },
   };
+  console.log(JSON.stringify(postData))
 
   const options = {
     method: "POST",
@@ -76,9 +77,9 @@ function createPost(e) {
   .then((r) => r.json())
   .then(data =>{
       console.log("posting content...")
-    appendPost(data)
+      getAllPosts()
     })
-    .catch(console.warn);
+    .catch(console.warn);    
 }
 
 function deletePost(postId) {
@@ -104,13 +105,6 @@ function sendReact(postId, emojiId) {
   console.log(emojiId);
   console.log(JSON.stringify(postData));
 
-  // const postData = {
-  //   "post": {
-  //     "id": "ajdj-sds2-sdsd"
-  //       },
-  //   "emoji": "2"
-  // }
-
   console.log(postData);
   const options = {
     method: "POST",
@@ -123,25 +117,6 @@ function sendReact(postId, emojiId) {
 
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
-    // .then(data => {
-    //   console.log(data)
-    //   const allPosts = mainWrapper.querySelector(".post")
-    //   const targetPost = allPosts.find(post => post.id === `post-${postId}`)
-    //   const reactions = targetPost.querySelector('.reactions')
-    //   let targetReaction
-    //   switch(emojiId){
-    //     case 0:
-    //       targetReaction = reactions.querySelector('rofl').slice(2)++
-    //       break;
-    //     case 1:
-    //       targetReaction = reactions.querySelector('thumbsUp').slice(2)++
-    //       break;
-    //     case 2:
-    //       targetReaction = reactions.querySelector('hankey').slice(2)++
-    //       break;
-    //   }
-    // })
-    // .then(getAllPosts())
     .catch(console.warn);
 }
 
@@ -152,7 +127,7 @@ function appendPosts(posts) {
 
 function appendPost(postData) {
   const mainWrapper = document.querySelector(".wrapper");
-  // Create Elements
+  // Create Post Elements
   let newPost = document.createElement("div");
   let newPostWrapper = document.createElement("div");
   let newPostTitle = document.createElement("h2");

@@ -1,8 +1,9 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 // search button script
 // index.html
-
-const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
+const ind = require('./index.js')
+// const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
+const siteBackendUrl = `http://localhost:3000`;
 
 function hideMainToggle() {
   if (mainWrapper.style.display != "none") {
@@ -56,15 +57,15 @@ function createPost(e) {
     alert(err)
     return
   } 
+
   np.querySelector('#newPostFormImg') && (postLink = np.querySelector('#newPostFormImg').src);
   
   let postData = {
-    post: {
       title: postTitle,
       body: postBody,
       link: postLink,
-    },
   };
+  console.log(JSON.stringify(postData))
 
   const options = {
     method: "POST",
@@ -77,9 +78,9 @@ function createPost(e) {
   .then((r) => r.json())
   .then(data =>{
       console.log("posting content...")
-    appendPost(data)
+      getAllPosts()
     })
-    .catch(console.warn);
+    .catch(console.warn);    
 }
 
 function deletePost(postId) {
@@ -105,13 +106,6 @@ function sendReact(postId, emojiId) {
   console.log(emojiId);
   console.log(JSON.stringify(postData));
 
-  // const postData = {
-  //   "post": {
-  //     "id": "ajdj-sds2-sdsd"
-  //       },
-  //   "emoji": "2"
-  // }
-
   console.log(postData);
   const options = {
     method: "POST",
@@ -124,25 +118,6 @@ function sendReact(postId, emojiId) {
 
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
-    // .then(data => {
-    //   console.log(data)
-    //   const allPosts = mainWrapper.querySelector(".post")
-    //   const targetPost = allPosts.find(post => post.id === `post-${postId}`)
-    //   const reactions = targetPost.querySelector('.reactions')
-    //   let targetReaction
-    //   switch(emojiId){
-    //     case 0:
-    //       targetReaction = reactions.querySelector('rofl').slice(2)++
-    //       break;
-    //     case 1:
-    //       targetReaction = reactions.querySelector('thumbsUp').slice(2)++
-    //       break;
-    //     case 2:
-    //       targetReaction = reactions.querySelector('hankey').slice(2)++
-    //       break;
-    //   }
-    // })
-    // .then(getAllPosts())
     .catch(console.warn);
 }
 
@@ -153,7 +128,7 @@ function appendPosts(posts) {
 
 function appendPost(postData) {
   const mainWrapper = document.querySelector(".wrapper");
-  // Create Elements
+  // Create Post Elements
   let newPost = document.createElement("div");
   let newPostWrapper = document.createElement("div");
   let newPostTitle = document.createElement("h2");
@@ -246,11 +221,9 @@ module.exports = {
   sendReact,
 }
 
-},{}],2:[function(require,module,exports){
+},{"./index.js":2}],2:[function(require,module,exports){
 const app = require('./app');
 document.addEventListener("DOMContentLoaded", init);
-
-
 
 function init() {
     // Fetch all posts as soon as app is loaded
@@ -272,6 +245,7 @@ function init() {
         const postForm = document.querySelector("#createPost > #postForm > form")
         postForm.addEventListener('submit',(e) => {
             app.createPost(e)
+            closeCreatePost(e)
         })
         
         // giphy
@@ -310,15 +284,24 @@ function init() {
         });
 
         cancelPostBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById("createPost").style.display = 'none';
-            document.getElementById("formBg").style.display = 'none';
-            newPostBtn.classList.toggle("newPostBtnDisabled", false);
-            if (document.getElementById("newPostFormImg")) {
-                document.getElementById("newPostFormImg").remove();
-            }
+            closeCreatePost(e)
         });
     });    
+
+    function closeCreatePost(e){
+        console.log("closing create post window")
+        e.preventDefault();
+        document.getElementById("createPost").style.display = 'none';
+        document.getElementById("formBg").style.display = 'none';
+        newPostBtn.classList.toggle("newPostBtnDisabled", false);
+        if (document.getElementById("newPostFormImg")) {
+            document.getElementById("newPostFormImg").remove();
+        }
+    }
+
+    module.exports = { closeCreatePost, }
 }
+
+
 
 },{"./app":1}]},{},[2]);
