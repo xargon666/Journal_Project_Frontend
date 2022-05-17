@@ -135,6 +135,7 @@ function appendPost(postData) {
   let newPostComments = document.createElement("p");
   let newPostDateTime = document.createElement("p");
   let newPostReactions = document.createElement("div");
+  let newGiphy = document.createElement("img");
   newPost.classList.add("post");
   newPostWrapper.classList.add("postWrapper");
   newPostTitle.className = "postTitle";
@@ -152,6 +153,24 @@ function appendPost(postData) {
   thumbsUp.classList.add("reaction");
   hankey.className = "hankeyCount";
   hankey.classList.add("reaction");
+
+  let commentsBody = document.createElement('div');
+  commentsBody.className = 'commentsBodyHidden';
+  let header = document.createElement('h3');
+  header.textContent = 'Comments';
+  let commentForm = document.createElement('form');
+  commentForm.className = 'commentForm';
+  let commentLabel = document.createElement('label');
+  commentLabel.textContent = 'Enter your comment:';
+  commentLabel.htmlFor = 'commentInput' + postData.id;
+  let commentInput = document.createElement('textarea');
+  commentInput.id = 'commentInput' + postData.id;
+  commentInput.className = 'commentInput';
+  commentInput.maxLength = '250';
+  let commentSubmitBtn = document.createElement('button');
+  commentSubmitBtn.className = 'commentSubmitBtn';
+  commentSubmitBtn.textContent = 'Submit Comment';
+  
 
   // Populate
   postData.id && newPost.setAttribute("id", postData.id);
@@ -193,24 +212,36 @@ function appendPost(postData) {
     newPostWrapper.appendChild(newPostComments);
     newPostWrapper.appendChild(newPostDateTime);
     newPostReactions.appendChild(laugh);
+    newPostWrapper.appendChild(newGiphy);
     newPostReactions.appendChild(thumbsUp);
     newPostReactions.appendChild(hankey);
     newPostWrapper.appendChild(newPostReactions);
     newPost.appendChild(newPostWrapper);
+
+    commentForm.appendChild(commentLabel);
+    commentForm.appendChild(commentInput);
+    commentForm.appendChild(commentSubmitBtn);
+    commentsBody.appendChild(header);
+    commentsBody.appendChild(commentForm);
+    
+    for(let i=0;i<postData.comments.length;i++){
+      let comment = postData.comments[i];
+      let thisComment = document.createElement("p");
+      thisComment.textContent = comment.body;
+      thisComment.id = comment.postRef;
+      let thisDate = document.createElement("p");
+      thisDate.textContent = 'Commented on '+comment.date;
+      commentsBody.appendChild(thisDate);
+      commentsBody.appendChild(thisComment);
+    }
+    
+    newPost.insertAdjacentElement("beforeEnd", commentsBody);
+    
     mainWrapper.insertAdjacentElement("afterBegin", newPost);
     // add comments interface
     newPostComments.addEventListener("click", e => {
-      if (!newPost.contains(document.querySelector('.commentsBody'))) {
-        let div = document.createElement('div');
-        div.className = 'commentsBody';
-        let header = document.createElement('h3');
-        header.textContent = 'Comments';
-        div.appendChild(header);
-        newPost.insertAdjacentElement("beforeend", div);
-      } else {
-        document.querySelector(".commentsBody").remove();
-      }
-    });
+      commentsBody.classList.toggle('commentsBody');
+    })
   }
 }
 
