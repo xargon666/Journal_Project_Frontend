@@ -40,7 +40,6 @@ html{
         width: 60vw;
     }
 
-<<<<<<< HEAD
     #logo{
         width: 3rem;  
     }
@@ -59,12 +58,6 @@ html{
     }
 
 /* ------------------------ Post Stuff ------------------------ */
-=======
-     .container{
-        width: 60vw;
-    }
-
->>>>>>> e42530b114e13913d46f3cadfc318993dae97f83
     .post{
         border-radius: 10px;
         background-color: #303134;
