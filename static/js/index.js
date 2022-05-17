@@ -21,7 +21,9 @@ function init() {
         
         // send post data
         const postForm = document.querySelector("#createPost > #postForm > form")
-        postForm.addEventListener('submit',createPost)
+        postForm.addEventListener('submit',(e) => {
+            app.createPost(e)
+        })
         
         // giphy
         addGifBtn.addEventListener('click', (e) => {

@@ -45,8 +45,8 @@ function createPost(e) {
   let postBody;
   let postLink;
   try {
-    np.querySelector('#formTitle').textContent && (postTitle = np.querySelector('#formTitle').textContent);
-    np.querySelector('#postContent').textContent && (postBody = np.querySelector('#postContent').textContent);
+    postTitle = np.querySelector('#postTitle').value;
+    postBody = np.querySelector('#postContent').value;
     if (!postTitle || !postBody){
       throw new Error("The post container no text content")
     }
@@ -55,8 +55,8 @@ function createPost(e) {
     alert(err)
     return
   } 
-  np.querySelector('img') && (postLink = np.querySelector('img').src);
-
+  np.querySelector('#newPostFormImg') && (postLink = np.querySelector('#newPostFormImg').src);
+  
   let postData = {
     post: {
       title: postTitle,
@@ -72,10 +72,12 @@ function createPost(e) {
       "Content-Type": "application/json",
     },
   };
-
   fetch(`${siteBackendUrl}${route}`, options)
-    .then((r) => r.json())
-    .then(appendPost)
+  .then((r) => r.json())
+  .then(data =>{
+      console.log("posting content...")
+    appendPost(data)
+    })
     .catch(console.warn);
 }
 

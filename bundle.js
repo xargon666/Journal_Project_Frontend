@@ -46,8 +46,8 @@ function createPost(e) {
   let postBody;
   let postLink;
   try {
-    np.querySelector('#formTitle').textContent && (postTitle = np.querySelector('#formTitle').textContent);
-    np.querySelector('#postContent').textContent && (postBody = np.querySelector('#postContent').textContent);
+    postTitle = np.querySelector('#postTitle').value;
+    postBody = np.querySelector('#postContent').value;
     if (!postTitle || !postBody){
       throw new Error("The post container no text content")
     }
@@ -56,8 +56,8 @@ function createPost(e) {
     alert(err)
     return
   } 
-  np.querySelector('img') && (postLink = np.querySelector('img').src);
-
+  np.querySelector('#newPostFormImg') && (postLink = np.querySelector('#newPostFormImg').src);
+  
   let postData = {
     post: {
       title: postTitle,
@@ -73,10 +73,12 @@ function createPost(e) {
       "Content-Type": "application/json",
     },
   };
-
   fetch(`${siteBackendUrl}${route}`, options)
-    .then((r) => r.json())
-    .then(appendPost)
+  .then((r) => r.json())
+  .then(data =>{
+      console.log("posting content...")
+    appendPost(data)
+    })
     .catch(console.warn);
 }
 
@@ -98,8 +100,22 @@ function sendReact(postId, emojiId) {
     emoji: String(emojiId),
   };
 
-   const options = {
+  console.log(postData);
+  console.log(postId);
+  console.log(emojiId);
+  console.log(JSON.stringify(postData));
+
+  // const postData = {
+  //   "post": {
+  //     "id": "ajdj-sds2-sdsd"
+  //       },
+  //   "emoji": "2"
+  // }
+
+  console.log(postData);
+  const options = {
     method: "POST",
+    // body: postData,
     body: JSON.stringify(postData),
     headers: {
       "Content-Type": "application/json",
@@ -108,6 +124,25 @@ function sendReact(postId, emojiId) {
 
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
+    // .then(data => {
+    //   console.log(data)
+    //   const allPosts = mainWrapper.querySelector(".post")
+    //   const targetPost = allPosts.find(post => post.id === `post-${postId}`)
+    //   const reactions = targetPost.querySelector('.reactions')
+    //   let targetReaction
+    //   switch(emojiId){
+    //     case 0:
+    //       targetReaction = reactions.querySelector('rofl').slice(2)++
+    //       break;
+    //     case 1:
+    //       targetReaction = reactions.querySelector('thumbsUp').slice(2)++
+    //       break;
+    //     case 2:
+    //       targetReaction = reactions.querySelector('hankey').slice(2)++
+    //       break;
+    //   }
+    // })
+    // .then(getAllPosts())
     .catch(console.warn);
 }
 
@@ -235,7 +270,9 @@ function init() {
         
         // send post data
         const postForm = document.querySelector("#createPost > #postForm > form")
-        postForm.addEventListener('submit',createPost)
+        postForm.addEventListener('submit',(e) => {
+            app.createPost(e)
+        })
         
         // giphy
         addGifBtn.addEventListener('click', (e) => {
