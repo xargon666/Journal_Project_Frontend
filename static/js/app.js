@@ -4,8 +4,7 @@
 const port = 3000;
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 const previewLength = 25;
-const mainWrapper = document.querySelector(".wrapper");
-const mainWrapperDisplayState = mainWrapper.style.display;
+
 
 function hideMainToggle() {
   if (mainWrapper.style.display != "none") {
@@ -19,7 +18,7 @@ function hideMainToggle() {
 
 // index
 function getAllPosts() {
-  const route = "/posts";
+const route = "/posts";
   fetch(`${siteBackendUrl}${route}`)
     .then((r) => r.json())
     .then(appendPosts)
@@ -63,6 +62,7 @@ function appendPosts(posts) {
 
 function appendPost(postData) {
   console.log("appending post...")
+  const mainWrapper = document.querySelector(".wrapper");
   // Create Elements
   let newPost = document.createElement("div");
   let newPostWrapper = document.createElement("div");
