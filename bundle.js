@@ -206,7 +206,7 @@ function appendPost(postData) {
     newPostWrapper.appendChild(newPostReactions);
     newPost.appendChild(newPostWrapper);
     mainWrapper.insertAdjacentElement("afterBegin", newPost);
-
+    // add comments interface
     newPostComments.addEventListener("click", e => {
       if (!newPost.contains(document.querySelector('.commentsBody'))) {
         let div = document.createElement('div');
