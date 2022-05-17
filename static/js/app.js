@@ -120,14 +120,13 @@ function appendPost(postData) {
     mainWrapper.insertAdjacentElement("afterBegin", newPost);
 
     newPostComments.addEventListener("click", e => {
-      let out = newPostComments.parentNode.parentElement;
-      if (!out.contains(document.querySelector('.commentsBody'))) {
+      if (!newPost.contains(document.querySelector('.commentsBody'))) {
         let div = document.createElement('div');
         div.className = 'commentsBody';
         let header = document.createElement('h3');
         header.textContent = 'Comments';
         div.appendChild(header);
-        out.insertAdjacentElement("beforeend", div);
+        newPost.insertAdjacentElement("beforeend", div);
       }
       else {
         document.querySelector('.commentsBody').remove();
@@ -135,15 +134,15 @@ function appendPost(postData) {
     })
 
     rofl.addEventListener("click", e=>{
-      rofl.textContent = `${parseInt(rofl.textContent, 10)+1} 🤣`
+      rofl.textContent = `${parseInt(rofl.textContent, 10)+1} 🤣`;
     })
 
     thumbsUp.addEventListener("click", e=>{
-      thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10)+1} 👍`
+      thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10)+1} 👍`;
     })
 
     hankey.addEventListener("click", e=>{
-      hankey.textContent = `${parseInt(hankey.textContent, 10)+1} 💩`
+      hankey.textContent = `${parseInt(hankey.textContent, 10)+1} 💩`;
     })
   }
 }
