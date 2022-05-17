@@ -72,7 +72,6 @@ function appendPosts(posts) {
 }
 
 function appendPost(postData) {
-  console.log("appending post...")
   const mainWrapper = document.querySelector(".wrapper");
   // Create Elements
   let newPost = document.createElement("div");
