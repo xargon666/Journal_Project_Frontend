@@ -25,7 +25,17 @@
                     sapiente animi fuga corporis non quod minima nostrum?</p>
                 <p class="comments">Comments: x</p>
                 <p class="dateTime">date time</p>
-                <p class="reactions">Reactions: x 🤣, x 👍, x 💩</p>
+                <div class="reactions">
+                    <p>Reactions: </p>
+                    &nbsp
+                    <p id="roflCount">0</p>
+                    &nbsp 🤣, &nbsp
+                    <p id="thumbsUpCount">0</p>
+                    &nbsp 👍,&nbsp
+                    <p id="hankeyCount">0</p>
+                    &nbsp 💩
+                </div>
+                
             </div>
         </div>
         <div class="post">
@@ -95,12 +105,12 @@
         <form>
             <h2 id="formTitle">New post</h2>
             <label for="postTitle">Title:</label>
-            <input type="text" id="postTitle" name="postTitle" maxlength="50" placeholder="Enter your title here...">
+            <input type="text" id="postTitle" name="postTitle" maxlength="50" placeholder="Enter your title here..." required>
             <br>
             <label for="postContent">Post:</label>
             <br>
             <textarea id="postContent" name="postContent" rows="6" cols="50"
-                maxlength="500">Type your post here...</textarea>
+                maxlength="500" required></textarea>
             <br>
             <input id="submitBtn" type="submit" value="Submit">
             <button id="addGifBtn">Add a GIF</button>
@@ -115,7 +125,7 @@
     </div>
 
     <div class="newPostBtn">
-        
+        dsf
     </div>
 </body>
 
