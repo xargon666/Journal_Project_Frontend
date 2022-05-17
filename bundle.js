@@ -208,14 +208,13 @@ function appendPost(postData) {
     mainWrapper.insertAdjacentElement("afterBegin", newPost);
 
     newPostComments.addEventListener("click", e => {
-      let out = newPostComments.parentNode.parentElement;
-      if (!out.contains(document.querySelector('.commentsBody'))) {
+      if (!newPost.contains(document.querySelector('.commentsBody'))) {
         let div = document.createElement('div');
         div.className = 'commentsBody';
         let header = document.createElement('h3');
         header.textContent = 'Comments';
         div.appendChild(header);
-        out.insertAdjacentElement("beforeend", div);
+        newPost.insertAdjacentElement("beforeend", div);
       }
       else {
         document.querySelector('.commentsBody').remove();
