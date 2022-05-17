@@ -3,59 +3,100 @@
 
 *,
 *::before,
-*::after{
-    padding:0;
-    margin:0;
-    box-sizing:border-box;
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
 
-html{
+html {
     background-color: #202124;
-    color:#e8eaed;
+    color: #e8eaed;
     box-sizing: border-box;
 }
 
-@media (min-width: 750px) {
-    header{
-        float:top;
-        position:fixed;
-        top:0;
-        width:100vw;
-        height:7vh;
-        left:0;
-        background-color: #202124;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    body{
-        margin-top: 7vh;
-        padding-top:3vh;
-        display: flex;
-        justify-content: center;
-    }
-    
-    body .wrapper{
-        width: 60vw;
-    }
+#logo {
+    width: 3rem;
+}
 
-    #logo{
-        width: 3rem;  
-    }
+.newPostBtn {
+    width: 5vw;
+    min-width: 70px;
+    float: bottom;
+    position: fixed;
+    top: 80vh;
+    right: 10vw;
+    cursor: pointer;
+    content: url('https://i.imgur.com/ZxdNxY7.png');
+}
 
-    #newPostBtn{
-        width: 5vw;
-        min-width: 70px;
-        float:bottom;
-        position:fixed;
-        top:80vh;
-        left:80vw;
-    }
+.newPostBtn:hover {
+    content: url('https://i.imgur.com/Kx3v7UP.png');
+}
 
-    #newPostBtn:hover{
-        content:url('https://i.imgur.com/Kx3v7UP.png');
-    }
+.newPostBtnDisabled {
+    content: url('https://i.imgur.com/iMwDi2N.png');
+    cursor: default;
+}
+
+.newPostBtnDisabled:hover {
+    content: url('https://i.imgur.com/iMwDi2N.png');
+}
+
+.roflCount,
+.thumbsUpCount,
+.hankeyCount {
+    padding-left: 15px;
+}
+
+.roflCount:hover,
+.thumbsUpCount:hover,
+.hankeyCount:hover {
+    padding:15px;
+    cursor: pointer;
+    background-color: #202124;
+    border-radius: 5px;
+}
+
+
+header {
+    float: top;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 7vh;
+    left: 0;
+    background-color: #202124;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    margin-top: 7vh;
+    padding-top: 3vh;
+    display: flex;
+    justify-content: center;
+}
+
+body .wrapper {
+    width: 60vw;
+}
+
+
+#newPostBtn {
+    width: 5vw;
+    min-width: 70px;
+    float: bottom;
+    position: fixed;
+    top: 80vh;
+    left: 80vw;
+}
+
+#newPostBtn:hover {
+    content: url('https://i.imgur.com/Kx3v7UP.png');
+}
 
 /* ------------------------ Post Stuff ------------------------ */
     .post{
@@ -93,12 +134,27 @@ html{
     
     .comments{
         grid-area: comments;
+        cursor: pointer;
+    }
+
+    .commentsBody{
+        padding: 15px 20px 15px 20px;   
+    }
+
+    .comments:hover{
+        border-radius: 5px;
+        background-color: #202124;
     }
     
     .reactions{
         grid-area: reactions;
+        display: inline-flex;
     }
     
+    .reactions > .reaction:hover {
+        cursor: pointer
+    }
+
     #postForm{
         border-radius: 10px;
         background-color: #303134;
@@ -133,19 +189,102 @@ html{
     input, textarea, #formTitle{
         margin-bottom: 10px;
     }
+
+
+.postWrapper {
+    padding: 15px 20px 15px 20px;
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "postTitle reactions"
+        "preview preview"
+        "comments dateTime";
+
 }
 
+.postTitle {
+    grid-area: postTitle;
+    padding-bottom: 5px;
+}
+
+.dateTime {
+    grid-area: dateTime;
+}
+
+.preview {
+    grid-area: preview;
+    padding-bottom: 5px;
+}
+
+.comments {
+    grid-area: comments;
+    cursor: pointer;
+}
+
+.commentsBody {
+    padding: 15px 20px 15px 20px;
+}
+
+.comments:hover {
+    border-radius: 5px;
+    background-color: #202124;
+}
+
+.reactions {
+    grid-area: reactions;
+    display: inline-flex;
+}
+
+#postForm {
+    border-radius: 10px;
+    background-color: #303134;
+    opacity: 1;
+    padding: 30px 50px 30px 50px;
+}
+
+#createPost {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    float: left;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#formBg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    float: left;
+    height: 100%;
+    width: 100%;
+    background-color: #202124;
+    opacity: 0.9;
+}
+
+input,
+textarea,
+#formTitle {
+    margin-bottom: 10px;
+}
+
+
 @media (min-width:1400px) {
-    .postBody{
+    .postWrapper {
         padding: 15px 20px 15px 20px;
         display: grid;
 
         grid-template-columns: 3fr 1fr;
         grid-template-rows: auto;
-        grid-template-areas: 
-          "postTitle reactions"
-          "preview preview"
-          "comments dateTime";
-
+        grid-template-areas:
+            "postTitle reactions"
+            "preview preview"
+            "comments dateTime";
     }
 }
