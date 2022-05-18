@@ -14,6 +14,7 @@ html {
     background-color: #202124;
     color: #e8eaed;
     box-sizing: border-box;
+    min-width: 250px;
 }
 
 #logo {
@@ -28,20 +29,20 @@ html {
     top: 80vh;
     right: 10vw;
     cursor: pointer;
-    content: url('https://i.imgur.com/ZxdNxY7.png');
+    content: url('https://i.imgur.com/U5O34Lk.png');
 }
 
 .newPostBtn:hover {
-    content: url('https://i.imgur.com/Kx3v7UP.png');
+    content: url('https://i.imgur.com/RaG4q4e.png');
 }
 
 .newPostBtnDisabled {
-    content: url('https://i.imgur.com/iMwDi2N.png');
+    content: url('https://i.imgur.com/y7QStEj.png');
     cursor: default;
 }
 
 .newPostBtnDisabled:hover {
-    content: url('https://i.imgur.com/iMwDi2N.png');
+    content: url('https://i.imgur.com/y7QStEj.png');
 }
 
 .roflCount,
@@ -82,6 +83,7 @@ body {
 
 body .wrapper {
     width: 60vw;
+    min-width: 250px;
 }
 
 
@@ -93,11 +95,6 @@ body .wrapper {
     top: 80vh;
     left: 80vw;
 }
-
-#newPostBtn:hover {
-    content: url('https://i.imgur.com/Kx3v7UP.png');
-}
-
 /* ------------------------ Post Stuff ------------------------ */
 .post {
     border-radius: 10px;
@@ -109,12 +106,14 @@ body .wrapper {
     padding: 15px 20px 15px 20px;
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: auto;
     grid-template-areas:
-        "postTitle reactions"
-        "preview preview"
-        "comments dateTime";
+        "postTitle"
+        "dateTime"
+        "preview"
+        "reactions"
+        "comments";
 
 }
 
@@ -129,7 +128,9 @@ body .wrapper {
 
 .preview {
     grid-area: preview;
-    padding-bottom: 5px;
+    margin: 10px 0 10px 0;
+    width: 100%;
+    word-wrap: break-word;
 }
 
 .comments {
@@ -204,20 +205,6 @@ textarea,
     margin-bottom: 10px;
 }
 
-
-.postWrapper {
-    padding: 15px 20px 15px 20px;
-    display: grid;
-
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas:
-        "postTitle reactions"
-        "preview preview"
-        "comments dateTime";
-
-}
-
 .postTitle {
     grid-area: postTitle;
     padding-bottom: 5px;
@@ -225,6 +212,7 @@ textarea,
 
 .dateTime {
     grid-area: dateTime;
+    color: #a9aaab
 }
 
 .preview {
@@ -291,15 +279,59 @@ textarea,
     opacity: 0.9;
 }
 
+
+
 input,
 textarea,
 #formTitle {
     margin-bottom: 10px;
 }
 
+@media (max-width:750px){
+    .postGiphy{
+        width:100%;
+    }
 
+    .newPostBtn {
+        content: url('https://i.imgur.com/RaG4q4e.png');
+    }
+}
 
-@media (min-width:1400px) {
+@media screen and (min-width:750px) {
+    .postWrapper {
+        padding: 15px 20px 15px 20px;
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "postTitle reactions"
+            "preview preview"
+            "comments dateTime";
+
+    }
+
+    .dateTime{
+        color: #e8eaed;
+    }
+}
+
+@media screen and (min-width:1100px) {
+    .postWrapper {
+        padding: 15px 20px 15px 20px;
+        display: grid;
+
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "postTitle reactions"
+            "preview preview"
+            "comments dateTime";
+
+    }
+}
+
+@media screen and  (min-width:1400px) {
     .postWrapper {
         padding: 15px 20px 15px 20px;
         display: grid;

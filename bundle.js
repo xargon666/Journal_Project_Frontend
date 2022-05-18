@@ -216,10 +216,14 @@ function appendPost(postData) {
     hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
   });
 
+
+  postBodyDiv.appendChild(newPostBody);
+
   if(postData.link){
     let newGiphy = document.createElement("img");
 
     newGiphy.src = postData.link;
+    newGiphy.className = 'postGiphy';
     newGiphy.alt = 'Gif for post titled ' + postData.title;
 
     postBodyDiv.appendChild(newGiphy);
@@ -228,8 +232,7 @@ function appendPost(postData) {
   // Append
   //   newPostTitle.appendChild("a");
   if (newPostBody.textContent && newPostTitle.textContent) {
-    newPostWrapper.appendChild(newPostTitle);
-    postBodyDiv.appendChild(newPostBody);
+    newPostWrapper.appendChild(newPostTitle);  
     newPostWrapper.appendChild(postBodyDiv);
     newPostWrapper.appendChild(newPostComments);
     newPostWrapper.appendChild(newPostDateTime);
@@ -286,6 +289,7 @@ function appendPost(postData) {
         commentDiv.insertAdjacentElement("afterBegin", thisDate)
         commentForm.insertAdjacentElement("afterEnd", commentDiv);
       }
+      commentInput.value = "";
     })
   }
 }
