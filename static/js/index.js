@@ -1,24 +1,30 @@
 const app = require('./app');
 document.addEventListener("DOMContentLoaded", init);
 
-
-
 function init() {
+    // Fetch all posts as soon as app is loaded
     app.getAllPosts();
     const newPostBtn = document.querySelector(".newPostBtn");
     const cancelPostBtn = document.querySelector("#cancelBtn");
     const addGifBtn = document.querySelector("#addGifBtn");
 
+    // giphy API key
     let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
 
-    // Fetch all posts as soon as app is loaded
-    
-
+    // create post button
     newPostBtn.addEventListener('click', (e) => {
         document.getElementById("createPost").style.display = 'flex';
         document.getElementById("formBg").style.display = 'block';
         newPostBtn.classList.toggle("newPostBtnDisabled", true);
-
+        
+        // send post data
+        const postForm = document.querySelector("#createPost > #postForm > form")
+        postForm.addEventListener('submit',(e) => {
+            app.createPost(e)
+            closeCreatePost(e)
+        })
+        
+        // giphy
         addGifBtn.addEventListener('click', (e) => {
             e.preventDefault();
             document.getElementById("gifForm").style.display = 'block';
@@ -54,13 +60,22 @@ function init() {
         });
 
         cancelPostBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById("createPost").style.display = 'none';
-            document.getElementById("formBg").style.display = 'none';
-            newPostBtn.classList.toggle("newPostBtnDisabled", false);
-            if (document.getElementById("newPostFormImg")) {
-                document.getElementById("newPostFormImg").remove();
-            }
+            closeCreatePost(e)
         });
     });    
+
+    function closeCreatePost(e){
+        console.log("closing create post window")
+        e.preventDefault();
+        document.getElementById("createPost").style.display = 'none';
+        document.getElementById("formBg").style.display = 'none';
+        newPostBtn.classList.toggle("newPostBtnDisabled", false);
+        if (document.getElementById("newPostFormImg")) {
+            document.getElementById("newPostFormImg").remove();
+        }
+    }
+
+    module.exports = { closeCreatePost, }
 }
+
+
