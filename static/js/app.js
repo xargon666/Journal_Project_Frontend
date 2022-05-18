@@ -4,16 +4,6 @@ const ind = require('./index.js')
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 // const siteBackendUrl = `http://localhost:3000`;
 
-function hideMainToggle() {
-  if (mainWrapper.style.display != "none") {
-    mainWrapper.style.display = "none";
-  } else {
-    mainWrapper.style.display = mainWrapperDisplayState;
-  }
-}
-
-// function applyPostEvent() {}
-
 // index
 function getAllPosts() {
   //remove existing posts
@@ -27,18 +17,18 @@ function getAllPosts() {
     .then(appendPosts)
     .catch(console.warn);
 }
-
-function getPost(id) {
-  const route = `/posts/:${id}`;
-  fetch(`${siteBackendUrl}${route}`)
-    .then((r) => r.json())
-    .then(appendPosts)
-    .catch(console.warn);
+// *************** unused functions ***************
+// function for delete button
+function deletePost(postId) {
+  const route = "/posts";
 }
-
+// function for edit button
+function editPost(postId) {
+  const route = "/posts";
+}
+// **************************************************
 // create
-function createPost(e) {
-  e.preventDefault()
+function createPost() {
   const route = "/posts";
   const np = document.querySelector('#postForm');
   let postTitle;
@@ -48,11 +38,11 @@ function createPost(e) {
     postTitle = np.querySelector('#postTitle').value;
     postBody = np.querySelector('#postContent').value;
     if (!postTitle || !postBody) {
-      throw new Error("The post container no text content")
+      throw new Error("The post contains no text content")
     }
   }
   catch (err) {
-    alert(err)
+    console.error(err)
     return
   }
 
@@ -75,14 +65,10 @@ function createPost(e) {
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
     .then(data => {
-      console.log("posting content...")
+      console.log(data)
       getAllPosts()
     })
     .catch(console.warn);
-}
-
-function deletePost(postId) {
-  const route = "/posts";
 }
 
 function createComment(postId, commentBodyText) {
@@ -150,11 +136,14 @@ function appendPost(postData) {
   let newPostDateTime = document.createElement("p");
   let newPostReactions = document.createElement("div");
   let postBodyDiv = document.createElement("div");
+  let newPostCommentsDiv = document.createElement("div");
   newPost.classList.add("post");
   newPostWrapper.classList.add("postWrapper");
   newPostTitle.className = "postTitle";
+  newPostBody.className = "previewText";
   postBodyDiv.className = "preview";
-  newPostComments.classList.add("comments");
+  newPostComments.classList.add("commentsText");
+  newPostCommentsDiv.classList.add("comments");
   newPostDateTime.classList.add("dateTime");
   newPostReactions.classList.add("reactions");
 
@@ -199,26 +188,30 @@ function appendPost(postData) {
   laugh.addEventListener("click", () => {
     sendReact(postData.id, 0);
     laugh.textContent = `${parseInt(laugh.textContent, 10) + 1} 🤣`;
-  });
+  },{once:true});
 
 
   thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
   thumbsUp.addEventListener("click", () => {
     sendReact(postData.id, 1);
     thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`;
-  });
+  },{once:true});
 
 
   hankey.textContent += `${postData.reactions.poo} 💩`;
   hankey.addEventListener("click", () => {
     sendReact(postData.id, 2);
     hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
-  });
+  },{once:true});
+
+  
+  postBodyDiv.appendChild(newPostBody);
 
   if(postData.link){
     let newGiphy = document.createElement("img");
 
     newGiphy.src = postData.link;
+    newGiphy.className = 'postGiphy';
     newGiphy.alt = 'Gif for post titled ' + postData.title;
 
     postBodyDiv.appendChild(newGiphy);
@@ -227,10 +220,10 @@ function appendPost(postData) {
   // Append
   //   newPostTitle.appendChild("a");
   if (newPostBody.textContent && newPostTitle.textContent) {
-    newPostWrapper.appendChild(newPostTitle);
-    postBodyDiv.appendChild(newPostBody);
+    newPostWrapper.appendChild(newPostTitle);  
     newPostWrapper.appendChild(postBodyDiv);
-    newPostWrapper.appendChild(newPostComments);
+    newPostCommentsDiv.appendChild(newPostComments);
+    newPostWrapper.appendChild(newPostCommentsDiv);
     newPostWrapper.appendChild(newPostDateTime);
     newPostReactions.appendChild(laugh);
     newPostReactions.appendChild(thumbsUp);
@@ -285,6 +278,7 @@ function appendPost(postData) {
         commentDiv.insertAdjacentElement("afterBegin", thisDate)
         commentForm.insertAdjacentElement("afterEnd", commentDiv);
       }
+      commentInput.value = "";
     })
   }
 }
@@ -293,4 +287,5 @@ module.exports = {
   getAllPosts,
   createPost,
   sendReact,
+  appendPost
 }

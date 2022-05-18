@@ -12,6 +12,7 @@
     "test": "jest --watchAll",
     "coverage": "jest --coverage"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xargon666/Journal_Project_Frontend.git"
@@ -25,8 +26,9 @@
   "homepage": "https://github.com/xargon666/Journal_Project_Frontend#readme",
   "devDependencies": {
     "concurrently": "^7.2.0",
-    "watchify": "^4.0.0",
     "jest": "^28.1.0",
-    "jest-environment-jsdom": "^28.1.0"
+    "jest-environment-jsdom": "^28.1.0",
+    "supertest": "^6.2.3",
+    "watchify": "^4.0.0"
   }
 }
