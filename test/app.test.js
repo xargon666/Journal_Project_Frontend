@@ -40,11 +40,11 @@ describe("app.js function test", () => {
         test("post form has content",()=>{
             expect(postContent.textContent).toBeTruthy()
         })
-    // describe("create post function returns data",()=>{
-    //     test("function executes",()=>{
-    //         // expect(createPost).to return something
-    //     })
-    // })
+    describe("create post function returns data",()=>{
+        test("function executes",(e)=>{
+            expect(app.createPost(e)).not.toBeFalsy()
+        })
+    })
     })
   });
 });
