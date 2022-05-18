@@ -4,6 +4,16 @@ const ind = require('./index.js')
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 // const siteBackendUrl = `http://localhost:3000`;
 
+
+
+
+
+
+
+
+
+//is this function needed?
+
 function hideMainToggle() {
   if (mainWrapper.style.display != "none") {
     mainWrapper.style.display = "none";
@@ -13,6 +23,19 @@ function hideMainToggle() {
 }
 
 // function applyPostEvent() {}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // index
 function getAllPosts() {
@@ -28,6 +51,13 @@ function getAllPosts() {
     .catch(console.warn);
 }
 
+
+
+
+
+
+
+//unused functino
 function getPost(id) {
   const route = `/posts/:${id}`;
   fetch(`${siteBackendUrl}${route}`)
@@ -35,6 +65,13 @@ function getPost(id) {
     .then(appendPosts)
     .catch(console.warn);
 }
+
+
+
+
+
+
+
 
 // create
 function createPost(e) {
@@ -48,7 +85,7 @@ function createPost(e) {
     postTitle = np.querySelector('#postTitle').value;
     postBody = np.querySelector('#postContent').value;
     if (!postTitle || !postBody) {
-      throw new Error("The post container no text content")
+      throw new Error("The post contains no text content")
     }
   }
   catch (err) {

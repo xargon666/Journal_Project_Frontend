@@ -75,7 +75,7 @@ function init() {
         }
     }
 
-    module.exports = { closeCreatePost, }
+    module.exports = { closeCreatePost,  init }
 }
 
 
