@@ -17,6 +17,10 @@ html {
     min-width: 250px;
 }
 
+h3{
+    margin-bottom: 20px;
+}
+
 #logo {
     width: 3rem;
 }
@@ -128,12 +132,13 @@ body {
 
 .dateTime {
     grid-area: dateTime;
+    color: #a9aaab
 }
 
 .preview {
     grid-area: preview;
     margin: 10px 0 10px 0;
-    width: 100%;
+    max-width: 60vw;
 }
 
 .previewText{
@@ -148,14 +153,20 @@ body {
     cursor: pointer;
 }
 
+.commentsText{
+    padding:10px 15px 10px 15px;
+    width: max-content;
+}
+
+.commentsText:hover {
+    border-radius: 5px;
+    background-color: #202124;
+}
+
 .commentsBody {
     padding: 15px 20px 15px 20px;
 }
 
-.comments:hover {
-    border-radius: 5px;
-    background-color: #202124;
-}
 
 .reactions {
     grid-area: reactions;
@@ -215,26 +226,6 @@ textarea,
     margin-bottom: 10px;
 }
 
-.postTitle {
-    grid-area: postTitle;
-    padding-bottom: 5px;
-}
-
-.dateTime {
-    grid-area: dateTime;
-    color: #a9aaab
-}
-
-.preview {
-    grid-area: preview;
-    padding-bottom: 5px;
-    max-width: 60vw;
-}
-
-.comments {
-    grid-area: comments;
-    cursor: pointer;
-}
 
 .commentsBodyHidden {
     display: none;
@@ -247,16 +238,6 @@ textarea,
 .commentsBody {
     display: block;
     padding: 15px 20px 15px 20px;
-}
-
-.comments:hover {
-    border-radius: 5px;
-    background-color: #202124;
-}
-
-.reactions {
-    grid-area: reactions;
-    display: inline-flex;
 }
 
 #postForm {
@@ -316,10 +297,6 @@ textarea,
             "preview preview"
             "comments dateTime";
 
-    }
-
-    .dateTime{
-        color: #e8eaed;
     }
 }
 
