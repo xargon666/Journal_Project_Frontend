@@ -60,7 +60,7 @@ function createPost() {
     }
   }
   catch (err) {
-    console.log(err)
+    console.error(err)
     return
   }
 
@@ -154,12 +154,14 @@ function appendPost(postData) {
   let newPostDateTime = document.createElement("p");
   let newPostReactions = document.createElement("div");
   let postBodyDiv = document.createElement("div");
+  let newPostCommentsDiv = document.createElement("div");
   newPost.classList.add("post");
   newPostWrapper.classList.add("postWrapper");
   newPostTitle.className = "postTitle";
   newPostBody.className = "previewText";
   postBodyDiv.className = "preview";
-  newPostComments.classList.add("comments");
+  newPostComments.classList.add("commentsText");
+  newPostCommentsDiv.classList.add("comments");
   newPostDateTime.classList.add("dateTime");
   newPostReactions.classList.add("reactions");
 
@@ -238,7 +240,8 @@ function appendPost(postData) {
   if (newPostBody.textContent && newPostTitle.textContent) {
     newPostWrapper.appendChild(newPostTitle);  
     newPostWrapper.appendChild(postBodyDiv);
-    newPostWrapper.appendChild(newPostComments);
+    newPostCommentsDiv.appendChild(newPostComments);
+    newPostWrapper.appendChild(newPostCommentsDiv);
     newPostWrapper.appendChild(newPostDateTime);
     newPostReactions.appendChild(laugh);
     newPostReactions.appendChild(thumbsUp);
