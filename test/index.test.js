@@ -15,7 +15,8 @@ describe('index.html', () =>{
 	beforeEach(() =>{
         document.documentElement.innerHTML = html.toString();
         title = document.querySelector('title');
-        const js = require('../static/js/script');
+        const js = require('../static/js/index');
+        const app = require('../static/js/app');
     })
 
     describe('Tests title', () =>{
