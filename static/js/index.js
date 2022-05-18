@@ -20,7 +20,8 @@ function init() {
         // send post data
         const postForm = document.querySelector("#createPost > #postForm > form")
         postForm.addEventListener('submit',(e) => {
-            app.createPost(e)
+            e.preventDefault()
+            app.createPost()
             closeCreatePost(e)
         })
         

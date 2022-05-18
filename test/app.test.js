@@ -9,6 +9,7 @@ const testPost = {
 };
 
 const fs = require("fs");
+const { format } = require("path");
 const path = require("path");
 const html = fs.readFileSync(path.resolve(__dirname, "../index.html"), "utf-8");
 
@@ -28,12 +29,12 @@ describe("app.js function test", () => {
       let postContent = postForm.querySelector("#postContent");
       postTitle.textContent = testPost.title;
       postContent.textContent = testPost.body;
+      
     });
     describe("form is setup for activation",()=>{
         test("post form element exists", () => {
         expect(postForm).toBeTruthy();
         });
-
         test("post form has title",()=>{
             expect(postTitle.textContent).toBeTruthy()
         })
@@ -41,8 +42,9 @@ describe("app.js function test", () => {
             expect(postContent.textContent).toBeTruthy()
         })
     describe("create post function returns data",()=>{
-        test("function executes",(e)=>{
-            expect(app.createPost(e)).not.toBeFalsy()
+        test("function executes",()=>{
+            expect(app.createPost()).not.toBe(undefined)
+            console.log(app.createPost())
         })
     })
     })

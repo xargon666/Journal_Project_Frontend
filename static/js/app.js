@@ -37,8 +37,8 @@ function getPost(id) {
 }
 
 // create
-function createPost(e) {
-  e.preventDefault()
+function createPost() {
+
   const route = "/posts";
   const np = document.querySelector('#postForm');
   let postTitle;
