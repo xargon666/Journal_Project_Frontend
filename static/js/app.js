@@ -120,15 +120,6 @@ function sendReact(postId, emojiId) {
     emoji: String(emojiId),
   };
 
-<<<<<<< HEAD
-=======
-  console.log(postData);
-  console.log(postId);
-  console.log(emojiId);
-  console.log(JSON.stringify(postData));
-
-  console.log(postData);
->>>>>>> 1a73496506cd3f32aad3253b8fe7e45ef8caf4a2
   const options = {
     method: "POST",
     // body: postData,
@@ -205,29 +196,6 @@ function appendPost(postData) {
   postData.date && (newPostDateTime.textContent = postData.date);
   if (postData.reactions) {
     if (postData.reactions.laugh) {
-<<<<<<< HEAD
-      rofl.textContent += `${postData.reactions.laugh} 🤣`;
-      rofl.addEventListener('click', () => {
-        sendReact(postData.id, 0)
-        rofl.textContent = `${parseInt(rofl.textContent, 10) + 1} 🤣`
-      })
-
-    }
-    if (postData.reactions.thumbUp) {
-      thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
-      thumbsUp.addEventListener('click', () => {
-        sendReact(postData.id, 1)
-        thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`
-      })
-
-    }
-    if (postData.reactions.poo) {
-      hankey.textContent += `${postData.reactions.poo} 💩`;
-      hankey.addEventListener('click', () => {
-        sendReact(postData.id, 2)
-        hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`
-      })
-=======
       laugh.textContent += `${postData.reactions.laugh} 🤣`;
       laugh.addEventListener("click", () => {
         sendReact(postData.id, 0);
@@ -247,7 +215,6 @@ function appendPost(postData) {
         sendReact(postData.id, 2);
         hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
       });
->>>>>>> 1a73496506cd3f32aad3253b8fe7e45ef8caf4a2
     }
   }
 

@@ -121,15 +121,6 @@ function sendReact(postId, emojiId) {
     emoji: String(emojiId),
   };
 
-<<<<<<< HEAD
-=======
-  console.log(postData);
-  console.log(postId);
-  console.log(emojiId);
-  console.log(JSON.stringify(postData));
-
-  console.log(postData);
->>>>>>> 1a73496506cd3f32aad3253b8fe7e45ef8caf4a2
   const options = {
     method: "POST",
     // body: postData,
@@ -206,29 +197,6 @@ function appendPost(postData) {
   postData.date && (newPostDateTime.textContent = postData.date);
   if (postData.reactions) {
     if (postData.reactions.laugh) {
-<<<<<<< HEAD
-      rofl.textContent += `${postData.reactions.laugh} 🤣`;
-      rofl.addEventListener('click', () => {
-        sendReact(postData.id, 0)
-        rofl.textContent = `${parseInt(rofl.textContent, 10) + 1} 🤣`
-      })
-
-    }
-    if (postData.reactions.thumbUp) {
-      thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
-      thumbsUp.addEventListener('click', () => {
-        sendReact(postData.id, 1)
-        thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`
-      })
-
-    }
-    if (postData.reactions.poo) {
-      hankey.textContent += `${postData.reactions.poo} 💩`;
-      hankey.addEventListener('click', () => {
-        sendReact(postData.id, 2)
-        hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`
-      })
-=======
       laugh.textContent += `${postData.reactions.laugh} 🤣`;
       laugh.addEventListener("click", () => {
         sendReact(postData.id, 0);
@@ -248,7 +216,6 @@ function appendPost(postData) {
         sendReact(postData.id, 2);
         hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
       });
->>>>>>> 1a73496506cd3f32aad3253b8fe7e45ef8caf4a2
     }
   }
 
@@ -296,12 +263,7 @@ function appendPost(postData) {
       if(commentInput.value!=""){
         createComment(postData.id, commentInput.value);
 
-        let thisComment = document.createElement("p");
-        thisComment.textContent = commentInput.value;
-        let thisDate = document.createElement("p");
-        thisDate.textContent = 'Commented on ' + comment.date;
-        commentsBody.appendChild(thisDate);
-        commentsBody.appendChild(thisComment);
+        
       }
     })
   }
@@ -317,24 +279,30 @@ module.exports = {
 const app = require('./app');
 document.addEventListener("DOMContentLoaded", init);
 
-
-
 function init() {
+    // Fetch all posts as soon as app is loaded
     app.getAllPosts();
     const newPostBtn = document.querySelector(".newPostBtn");
     const cancelPostBtn = document.querySelector("#cancelBtn");
     const addGifBtn = document.querySelector("#addGifBtn");
 
+    // giphy API key
     let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
 
-    // Fetch all posts as soon as app is loaded
-    
-
+    // create post button
     newPostBtn.addEventListener('click', (e) => {
         document.getElementById("createPost").style.display = 'flex';
         document.getElementById("formBg").style.display = 'block';
         newPostBtn.classList.toggle("newPostBtnDisabled", true);
-
+        
+        // send post data
+        const postForm = document.querySelector("#createPost > #postForm > form")
+        postForm.addEventListener('submit',(e) => {
+            app.createPost(e)
+            closeCreatePost(e)
+        })
+        
+        // giphy
         addGifBtn.addEventListener('click', (e) => {
             e.preventDefault();
             document.getElementById("gifForm").style.display = 'block';
@@ -370,15 +338,24 @@ function init() {
         });
 
         cancelPostBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById("createPost").style.display = 'none';
-            document.getElementById("formBg").style.display = 'none';
-            newPostBtn.classList.toggle("newPostBtnDisabled", false);
-            if (document.getElementById("newPostFormImg")) {
-                document.getElementById("newPostFormImg").remove();
-            }
+            closeCreatePost(e)
         });
     });    
+
+    function closeCreatePost(e){
+        console.log("closing create post window")
+        e.preventDefault();
+        document.getElementById("createPost").style.display = 'none';
+        document.getElementById("formBg").style.display = 'none';
+        newPostBtn.classList.toggle("newPostBtnDisabled", false);
+        if (document.getElementById("newPostFormImg")) {
+            document.getElementById("newPostFormImg").remove();
+        }
+    }
+
+    module.exports = { closeCreatePost, }
 }
+
+
 
 },{"./app":1}]},{},[2]);
