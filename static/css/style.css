@@ -21,6 +21,10 @@ html {
     width: 3rem;
 }
 
+.postGiphy{
+    max-width:400px;
+}
+
 .newPostBtn {
     width: 5vw;
     min-width: 70px;
@@ -48,7 +52,7 @@ html {
 .roflCount,
 .thumbsUpCount,
 .hankeyCount {
-    padding-left: 15px;
+    padding: 15px;
 }
 
 .roflCount:hover,
@@ -103,7 +107,7 @@ body .wrapper {
 }
 
 .postWrapper {
-    padding: 15px 20px 15px 20px;
+    padding: 5px 25px 20px 25px;
     display: grid;
 
     grid-template-columns: 1fr;
@@ -119,7 +123,7 @@ body .wrapper {
 
 .postTitle {
     grid-area: postTitle;
-    padding-bottom: 5px;
+    padding: 15px 0 5px 0;
 }
 
 .dateTime {
@@ -299,11 +303,7 @@ textarea,
 
 @media screen and (min-width:750px) {
     .postWrapper {
-        padding: 15px 20px 15px 20px;
-        display: grid;
-
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
         grid-template-areas:
             "postTitle reactions"
             "preview preview"
@@ -318,11 +318,7 @@ textarea,
 
 @media screen and (min-width:1100px) {
     .postWrapper {
-        padding: 15px 20px 15px 20px;
-        display: grid;
-
         grid-template-columns: 2fr 1fr;
-        grid-template-rows: auto;
         grid-template-areas:
             "postTitle reactions"
             "preview preview"
@@ -333,11 +329,7 @@ textarea,
 
 @media screen and  (min-width:1400px) {
     .postWrapper {
-        padding: 15px 20px 15px 20px;
-        display: grid;
-
         grid-template-columns: 3fr 1fr;
-        grid-template-rows: auto;
         grid-template-areas:
             "postTitle reactions"
             "preview preview"
