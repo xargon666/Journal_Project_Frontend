@@ -105,6 +105,7 @@ body {
 }
 /* ------------------------ Post Stuff ------------------------ */
 .post {
+    position: relative;
     border-radius: 10px;
     background-color: #303134;
     margin-bottom: 3vh;
@@ -123,6 +124,22 @@ body {
         "reactions"
         "comments";
 
+}
+
+.delete-edit-btns {
+  position: absolute;
+  
+  cursor: pointer;
+}
+
+.delete-btn {
+  top: 20px;
+  right: 20px;
+}
+
+.edit-btn {
+  top: 20px;
+  right: 50px;
 }
 
 .postTitle {
