@@ -12,6 +12,7 @@
     "test": "jest --watchAll",
     "coverage": "jest --coverage"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xargon666/Journal_Project_Frontend.git"
