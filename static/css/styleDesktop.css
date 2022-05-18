@@ -53,7 +53,7 @@ html {
 .roflCount:hover,
 .thumbsUpCount:hover,
 .hankeyCount:hover {
-    padding:15px;
+    padding: 15px;
     cursor: pointer;
     background-color: #202124;
     border-radius: 5px;
@@ -99,96 +99,110 @@ body .wrapper {
 }
 
 /* ------------------------ Post Stuff ------------------------ */
-    .post{
-        border-radius: 10px;
-        background-color: #303134;
-        margin-bottom: 3vh;
-    }
+.post {
+    border-radius: 10px;
+    background-color: #303134;
+    margin-bottom: 3vh;
+}
 
-    .postWrapper{
-        padding: 15px 20px 15px 20px;
-        display: grid;
+.postWrapper {
+    padding: 15px 20px 15px 20px;
+    display: grid;
 
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-        grid-template-areas: 
-          "postTitle reactions"
-          "preview preview"
-          "comments dateTime";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "postTitle reactions"
+        "preview preview"
+        "comments dateTime";
 
-    }
+}
 
-    .postTitle{
-        grid-area: postTitle;
-        padding-bottom: 5px;
-    }
+.postTitle {
+    grid-area: postTitle;
+    padding-bottom: 5px;
+}
 
-    .dateTime{
-        grid-area: dateTime;
-    }
-    
-    .preview{
-        grid-area: preview;
-        padding-bottom: 5px;
-    }
-    
-    .comments{
-        grid-area: comments;
-        cursor: pointer;
-    }
+.dateTime {
+    grid-area: dateTime;
+}
 
-    .commentsBody{
-        padding: 15px 20px 15px 20px;   
-    }
+.preview {
+    grid-area: preview;
+    padding-bottom: 5px;
+}
 
-    .comments:hover{
-        border-radius: 5px;
-        background-color: #202124;
-    }
-    
-    .reactions{
-        grid-area: reactions;
-        display: inline-flex;
-    }
-    
-    .reactions > .reaction:hover {
-        cursor: pointer
-    }
+.comments {
+    grid-area: comments;
+    cursor: pointer;
+}
 
-    #postForm{
-        border-radius: 10px;
-        background-color: #303134;
-        opacity: 1;
-        padding:30px 50px 30px 50px;
-    }
+.commentsBody {
+    padding: 15px 20px 15px 20px;
+}
 
-    #createPost{
-        position:fixed;
-        top:0;
-        left:0;
-        display:none;
-        float: left;
-        height: 100%;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-    }
+.comments:hover {
+    border-radius: 5px;
+    background-color: #202124;
+}
 
-    #formBg{
-        position:fixed;
-        top:0;
-        left:0;
-        display:none;
-        float: left;
-        height: 100%;
-        width: 100%;
-        background-color: #202124;
-        opacity: 0.9;
-    }
-    
-    input, textarea, #formTitle{
-        margin-bottom: 10px;
-    }
+.reactions {
+    grid-area: reactions;
+    display: inline-flex;
+}
+
+.commentDiv {
+    margin-bottom: 10px;
+}
+
+.commentSubmitBtn {
+    margin-bottom: 20px;
+}
+
+.commentDates {
+    color: #a9aaab
+}
+
+.reactions>.reaction:hover {
+    cursor: pointer
+}
+
+#postForm {
+    border-radius: 10px;
+    background-color: #303134;
+    opacity: 1;
+    padding: 30px 50px 30px 50px;
+}
+
+#createPost {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    float: left;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#formBg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    float: left;
+    height: 100%;
+    width: 100%;
+    background-color: #202124;
+    opacity: 0.9;
+}
+
+input,
+textarea,
+#formTitle {
+    margin-bottom: 10px;
+}
 
 
 .postWrapper {
@@ -223,12 +237,12 @@ body .wrapper {
     cursor: pointer;
 }
 
-.commentsBodyHidden{
+.commentsBodyHidden {
     display: none;
 }
 
-.commentInput{
-    width:100%;
+.commentInput {
+    width: 100%;
 }
 
 .commentsBody {

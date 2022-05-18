@@ -18,7 +18,7 @@ function hideMainToggle() {
 function getAllPosts() {
   //remove existing posts
   while (document.querySelector(".wrapper").firstElementChild) {
-        document.querySelector(".wrapper").firstElementChild.remove();
+    document.querySelector(".wrapper").firstElementChild.remove();
   }
   // pull data and run appendPosts
   const route = "/posts";
@@ -47,21 +47,21 @@ function createPost(e) {
   try {
     postTitle = np.querySelector('#postTitle').value;
     postBody = np.querySelector('#postContent').value;
-    if (!postTitle || !postBody){
+    if (!postTitle || !postBody) {
       throw new Error("The post container no text content")
     }
   }
-  catch(err){
+  catch (err) {
     alert(err)
     return
-  } 
+  }
 
   np.querySelector('#newPostFormImg') && (postLink = np.querySelector('#newPostFormImg').src);
-  
+
   let postData = {
-      title: postTitle,
-      body: postBody,
-      link: postLink,
+    title: postTitle,
+    body: postBody,
+    link: postLink,
   };
   console.log(JSON.stringify(postData))
 
@@ -73,12 +73,12 @@ function createPost(e) {
     },
   };
   fetch(`${siteBackendUrl}${route}`, options)
-  .then((r) => r.json())
-  .then(data =>{
+    .then((r) => r.json())
+    .then(data => {
       console.log("posting content...")
       getAllPosts()
     })
-    .catch(console.warn);    
+    .catch(console.warn);
 }
 
 function deletePost(postId) {
@@ -149,11 +149,11 @@ function appendPost(postData) {
   let newPostComments = document.createElement("p");
   let newPostDateTime = document.createElement("p");
   let newPostReactions = document.createElement("div");
-  let newGiphy = document.createElement("img");
+  let postBodyDiv = document.createElement("div");
   newPost.classList.add("post");
   newPostWrapper.classList.add("postWrapper");
   newPostTitle.className = "postTitle";
-  newPostBody.className = "preview";
+  postBodyDiv.className = "preview";
   newPostComments.classList.add("comments");
   newPostDateTime.classList.add("dateTime");
   newPostReactions.classList.add("reactions");
@@ -194,39 +194,45 @@ function appendPost(postData) {
   postData.comments &&
     (newPostComments.textContent = `Comments: ${postData.comments.length}`);
   postData.date && (newPostDateTime.textContent = postData.date);
-  if (postData.reactions) {
-    if (postData.reactions.laugh) {
-      laugh.textContent += `${postData.reactions.laugh} 🤣`;
-      laugh.addEventListener("click", () => {
-        sendReact(postData.id, 0);
-        laugh.textContent = `${parseInt(laugh.textContent, 10) + 1} 🤣`;
-      });
-    }
-    if (postData.reactions.thumbUp) {
-      thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
-      thumbsUp.addEventListener("click", () => {
-        sendReact(postData.id, 1);
-        thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`;
-      });
-    }
-    if (postData.reactions.poo) {
-      hankey.textContent += `${postData.reactions.poo} 💩`;
-      hankey.addEventListener("click", () => {
-        sendReact(postData.id, 2);
-        hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
-      });
-    }
+
+  laugh.textContent += `${postData.reactions.laugh} 🤣`;
+  laugh.addEventListener("click", () => {
+    sendReact(postData.id, 0);
+    laugh.textContent = `${parseInt(laugh.textContent, 10) + 1} 🤣`;
+  });
+
+
+  thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
+  thumbsUp.addEventListener("click", () => {
+    sendReact(postData.id, 1);
+    thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`;
+  });
+
+
+  hankey.textContent += `${postData.reactions.poo} 💩`;
+  hankey.addEventListener("click", () => {
+    sendReact(postData.id, 2);
+    hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
+  });
+
+  if(postData.link){
+    let newGiphy = document.createElement("img");
+
+    newGiphy.src = postData.link;
+    newGiphy.alt = 'Gif for post titled ' + postData.title;
+
+    postBodyDiv.appendChild(newGiphy);
   }
 
   // Append
   //   newPostTitle.appendChild("a");
   if (newPostBody.textContent && newPostTitle.textContent) {
     newPostWrapper.appendChild(newPostTitle);
-    newPostWrapper.appendChild(newPostBody);
+    postBodyDiv.appendChild(newPostBody);
+    newPostWrapper.appendChild(postBodyDiv);
     newPostWrapper.appendChild(newPostComments);
     newPostWrapper.appendChild(newPostDateTime);
     newPostReactions.appendChild(laugh);
-    newPostWrapper.appendChild(newGiphy);
     newPostReactions.appendChild(thumbsUp);
     newPostReactions.appendChild(hankey);
     newPostWrapper.appendChild(newPostReactions);
@@ -241,12 +247,16 @@ function appendPost(postData) {
     for (let i = 0; i < postData.comments.length; i++) {
       let comment = postData.comments[i];
       let thisComment = document.createElement("p");
+      let commentDiv = document.createElement("div");
+      commentDiv.className = 'commentDiv';
       thisComment.textContent = comment.body;
-      thisComment.id = comment.postRef;
+      thisComment.className = 'comment';
       let thisDate = document.createElement("p");
       thisDate.textContent = 'Commented on ' + comment.date;
-      commentsBody.appendChild(thisDate);
-      commentsBody.appendChild(thisComment);
+      thisDate.className = 'commentDates';
+      commentDiv.insertAdjacentElement("afterBegin", thisComment)
+      commentDiv.insertAdjacentElement("afterBegin", thisDate)
+      commentForm.insertAdjacentElement("afterEnd", commentDiv);
     }
 
     newPost.insertAdjacentElement("beforeEnd", commentsBody);
@@ -257,12 +267,23 @@ function appendPost(postData) {
       commentsBody.classList.toggle('commentsBody');
     })
 
-    commentSubmitBtn.addEventListener("click", e=>{
+    commentSubmitBtn.addEventListener("click", e => {
       e.preventDefault();
-      if(commentInput.value!=""){
+      if (commentInput.value != "") {
         createComment(postData.id, commentInput.value);
 
-        
+        let currentdate = new Date();
+        let thisComment = document.createElement("p");
+        let commentDiv = document.createElement("div");
+        commentDiv.className = 'commentDiv';
+        thisComment.textContent = commentInput.value;
+        thisComment.className = 'comment';
+        let thisDate = document.createElement("p");
+        thisDate.textContent = 'Commented on ' + currentdate.toString().slice(0, 24);
+        thisDate.className = 'commentDates';
+        commentDiv.insertAdjacentElement("afterBegin", thisComment)
+        commentDiv.insertAdjacentElement("afterBegin", thisDate)
+        commentForm.insertAdjacentElement("afterEnd", commentDiv);
       }
     })
   }
