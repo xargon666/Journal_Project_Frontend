@@ -153,6 +153,7 @@ function appendPost(postData) {
   newPost.classList.add("post");
   newPostWrapper.classList.add("postWrapper");
   newPostTitle.className = "postTitle";
+  newPostBody.className = "previewText";
   postBodyDiv.className = "preview";
   newPostComments.classList.add("comments");
   newPostDateTime.classList.add("dateTime");
@@ -215,7 +216,7 @@ function appendPost(postData) {
     hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
   });
 
-
+  
   postBodyDiv.appendChild(newPostBody);
 
   if(postData.link){

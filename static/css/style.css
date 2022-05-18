@@ -134,7 +134,13 @@ body .wrapper {
     grid-area: preview;
     margin: 10px 0 10px 0;
     width: 100%;
+}
+
+.previewText{
+    max-width: 50vw;
+    height: fit-content;
     word-wrap: break-word;
+    padding-bottom: 10px;
 }
 
 .comments {
@@ -222,6 +228,7 @@ textarea,
 .preview {
     grid-area: preview;
     padding-bottom: 5px;
+    max-width: 60vw;
 }
 
 .comments {
@@ -325,6 +332,10 @@ textarea,
             "comments dateTime";
 
     }
+
+    .previewText{
+        max-width: 56vw;
+    }
 }
 
 @media screen and  (min-width:1400px) {
@@ -334,5 +345,9 @@ textarea,
             "postTitle reactions"
             "preview preview"
             "comments dateTime";
+    }
+
+    .previewText{
+        max-width: 59vw;
     }
 }
