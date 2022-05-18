@@ -7,42 +7,32 @@ const path = require("path");
 const html = fs.readFileSync(path.resolve(__dirname, "../index.html"), "utf-8");
 
 
-
-
-
-
-// Working Post Content Tests
-
 describe("index.html Content", () => {
-  describe("Post Content", () => {
-        document.documentElement.innerHTML = html.toString();
-
-        test.each(Array.from(document.querySelectorAll(".post")))("Post #%# has text in title", (e) => {
-            let target = e.querySelector(".postWrapper>.postTitle");
-            expect(target.textContent).toBeTruthy();
+    describe("Post Content", () => {
+          document.documentElement.innerHTML = html.toString();
+  
+          describe.each(Array.from(document.querySelectorAll(".post")))("Post #%#", (e) => {
+              it("has title text",()=>{
+              let target = e.querySelector(".postWrapper>.postTitle");
+              expect(target.textContent).toBeTruthy();
+            })
+              it("title <= 50 chars",()=>{
+               let target = e.querySelector(".postWrapper>.postTitle");
+                let charLimit = 50
+                expect(target.textContent.length <= charLimit).toBeTruthy();
+            })
+              it("has body text",()=>{
+              let target = e.querySelector(".postWrapper>.preview");
+              expect(target.textContent).toBeTruthy();
+            })
+              it("body text <= 500 chars",()=>{
+               let target = e.querySelector(".postWrapper>.preview");
+                let charLimit = 500
+                expect(target.textContent.length <= charLimit).toBeTruthy();
+            })
         });
-    
-        test.each(Array.from(document.querySelectorAll(".post")))("Post #%# has text in body", (e) => {
-            let target = e.querySelector(".postWrapper>.preview");
-            expect(target.textContent).toBeTruthy();
         });
-        test.each(Array.from(document.querySelectorAll(".post")))("Post #%# title text <= 50 chars", (e) => {
-            let target = e.querySelector(".postWrapper>.postTitle");
-            let charLimit = 50
-            expect(target.textContent.length <= charLimit).toBeTruthy();
-        });
-    
-        test.each(Array.from(document.querySelectorAll(".post")))("Post #%# body text <= 500 chars", (e) => {
-            let target = e.querySelector(".postWrapper>.preview");
-            let charLimit = 500
-            expect(target.textContent.length <= charLimit).toBeTruthy();
-        });
-
     });
-});
-
-
-
 
 // describe("\nindex.html", () => {
 //   let title;
