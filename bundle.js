@@ -5,39 +5,6 @@ const ind = require('./index.js')
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 // const siteBackendUrl = `http://localhost:3000`;
 
-
-
-
-
-
-
-
-
-//is this function needed?
-
-function hideMainToggle() {
-  if (mainWrapper.style.display != "none") {
-    mainWrapper.style.display = "none";
-  } else {
-    mainWrapper.style.display = mainWrapperDisplayState;
-  }
-}
-
-// function applyPostEvent() {}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // index
 function getAllPosts() {
   //remove existing posts
@@ -52,13 +19,7 @@ function getAllPosts() {
     .catch(console.warn);
 }
 
-
-
-
-
-
-
-//unused functino
+// *************** unused functions ***************
 function getPost(id) {
   const route = `/posts/:${id}`;
   fetch(`${siteBackendUrl}${route}`)
@@ -67,12 +28,22 @@ function getPost(id) {
     .catch(console.warn);
 }
 
+function deletePost(postId) {
+  const route = "/posts";
+}
 
+function editPost(postId) {
+  const route = "/posts";
+}
 
-
-
-
-
+function hideMainToggle() {
+  if (mainWrapper.style.display != "none") {
+    mainWrapper.style.display = "none";
+  } else {
+    mainWrapper.style.display = mainWrapperDisplayState;
+  }
+}
+// **************************************************
 
 // create
 function createPost() {
@@ -116,10 +87,6 @@ function createPost() {
       getAllPosts()
     })
     .catch(console.warn);
-}
-
-function deletePost(postId) {
-  const route = "/posts";
 }
 
 function createComment(postId, commentBodyText) {
@@ -237,21 +204,21 @@ function appendPost(postData) {
   laugh.addEventListener("click", () => {
     sendReact(postData.id, 0);
     laugh.textContent = `${parseInt(laugh.textContent, 10) + 1} 🤣`;
-  });
+  },{once:true});
 
 
   thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
   thumbsUp.addEventListener("click", () => {
     sendReact(postData.id, 1);
     thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`;
-  });
+  },{once:true});
 
 
   hankey.textContent += `${postData.reactions.poo} 💩`;
   hankey.addEventListener("click", () => {
     sendReact(postData.id, 2);
     hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
-  });
+  },{once:true});
 
   
   postBodyDiv.appendChild(newPostBody);
