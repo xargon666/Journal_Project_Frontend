@@ -74,8 +74,7 @@ function getPost(id) {
 
 
 // create
-function createPost(e) {
-  e.preventDefault()
+function createPost() {
   const route = "/posts";
   const np = document.querySelector('#postForm');
   let postTitle;
@@ -89,7 +88,7 @@ function createPost(e) {
     }
   }
   catch (err) {
-    alert(err)
+    console.log(err)
     return
   }
 
@@ -112,7 +111,7 @@ function createPost(e) {
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
     .then(data => {
-      console.log("posting content...")
+      console.log(data)
       getAllPosts()
     })
     .catch(console.warn);
