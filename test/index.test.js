@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf-8')
 
+describe('Post Content', () =>{
+})
 
 describe('index.html', () =>{
     let title;
