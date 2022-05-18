@@ -4,39 +4,6 @@ const ind = require('./index.js')
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 // const siteBackendUrl = `http://localhost:3000`;
 
-
-
-
-
-
-
-
-
-//is this function needed?
-
-function hideMainToggle() {
-  if (mainWrapper.style.display != "none") {
-    mainWrapper.style.display = "none";
-  } else {
-    mainWrapper.style.display = mainWrapperDisplayState;
-  }
-}
-
-// function applyPostEvent() {}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // index
 function getAllPosts() {
   //remove existing posts
@@ -51,13 +18,7 @@ function getAllPosts() {
     .catch(console.warn);
 }
 
-
-
-
-
-
-
-//unused functino
+// *************** unused functions ***************
 function getPost(id) {
   const route = `/posts/:${id}`;
   fetch(`${siteBackendUrl}${route}`)
@@ -66,12 +27,22 @@ function getPost(id) {
     .catch(console.warn);
 }
 
+function deletePost(postId) {
+  const route = "/posts";
+}
 
+function editPost(postId) {
+  const route = "/posts";
+}
 
-
-
-
-
+function hideMainToggle() {
+  if (mainWrapper.style.display != "none") {
+    mainWrapper.style.display = "none";
+  } else {
+    mainWrapper.style.display = mainWrapperDisplayState;
+  }
+}
+// **************************************************
 
 // create
 function createPost() {
@@ -115,10 +86,6 @@ function createPost() {
       getAllPosts()
     })
     .catch(console.warn);
-}
-
-function deletePost(postId) {
-  const route = "/posts";
 }
 
 function createComment(postId, commentBodyText) {
