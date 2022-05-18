@@ -150,11 +150,12 @@ function appendPost(postData) {
   let newPostComments = document.createElement("p");
   let newPostDateTime = document.createElement("p");
   let newPostReactions = document.createElement("div");
+  let postBodyDiv = document.createElement("div");
   let newGiphy = document.createElement("img");
   newPost.classList.add("post");
   newPostWrapper.classList.add("postWrapper");
   newPostTitle.className = "postTitle";
-  newPostBody.className = "preview";
+  postBodyDiv.className = "preview";
   newPostComments.classList.add("comments");
   newPostDateTime.classList.add("dateTime");
   newPostReactions.classList.add("reactions");
@@ -195,39 +196,42 @@ function appendPost(postData) {
   postData.comments &&
     (newPostComments.textContent = `Comments: ${postData.comments.length}`);
   postData.date && (newPostDateTime.textContent = postData.date);
-  if (postData.reactions) {
-    if (postData.reactions.laugh) {
+ 
       laugh.textContent += `${postData.reactions.laugh} 🤣`;
       laugh.addEventListener("click", () => {
         sendReact(postData.id, 0);
         laugh.textContent = `${parseInt(laugh.textContent, 10) + 1} 🤣`;
       });
-    }
-    if (postData.reactions.thumbUp) {
+    
+    
       thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
       thumbsUp.addEventListener("click", () => {
         sendReact(postData.id, 1);
         thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`;
       });
-    }
-    if (postData.reactions.poo) {
+    
+  
       hankey.textContent += `${postData.reactions.poo} 💩`;
       hankey.addEventListener("click", () => {
         sendReact(postData.id, 2);
         hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
       });
-    }
-  }
+    
+  
+
+  newGiphy.src = postData.link;
+  newGiphy.alt = 'Gif for post titled ' + postData.title;
 
   // Append
   //   newPostTitle.appendChild("a");
   if (newPostBody.textContent && newPostTitle.textContent) {
     newPostWrapper.appendChild(newPostTitle);
-    newPostWrapper.appendChild(newPostBody);
+    postBodyDiv.appendChild(newPostBody);
+    postBodyDiv.appendChild(newGiphy);
+    newPostWrapper.appendChild(postBodyDiv);
     newPostWrapper.appendChild(newPostComments);
     newPostWrapper.appendChild(newPostDateTime);
     newPostReactions.appendChild(laugh);
-    newPostWrapper.appendChild(newGiphy);
     newPostReactions.appendChild(thumbsUp);
     newPostReactions.appendChild(hankey);
     newPostWrapper.appendChild(newPostReactions);
