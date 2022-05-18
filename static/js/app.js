@@ -4,16 +4,6 @@ const ind = require('./index.js')
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 // const siteBackendUrl = `http://localhost:3000`;
 
-function hideMainToggle() {
-  if (mainWrapper.style.display != "none") {
-    mainWrapper.style.display = "none";
-  } else {
-    mainWrapper.style.display = mainWrapperDisplayState;
-  }
-}
-
-// function applyPostEvent() {}
-
 // index
 function getAllPosts() {
   //remove existing posts
@@ -28,6 +18,7 @@ function getAllPosts() {
     .catch(console.warn);
 }
 
+// *************** unused functions ***************
 function getPost(id) {
   const route = `/posts/:${id}`;
   fetch(`${siteBackendUrl}${route}`)
@@ -36,9 +27,25 @@ function getPost(id) {
     .catch(console.warn);
 }
 
+function deletePost(postId) {
+  const route = "/posts";
+}
+
+function editPost(postId) {
+  const route = "/posts";
+}
+
+function hideMainToggle() {
+  if (mainWrapper.style.display != "none") {
+    mainWrapper.style.display = "none";
+  } else {
+    mainWrapper.style.display = mainWrapperDisplayState;
+  }
+}
+// **************************************************
+
 // create
 function createPost() {
-
   const route = "/posts";
   const np = document.querySelector('#postForm');
   let postTitle;
@@ -48,11 +55,11 @@ function createPost() {
     postTitle = np.querySelector('#postTitle').value;
     postBody = np.querySelector('#postContent').value;
     if (!postTitle || !postBody) {
-      throw new Error("The post container no text content")
+      throw new Error("The post contains no text content")
     }
   }
   catch (err) {
-    alert(err)
+    console.log(err)
     return
   }
 
@@ -75,14 +82,10 @@ function createPost() {
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
     .then(data => {
-      console.log("posting content...")
+      console.log(data)
       getAllPosts()
     })
     .catch(console.warn);
-}
-
-function deletePost(postId) {
-  const route = "/posts";
 }
 
 function createComment(postId, commentBodyText) {
@@ -153,6 +156,7 @@ function appendPost(postData) {
   newPost.classList.add("post");
   newPostWrapper.classList.add("postWrapper");
   newPostTitle.className = "postTitle";
+  newPostBody.className = "previewText";
   postBodyDiv.className = "preview";
   newPostComments.classList.add("comments");
   newPostDateTime.classList.add("dateTime");
@@ -215,10 +219,14 @@ function appendPost(postData) {
     hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
   });
 
+  
+  postBodyDiv.appendChild(newPostBody);
+
   if(postData.link){
     let newGiphy = document.createElement("img");
 
     newGiphy.src = postData.link;
+    newGiphy.className = 'postGiphy';
     newGiphy.alt = 'Gif for post titled ' + postData.title;
 
     postBodyDiv.appendChild(newGiphy);
@@ -227,8 +235,7 @@ function appendPost(postData) {
   // Append
   //   newPostTitle.appendChild("a");
   if (newPostBody.textContent && newPostTitle.textContent) {
-    newPostWrapper.appendChild(newPostTitle);
-    postBodyDiv.appendChild(newPostBody);
+    newPostWrapper.appendChild(newPostTitle);  
     newPostWrapper.appendChild(postBodyDiv);
     newPostWrapper.appendChild(newPostComments);
     newPostWrapper.appendChild(newPostDateTime);
@@ -285,6 +292,7 @@ function appendPost(postData) {
         commentDiv.insertAdjacentElement("afterBegin", thisDate)
         commentForm.insertAdjacentElement("afterEnd", commentDiv);
       }
+      commentInput.value = "";
     })
   }
 }

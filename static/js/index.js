@@ -20,9 +20,9 @@ function init() {
         // send post data
         const postForm = document.querySelector("#createPost > #postForm > form")
         postForm.addEventListener('submit',(e) => {
-            e.preventDefault()
-            app.createPost()
-            closeCreatePost(e)
+            e.preventDefault();
+            app.createPost();
+            closeCreatePost();
         })
         
         // giphy
@@ -61,22 +61,23 @@ function init() {
         });
 
         cancelPostBtn.addEventListener('click', (e) => {
-            closeCreatePost(e)
+            e.preventDefault();
+            closeCreatePost();
         });
     });    
 
-    function closeCreatePost(e){
-        console.log("closing create post window")
-        e.preventDefault();
+    function closeCreatePost(){
         document.getElementById("createPost").style.display = 'none';
         document.getElementById("formBg").style.display = 'none';
         newPostBtn.classList.toggle("newPostBtnDisabled", false);
         if (document.getElementById("newPostFormImg")) {
             document.getElementById("newPostFormImg").remove();
         }
+        document.getElementById("postTitle").value = "";
+        document.getElementById("postContent").value = "";
     }
 
-    module.exports = { closeCreatePost, }
+    module.exports = { closeCreatePost,  init }
 }
 
 
