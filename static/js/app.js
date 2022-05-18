@@ -18,7 +18,7 @@ function hideMainToggle() {
 function getAllPosts() {
   //remove existing posts
   while (document.querySelector(".wrapper").firstElementChild) {
-        document.querySelector(".wrapper").firstElementChild.remove();
+    document.querySelector(".wrapper").firstElementChild.remove();
   }
   // pull data and run appendPosts
   const route = "/posts";
@@ -47,21 +47,21 @@ function createPost(e) {
   try {
     postTitle = np.querySelector('#postTitle').value;
     postBody = np.querySelector('#postContent').value;
-    if (!postTitle || !postBody){
+    if (!postTitle || !postBody) {
       throw new Error("The post container no text content")
     }
   }
-  catch(err){
+  catch (err) {
     alert(err)
     return
-  } 
+  }
 
   np.querySelector('#newPostFormImg') && (postLink = np.querySelector('#newPostFormImg').src);
-  
+
   let postData = {
-      title: postTitle,
-      body: postBody,
-      link: postLink,
+    title: postTitle,
+    body: postBody,
+    link: postLink,
   };
   console.log(JSON.stringify(postData))
 
@@ -73,12 +73,12 @@ function createPost(e) {
     },
   };
   fetch(`${siteBackendUrl}${route}`, options)
-  .then((r) => r.json())
-  .then(data =>{
+    .then((r) => r.json())
+    .then(data => {
       console.log("posting content...")
       getAllPosts()
     })
-    .catch(console.warn);    
+    .catch(console.warn);
 }
 
 function deletePost(postId) {
@@ -241,12 +241,16 @@ function appendPost(postData) {
     for (let i = 0; i < postData.comments.length; i++) {
       let comment = postData.comments[i];
       let thisComment = document.createElement("p");
+      let commentDiv = document.createElement("div");
+      commentDiv.className = 'commentDiv';
       thisComment.textContent = comment.body;
-      thisComment.id = comment.postRef;
+      thisComment.className = 'comment';
       let thisDate = document.createElement("p");
       thisDate.textContent = 'Commented on ' + comment.date;
-      commentsBody.appendChild(thisDate);
-      commentsBody.appendChild(thisComment);
+      thisDate.className = 'commentDates';
+      commentDiv.insertAdjacentElement("afterBegin", thisComment)
+      commentDiv.insertAdjacentElement("afterBegin", thisDate)
+      commentForm.insertAdjacentElement("afterEnd", commentDiv);
     }
 
     newPost.insertAdjacentElement("beforeEnd", commentsBody);
@@ -257,12 +261,23 @@ function appendPost(postData) {
       commentsBody.classList.toggle('commentsBody');
     })
 
-    commentSubmitBtn.addEventListener("click", e=>{
+    commentSubmitBtn.addEventListener("click", e => {
       e.preventDefault();
-      if(commentInput.value!=""){
+      if (commentInput.value != "") {
         createComment(postData.id, commentInput.value);
 
-        
+        let currentdate = new Date();
+        let thisComment = document.createElement("p");
+        let commentDiv = document.createElement("div");
+        commentDiv.className = 'commentDiv';
+        thisComment.textContent = commentInput.value;
+        thisComment.className = 'comment';
+        let thisDate = document.createElement("p");
+        thisDate.textContent = 'Commented on ' + currentdate.toString().slice(0, 24);
+        thisDate.className = 'commentDates';
+        commentDiv.insertAdjacentElement("afterBegin", thisComment)
+        commentDiv.insertAdjacentElement("afterBegin", thisDate)
+        commentForm.insertAdjacentElement("afterEnd", commentDiv);
       }
     })
   }
