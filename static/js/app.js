@@ -18,8 +18,7 @@ function hideMainToggle() {
 function getAllPosts() {
   //remove existing posts
   while (document.querySelector(".wrapper").firstElementChild) {
-    // console.log("removing post...")
-    document.querySelector(".wrapper").firstElementChild.remove();
+        document.querySelector(".wrapper").firstElementChild.remove();
   }
   // pull data and run appendPosts
   const route = "/posts";
@@ -86,8 +85,29 @@ function deletePost(postId) {
   const route = "/posts";
 }
 
-function createComment(postId) {
-  const route = "/posts";
+function createComment(postId, commentBodyText) {
+  const route = "/posts/comments";
+
+  const postData = {
+    post: {
+      "id": postId
+    },
+    comment: {
+      "body": commentBodyText
+    },
+  };
+
+  const options = {
+    method: "POST",
+    body: JSON.stringify(postData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch(`${siteBackendUrl}${route}`, options)
+    .then((r) => r.json())
+    .catch(console.warn);
 }
 
 function sendReact(postId, emojiId) {
@@ -100,12 +120,6 @@ function sendReact(postId, emojiId) {
     emoji: String(emojiId),
   };
 
-  console.log(postData);
-  console.log(postId);
-  console.log(emojiId);
-  console.log(JSON.stringify(postData));
-
-  console.log(postData);
   const options = {
     method: "POST",
     // body: postData,
@@ -170,7 +184,7 @@ function appendPost(postData) {
   let commentSubmitBtn = document.createElement('button');
   commentSubmitBtn.className = 'commentSubmitBtn';
   commentSubmitBtn.textContent = 'Submit Comment';
-  
+
 
   // Populate
   postData.id && newPost.setAttribute("id", postData.id);
@@ -223,24 +237,33 @@ function appendPost(postData) {
     commentForm.appendChild(commentSubmitBtn);
     commentsBody.appendChild(header);
     commentsBody.appendChild(commentForm);
-    
-    for(let i=0;i<postData.comments.length;i++){
+
+    for (let i = 0; i < postData.comments.length; i++) {
       let comment = postData.comments[i];
       let thisComment = document.createElement("p");
       thisComment.textContent = comment.body;
       thisComment.id = comment.postRef;
       let thisDate = document.createElement("p");
-      thisDate.textContent = 'Commented on '+comment.date;
+      thisDate.textContent = 'Commented on ' + comment.date;
       commentsBody.appendChild(thisDate);
       commentsBody.appendChild(thisComment);
     }
-    
+
     newPost.insertAdjacentElement("beforeEnd", commentsBody);
-    
+
     mainWrapper.insertAdjacentElement("afterBegin", newPost);
     // add comments interface
     newPostComments.addEventListener("click", e => {
       commentsBody.classList.toggle('commentsBody');
+    })
+
+    commentSubmitBtn.addEventListener("click", e=>{
+      e.preventDefault();
+      if(commentInput.value!=""){
+        createComment(postData.id, commentInput.value);
+
+        
+      }
     })
   }
 }

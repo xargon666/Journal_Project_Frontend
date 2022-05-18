@@ -19,8 +19,7 @@ function hideMainToggle() {
 function getAllPosts() {
   //remove existing posts
   while (document.querySelector(".wrapper").firstElementChild) {
-    // console.log("removing post...")
-    document.querySelector(".wrapper").firstElementChild.remove();
+        document.querySelector(".wrapper").firstElementChild.remove();
   }
   // pull data and run appendPosts
   const route = "/posts";
@@ -87,8 +86,29 @@ function deletePost(postId) {
   const route = "/posts";
 }
 
-function createComment(postId) {
-  const route = "/posts";
+function createComment(postId, commentBodyText) {
+  const route = "/posts/comments";
+
+  const postData = {
+    post: {
+      "id": postId
+    },
+    comment: {
+      "body": commentBodyText
+    },
+  };
+
+  const options = {
+    method: "POST",
+    body: JSON.stringify(postData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch(`${siteBackendUrl}${route}`, options)
+    .then((r) => r.json())
+    .catch(console.warn);
 }
 
 function sendReact(postId, emojiId) {
@@ -101,12 +121,6 @@ function sendReact(postId, emojiId) {
     emoji: String(emojiId),
   };
 
-  console.log(postData);
-  console.log(postId);
-  console.log(emojiId);
-  console.log(JSON.stringify(postData));
-
-  console.log(postData);
   const options = {
     method: "POST",
     // body: postData,
@@ -171,7 +185,7 @@ function appendPost(postData) {
   let commentSubmitBtn = document.createElement('button');
   commentSubmitBtn.className = 'commentSubmitBtn';
   commentSubmitBtn.textContent = 'Submit Comment';
-  
+
 
   // Populate
   postData.id && newPost.setAttribute("id", postData.id);
@@ -224,24 +238,33 @@ function appendPost(postData) {
     commentForm.appendChild(commentSubmitBtn);
     commentsBody.appendChild(header);
     commentsBody.appendChild(commentForm);
-    
-    for(let i=0;i<postData.comments.length;i++){
+
+    for (let i = 0; i < postData.comments.length; i++) {
       let comment = postData.comments[i];
       let thisComment = document.createElement("p");
       thisComment.textContent = comment.body;
       thisComment.id = comment.postRef;
       let thisDate = document.createElement("p");
-      thisDate.textContent = 'Commented on '+comment.date;
+      thisDate.textContent = 'Commented on ' + comment.date;
       commentsBody.appendChild(thisDate);
       commentsBody.appendChild(thisComment);
     }
-    
+
     newPost.insertAdjacentElement("beforeEnd", commentsBody);
-    
+
     mainWrapper.insertAdjacentElement("afterBegin", newPost);
     // add comments interface
     newPostComments.addEventListener("click", e => {
       commentsBody.classList.toggle('commentsBody');
+    })
+
+    commentSubmitBtn.addEventListener("click", e=>{
+      e.preventDefault();
+      if(commentInput.value!=""){
+        createComment(postData.id, commentInput.value);
+
+        
+      }
     })
   }
 }
@@ -256,24 +279,30 @@ module.exports = {
 const app = require('./app');
 document.addEventListener("DOMContentLoaded", init);
 
-
-
 function init() {
+    // Fetch all posts as soon as app is loaded
     app.getAllPosts();
     const newPostBtn = document.querySelector(".newPostBtn");
     const cancelPostBtn = document.querySelector("#cancelBtn");
     const addGifBtn = document.querySelector("#addGifBtn");
 
+    // giphy API key
     let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
 
-    // Fetch all posts as soon as app is loaded
-    
-
+    // create post button
     newPostBtn.addEventListener('click', (e) => {
         document.getElementById("createPost").style.display = 'flex';
         document.getElementById("formBg").style.display = 'block';
         newPostBtn.classList.toggle("newPostBtnDisabled", true);
-
+        
+        // send post data
+        const postForm = document.querySelector("#createPost > #postForm > form")
+        postForm.addEventListener('submit',(e) => {
+            app.createPost(e)
+            closeCreatePost(e)
+        })
+        
+        // giphy
         addGifBtn.addEventListener('click', (e) => {
             e.preventDefault();
             document.getElementById("gifForm").style.display = 'block';
@@ -309,15 +338,24 @@ function init() {
         });
 
         cancelPostBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById("createPost").style.display = 'none';
-            document.getElementById("formBg").style.display = 'none';
-            newPostBtn.classList.toggle("newPostBtnDisabled", false);
-            if (document.getElementById("newPostFormImg")) {
-                document.getElementById("newPostFormImg").remove();
-            }
+            closeCreatePost(e)
         });
     });    
+
+    function closeCreatePost(e){
+        console.log("closing create post window")
+        e.preventDefault();
+        document.getElementById("createPost").style.display = 'none';
+        document.getElementById("formBg").style.display = 'none';
+        newPostBtn.classList.toggle("newPostBtnDisabled", false);
+        if (document.getElementById("newPostFormImg")) {
+            document.getElementById("newPostFormImg").remove();
+        }
+    }
+
+    module.exports = { closeCreatePost, }
 }
+
+
 
 },{"./app":1}]},{},[2]);
