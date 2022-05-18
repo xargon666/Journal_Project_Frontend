@@ -120,7 +120,7 @@ body {
         "postTitle"
         "dateTime"
         "preview"
-        "reactions"
+        "controls"
         "comments";
 
 }
@@ -167,11 +167,21 @@ body {
     padding: 15px 20px 15px 20px;
 }
 
-
-.reactions {
-    grid-area: reactions;
+.controls {
+    grid-area: controls;
     display: inline-flex;
 }
+.controls .reactions {
+    display: inline-flex;
+    order: 1;
+}
+.controls .edit-del-section {
+    display: inline-flex;
+    order: 2;
+}   
+.controls .edit-del-section > {
+    height: 75%;
+}   
 
 .commentDiv {
     margin-bottom: 10px;
