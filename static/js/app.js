@@ -19,8 +19,7 @@ function hideMainToggle() {
 function getAllPosts() {
   //remove existing posts
   while (document.querySelector(".wrapper").firstElementChild) {
-    // console.log("removing post...")
-    document.querySelector(".wrapper").firstElementChild.remove();
+        document.querySelector(".wrapper").firstElementChild.remove();
   }
   // pull data and run appendPosts
   const route = "/posts";
@@ -64,8 +63,29 @@ function deletePost(postId) {
   const route = "/posts";
 }
 
-function createComment(postId) {
-  const route = "/posts";
+function createComment(postId, commentBodyText) {
+  const route = "/posts/comments";
+
+  const postData = {
+    post: {
+      "id": postId
+    },
+    comment: {
+      "body": commentBodyText
+    },
+  };
+
+  const options = {
+    method: "POST",
+    body: JSON.stringify(postData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch(`${siteBackendUrl}${route}`, options)
+    .then((r) => r.json())
+    .catch(console.warn);
 }
 
 function sendReact(postId, emojiId) {
@@ -78,19 +98,6 @@ function sendReact(postId, emojiId) {
     emoji: String(emojiId),
   };
 
-console.log(postData)
-console.log(postId);
-console.log(emojiId);
-console.log(JSON.stringify(postData))
-
-  // const postData = {
-  //   "post": {
-  //     "id": "ajdj-sds2-sdsd"
-  //       },
-  //   "emoji": "2"
-  // }
-
-  console.log(postData)
   const options = {
     method: "POST",
     // body: postData,
@@ -102,25 +109,6 @@ console.log(JSON.stringify(postData))
 
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
-    // .then(data => {
-    //   console.log(data)
-    //   const allPosts = mainWrapper.querySelector(".post")
-    //   const targetPost = allPosts.find(post => post.id === `post-${postId}`)
-    //   const reactions = targetPost.querySelector('.reactions')
-    //   let targetReaction
-    //   switch(emojiId){
-    //     case 0:
-    //       targetReaction = reactions.querySelector('rofl').slice(2)++
-    //       break;
-    //     case 1:
-    //       targetReaction = reactions.querySelector('thumbsUp').slice(2)++
-    //       break;
-    //     case 2:
-    //       targetReaction = reactions.querySelector('hankey').slice(2)++
-    //       break;
-    //   }
-    // })
-    // .then(getAllPosts())
     .catch(console.warn);
 }
 
@@ -174,7 +162,7 @@ function appendPost(postData) {
   let commentSubmitBtn = document.createElement('button');
   commentSubmitBtn.className = 'commentSubmitBtn';
   commentSubmitBtn.textContent = 'Submit Comment';
-  
+
 
   // Populate
   postData.id && newPost.setAttribute("id", postData.id);
@@ -188,26 +176,25 @@ function appendPost(postData) {
     if (postData.reactions.laugh) {
       rofl.textContent += `${postData.reactions.laugh} 🤣`;
       rofl.addEventListener('click', () => {
-        sendReact(postData.id,0)
-        rofl.textContent = `${parseInt(rofl.textContent, 10)+1} 🤣`
+        sendReact(postData.id, 0)
+        rofl.textContent = `${parseInt(rofl.textContent, 10) + 1} 🤣`
       })
-      
+
     }
     if (postData.reactions.thumbUp) {
       thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
       thumbsUp.addEventListener('click', () => {
-        sendReact(postData.id,1)
-        thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10)+1} 👍`
+        sendReact(postData.id, 1)
+        thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`
       })
-      
+
     }
     if (postData.reactions.poo) {
       hankey.textContent += `${postData.reactions.poo} 💩`;
       hankey.addEventListener('click', () => {
-        sendReact(postData.id,2)
-        hankey.textContent = `${parseInt(hankey.textContent, 10)+1} 💩`
+        sendReact(postData.id, 2)
+        hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`
       })
-      
     }
   }
 
@@ -230,24 +217,33 @@ function appendPost(postData) {
     commentForm.appendChild(commentSubmitBtn);
     commentsBody.appendChild(header);
     commentsBody.appendChild(commentForm);
-    
-    for(let i=0;i<postData.comments.length;i++){
+
+    for (let i = 0; i < postData.comments.length; i++) {
       let comment = postData.comments[i];
       let thisComment = document.createElement("p");
       thisComment.textContent = comment.body;
       thisComment.id = comment.postRef;
       let thisDate = document.createElement("p");
-      thisDate.textContent = 'Commented on '+comment.date;
+      thisDate.textContent = 'Commented on ' + comment.date;
       commentsBody.appendChild(thisDate);
       commentsBody.appendChild(thisComment);
     }
-    
+
     newPost.insertAdjacentElement("beforeEnd", commentsBody);
-    
+
     mainWrapper.insertAdjacentElement("afterBegin", newPost);
     // add comments interface
     newPostComments.addEventListener("click", e => {
       commentsBody.classList.toggle('commentsBody');
+    })
+
+    commentSubmitBtn.addEventListener("click", e=>{
+      e.preventDefault();
+      if(commentInput.value!=""){
+        createComment(postData.id, commentInput.value);
+
+        
+      }
     })
   }
 }
