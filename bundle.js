@@ -5,39 +5,6 @@ const ind = require('./index.js')
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
 // const siteBackendUrl = `http://localhost:3000`;
 
-
-
-
-
-
-
-
-
-//is this function needed?
-
-function hideMainToggle() {
-  if (mainWrapper.style.display != "none") {
-    mainWrapper.style.display = "none";
-  } else {
-    mainWrapper.style.display = mainWrapperDisplayState;
-  }
-}
-
-// function applyPostEvent() {}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // index
 function getAllPosts() {
   //remove existing posts
@@ -51,28 +18,6 @@ function getAllPosts() {
     .then(appendPosts)
     .catch(console.warn);
 }
-
-
-
-
-
-
-
-//unused functino
-function getPost(id) {
-  const route = `/posts/:${id}`;
-  fetch(`${siteBackendUrl}${route}`)
-    .then((r) => r.json())
-    .then(appendPosts)
-    .catch(console.warn);
-}
-
-
-
-
-
-
-
 
 // create
 function createPost() {
@@ -116,10 +61,6 @@ function createPost() {
       getAllPosts()
     })
     .catch(console.warn);
-}
-
-function deletePost(postId) {
-  const route = "/posts";
 }
 
 function createComment(postId, commentBodyText) {
@@ -338,6 +279,7 @@ module.exports = {
   getAllPosts,
   createPost,
   sendReact,
+  appendPost
 }
 
 },{"./index.js":2}],2:[function(require,module,exports){
