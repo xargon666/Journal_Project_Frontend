@@ -33,12 +33,12 @@ describe("index.html Content", () => {
         });
         });
 
-    // describe("img elements", () => {
-    //     document.documentElement.innerHTML = html.toString();
-    //     describe.each(Array.from(document.querySelectorAll("img")))("img #%#", (e) => {
-    //       it("has alt attribute", () => {
-    //         expect(e.getAttribute("alt")).toBeTruthy()
-    //         });
-    //     });
-    //   });
+    describe("img elements", () => {
+        document.documentElement.innerHTML = html.toString();
+        describe.each(Array.from(document.querySelectorAll("img")))("img #%#", (e) => {
+          it("has alt attribute", () => {
+            expect(e.getAttribute("alt")).toBeTruthy()
+            });
+        });
+      });
 });
