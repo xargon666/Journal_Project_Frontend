@@ -1,15 +1,15 @@
 // search button script
 // index.html
 const ind = require('./index.js')
-const siteBackendUrl = `https://journal-project-backend.herokuapp.com`
-// const siteBackendUrl = `http://localhost:3000`;
+// const siteBackendUrl = `https://journal-project-backend.herokuapp.com`
+const siteBackendUrl = `http://localhost:3000`
 
 // index
 function getAllPosts() {
-  //remove existing posts
-  // while (document.querySelector(".wrapper").firstElementChild) {
-  //   document.querySelector(".wrapper").firstElementChild.remove();
-  // }
+  // remove existing posts
+  while (document.querySelector('.wrapper').firstElementChild) {
+    document.querySelector('.wrapper').firstElementChild.remove()
+  }
   // pull data and run appendPosts
   const route = '/posts'
   fetch(`${siteBackendUrl}${route}`)
@@ -27,8 +27,30 @@ function getPost(id) {
     .catch(console.warn)
 }
 
-function deletePost(postId) {
+function deletePost(postIdObj) {
+  console.log('POSTIDOBJ -> ', postIdObj)
   const route = '/posts'
+  const options = {
+    method: 'DELETE',
+    cors: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(postIdObj),
+  }
+
+  fetch(`${siteBackendUrl}${route}`, options)
+    .then((response) =>
+      // console.log('response.json() :', response.json())
+      response.json()
+    )
+    .then((data) => {
+      console.log('DATA -> ', data)
+      if (!data.error) {
+        appendPosts(data)
+      }
+      getAllPosts()
+    })
 }
 
 function editPost(postId) {
@@ -179,8 +201,11 @@ function appendPost(postData) {
   deleteButton.classList.add('delete-edit-btns')
   deleteButton.classList.add('delete-btn')
   deleteButton.textContent = '❌'
-  deleteButton.addEventListener('click', () => {
-    console.log('delete clicked!')
+  deleteButton.addEventListener('click', (e) => {
+    // console.log('delete clicked!')
+    // console.log('target: ', e.target)
+    console.log('e.target.parentElement: ', e.target.parentElement.id)
+    deletePost({ id: e.target.parentElement.id })
   })
   // adding an edit button
   let editButton = document.createElement('div')
