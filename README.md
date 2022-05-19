@@ -18,8 +18,8 @@ While installation is not required, the site may be deployed locally:
 2. Clone this repo: git clone https://github.com/xargon666/Journal_Project_Frontend.git
 3. Run the following commands:
 ```
-	npm install
-	npm start
+npm install
+npm start
 ```
 The local client interacts with the deployed backend server available on Heroku at [this link](https://journal-project-backend.herokuapp.com/).
 
