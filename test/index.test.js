@@ -21,7 +21,7 @@ const testPost = {
             id: 0,
             body: "comment in here blah blah blah",
             link: "link to a giphy should go here",
-            date: "ue May 17 2022 13:45:30",
+            date: "Tue May 17 2022 13:45:30",
             postRef: "ajdj-sds2-sdsd"
         }
     ],

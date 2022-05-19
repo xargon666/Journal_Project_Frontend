@@ -10,7 +10,7 @@
     "dev": "concurrently \"watchify ./static/js/index.js -o bundle.js\" \"python -m http.server 8000\"",
     "bundle": "watchify ./static/js/index.js -o bundle.js",
     "test": "jest --watchAll",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage --silent"
   },
   "type": "module",
   "repository": {
