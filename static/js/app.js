@@ -347,7 +347,7 @@ function giphySearch() {
 function closeCreatePost() {
   document.getElementById("createPost").style.display = 'none';
   document.getElementById("formBg").style.display = 'none';
-  newPostBtn.classList.toggle("newPostBtnDisabled", false);
+  document.querySelector(".newPostBtn").classList.toggle("newPostBtnDisabled", false);
   if (document.getElementById("newPostFormImg")) {
     document.getElementById("newPostFormImg").remove();
   }
