@@ -14,14 +14,14 @@ const testPost = {
     id: "ajdj-sds2-sdsd",
     title: "Yep sds ",
     body: "updated post sadsadsaasdsadasdasdsadasdasdasdas asdasdasdasdsadasdas asdsadasdasdasdsadasdaskdmklasdjkasldmalskdmasldmlasdmlasdaksdkjdas djadkajdh dasd",
-    link: "updated giphy should go here",
+    link: "https://media1.giphy.com/media/gw3IWyGkC0rsazTi/giphy.gif?cid=ab6c4d53zdzp1pvjpi7apbhj100lzl1tc6w4n7240ngxt60a&rid=giphy.gif&ct=g",
     date: "Fri May 6 2022 19:30:00",
     comments: [
         {
             id: 0,
             body: "comment in here blah blah blah",
             link: "link to a giphy should go here",
-            date: "ue May 17 2022 13:45:30",
+            date: "Tue May 17 2022 13:45:30",
             postRef: "ajdj-sds2-sdsd"
         }
     ],
@@ -104,39 +104,93 @@ describe('index.js',()=>{
         expect(document.getElementById("createPost").style.display).toEqual('flex')
     })
 
-    test(' addEventListener works', ()=>{
+    test('cancelPostBtn addEventListener works', ()=>{
         js.init();
+
+        const newPostBtn = document.querySelector(".newPostBtn"); 
+        
+        // dispatch click event to listener
+        const addEvt1 = new Event('click');
+        newPostBtn.dispatchEvent(addEvt1);
 
         const cancelPostBtn = document.querySelector("#cancelBtn");
         
         // dispatch click event to listener
-        const addEvt = new Event('click');
-        cancelPostBtn.dispatchEvent(addEvt);
+        const addEvt2 = new Event('click');
+        cancelPostBtn.dispatchEvent(addEvt2);
                 
         expect(app.closeCreatePost).toHaveBeenCalled();
     })
 
-    // test(' addEventListener works', ()=>{
-    //     js.init();
+    test('postForm submit calls closeCreatePost', ()=>{
+        js.init();
 
-    //     eventTrigger
+        const newPostBtn = document.querySelector(".newPostBtn"); 
         
-    //     // dispatch click event to listener
-    //     const addEvt = new Event('click');
-    //     eventTrigger.dispatchEvent(addEvt);
-                
-    //     expect(document.getElementById("createPost").style.display).toEqual('flex')
-    // })
+        // dispatch click event to listener
+        const addEvt1 = new Event('click');
+        newPostBtn.dispatchEvent(addEvt1);
 
-    test('giphySearch makes a fetch', async () => {
-        await js.giphySearch();
-        expect(fetch).toHaveBeenCalled()
+        const postForm = document.querySelector("#createPost > #postForm > form")
+        
+        // dispatch click event to listener
+        const addEvt = new Event('submit');
+        postForm.dispatchEvent(addEvt);
+                
+        expect(app.closeCreatePost).toHaveBeenCalled();
     })
 
-    test('giphySearch makes a fetch call with search term', async () => {
-        document.getElementById("gifSearch").value = "test";
-        await js.giphySearch();
-        console.log(document.getElementById("gifSearch").value)
-        expect(fetch).toHaveBeenCalledWith('https://api.giphy.com/v1/gifs/search?api_key=T20UHWhHXbf47QtXnYSnHXJrYkeOXam3&limit=1&q=test')
+    test('postForm submit calls createPost', ()=>{
+        js.init();
+
+        const newPostBtn = document.querySelector(".newPostBtn"); 
+        
+        // dispatch click event to listener
+        const addEvt1 = new Event('click');
+        newPostBtn.dispatchEvent(addEvt1);
+
+        const postForm = document.querySelector("#createPost > #postForm > form")
+        
+        // dispatch click event to listener
+        const addEvt = new Event('submit');
+        postForm.dispatchEvent(addEvt);
+                
+        expect(app.createPost).toHaveBeenCalled();
+    })
+
+    test('addGifBtn eventlistener works', ()=>{
+        js.init();
+
+        const newPostBtn = document.querySelector(".newPostBtn"); 
+        
+        // dispatch click event to listener
+        const addEvt1 = new Event('click');
+        newPostBtn.dispatchEvent(addEvt1);
+
+        const addGifBtn = document.querySelector("#addGifBtn");
+        
+        // dispatch click event to listener
+        const addEvt = new Event('click');
+        addGifBtn.dispatchEvent(addEvt);
+                
+        expect(document.getElementById("gifForm").style.display).toEqual('block')
+    })
+
+    test('searchBtn eventlistener works', ()=>{
+        js.init();
+
+        const newPostBtn = document.querySelector(".newPostBtn"); 
+        
+        // dispatch click event to listener
+        const addEvt1 = new Event('click');
+        newPostBtn.dispatchEvent(addEvt1);
+
+        const searchBtn = document.getElementById("btnSearch");
+        
+        // dispatch click event to listener
+        const addEvt = new Event('click');
+        searchBtn.dispatchEvent(addEvt);
+                
+        expect(app.giphySearch).toHaveBeenCalled();
     })
 })

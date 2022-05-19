@@ -13,14 +13,14 @@ const testPost = {
     id: "ajdj-sds2-sdsd",
     title: "Yep sds ",
     body: "updated post sadsadsaasdsadasdasdsadasdasdasdas asdasdasdasdsadasdas asdsadasdasdasdsadasdaskdmklasdjkasldmalskdmasldmlasdmlasdaksdkjdas djadkajdh dasd",
-    link: "updated giphy should go here",
+    link: "https://media1.giphy.com/media/gw3IWyGkC0rsazTi/giphy.gif?cid=ab6c4d53zdzp1pvjpi7apbhj100lzl1tc6w4n7240ngxt60a&rid=giphy.gif&ct=g",
     date: "Fri May 6 2022 19:30:00",
     comments: [
         {
             id: 0,
             body: "comment in here blah blah blah",
             link: "link to a giphy should go here",
-            date: "ue May 17 2022 13:45:30",
+            date: "Tue May 17 2022 13:45:30",
             postRef: "ajdj-sds2-sdsd"
         }
     ],
@@ -44,5 +44,16 @@ describe('app.js',()=>{
         let initialPosts = document.querySelectorAll('.post').length;
         app.appendPost(testPost);
         expect(document.querySelectorAll('.post').length).toEqual(initialPosts + 1);
+    })
+
+    test('giphySearch makes a fetch', async () => {
+        await app.giphySearch();
+        expect(fetch).toHaveBeenCalled()
+    })
+
+    test('giphySearch makes a fetch call with search term', async () => {
+        document.getElementById("gifSearch").value = "test";
+        await app.giphySearch();
+        expect(fetch).toHaveBeenCalledWith('https://api.giphy.com/v1/gifs/search?api_key=T20UHWhHXbf47QtXnYSnHXJrYkeOXam3&limit=1&q=test')
     })
 })
