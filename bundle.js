@@ -206,7 +206,9 @@ function appendPost(postData) {
   newPostControls.classList.add("controls")
   // newPostEditDel.classList.add("edit-del-section")
   newPostEditBtn.classList.add("edit-btn")
+  newPostEditBtn.classList.add('delete-edit-btns')
   newPostDeleteBtn.classList.add("del-btn")
+  newPostDeleteBtn.classList.add('delete-edit-btns')
   laugh.classList.add("roflCount");
   laugh.classList.add("reaction");
   thumbsUp.className = "thumbsUpCount";
@@ -236,6 +238,15 @@ function appendPost(postData) {
   postData.date && (newPostDateTime.textContent = postData.date);
   newPostBody.appendChild(newPostText);
   
+  // *** Edit & Delete Button Section ***
+  newPostDeleteBtn.addEventListener('click', (e) =>{
+    console.log("deleting post")
+    deletePost({ id: e.target.parentElement.id })
+  })
+  newPostEditBtn.addEventListener('click', (e) =>{
+    console.log("editing clicked!")
+
+  })
   // *** Reaction Section ***
   laugh.textContent += `${postData.reactions.laugh} 🤣`;
   laugh.addEventListener("click", () => {
@@ -316,7 +327,7 @@ function appendPost(postData) {
       e.preventDefault()
       if (commentInput.value != '') {
         createComment(postData.id, commentInput.value)
-
+        newPostComments.textContent = `Comments: ${parseInt(newPostComments.textContent.slice(10), 10) + 1}`;
         let currentdate = new Date()
         let thisComment = document.createElement('p')
         let commentDiv = document.createElement('div')
