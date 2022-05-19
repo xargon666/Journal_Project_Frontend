@@ -1,5 +1,5 @@
 
-# 🖥 Journal Project Backend
+# 🖥 Journal Project Frontend
 Project made as a week-long group project by the students of the FutureProof Bootcamp (Auguste cohort) on LAP 1.
 
 ## Description
@@ -8,6 +8,7 @@ This is the frontend client for our Journal Project, which interacts with the ba
 ## 💾 Deployment
 The application has been deployed on Netlify at [this link](https://journal-project-lemon.netlify.app).
 [![Netlify Status](https://api.netlify.com/api/v1/badges/acbe7129-01a3-43b8-ba0c-a35536ea7798/deploy-status)](https://app.netlify.com/sites/journal-project-lemon/deploys)
+
 ## 🎮 Installation & usage
 While installation is not required, the site may be deployed locally:
 ```
@@ -18,18 +19,16 @@ While installation is not required, the site may be deployed locally:
 	npm start
 ```
 The local client interacts with the deployed backend server available on Heroku at [this link](https://journal-project-backend.herokuapp.com/).
+
 ## 📟 Technologies
 1. NodeJS : javascript runtime
-2. ExpressJS : framework for nodejs that has been used to create the webserver
-3. Jest: test runner
-4. Supertest: to test HTTP Responses
-5. UUID: to generate **U**niversally **U**nique **ID**entifiers used for the id of both Posts and Comments
-6. Hoppscotch: an online service used to manually test the routes
-7. Zoom: to make the daily standups
-8. Slack: to communicate with the team members
+2. Jest: test runner
+3. Zoom: to make the daily standups
+4. Slack: to communicate with the team members
 
 ![HTML5](https://img.shields.io/badge/-HTML5-%23E44D27?style=flat-square&logo=html5&logoColor=ffffff) ![CSS3](https://img.shields.io/badge/-CSS3-%231572B6?style=flat-square&logo=css3) ![JavaScript](https://img.shields.io/badge/-JavaScript-%23F7DF1C?style=flat-square&logo=javascript&logoColor=000000&labelColor=%23F7DF1C&color=%23FFCE5A) ![Markdown](https://img.shields.io/badge/-Markdown-000000?style=flat-square&logo=markdown) ![Npm](https://img.shields.io/badge/-npm-CB3837?style=flat-square&logo=npm)
 ![Git](https://img.shields.io/badge/-Git-%23F05032?style=flat-square&logo=git&logoColor=%23ffffff) ![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github) ![VS Code](http://img.shields.io/badge/-VS%20Code-007ACC?style=flat-square&logo=visual-studio-code&logoColor=ffffff) ![Windows](http://img.shields.io/badge/-Windows-0078D6?style=flat-square&logo=windows&logoColor=ffffff) ![Mac](https://img.shields.io/badge/MacOS--9cf?style=flat-square&logo=Apple&logoColor=ffffff) <img src="http://img.shields.io/badge/-Heroku-430098?style=flat&logo=heroku&logoColor=white">
+
 ## 🤔 Process
 Team members worked on different components independantly and merged them together for testing, review and final touchs.
 Used: 
