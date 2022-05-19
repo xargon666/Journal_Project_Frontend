@@ -44,7 +44,6 @@ function createPost() {
     body: postBody,
     link: postLink,
   };
-  console.log(JSON.stringify(postData))
 
   const options = {
     method: "POST",
@@ -56,7 +55,6 @@ function createPost() {
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
     .then(data => {
-      console.log(data)
       getAllPosts()
     })
     .catch(console.warn);
@@ -268,15 +266,31 @@ function appendPost(postData) {
         commentDiv.insertAdjacentElement("afterBegin", thisComment)
         commentDiv.insertAdjacentElement("afterBegin", thisDate)
         commentForm.insertAdjacentElement("afterEnd", commentDiv);
+
+        console.log(newPostComments.textContent.slice(10));
+
+        newPostComments.textContent = `Comments: ${parseInt(newPostComments.textContent.slice(10), 10) + 1}`;
       }
       commentInput.value = "";
     })
   }
 }
 
+function closeCreatePost() {
+  document.getElementById("createPost").style.display = 'none';
+  document.getElementById("formBg").style.display = 'none';
+  newPostBtn.classList.toggle("newPostBtnDisabled", false);
+  if (document.getElementById("newPostFormImg")) {
+      document.getElementById("newPostFormImg").remove();
+  }
+  document.getElementById("postTitle").value = "";
+  document.getElementById("postContent").value = "";
+}
+
 module.exports = {
   getAllPosts,
   createPost,
   sendReact,
-  appendPost
+  appendPost,
+  closeCreatePost
 }

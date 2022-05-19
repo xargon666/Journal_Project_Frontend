@@ -45,7 +45,6 @@ function createPost() {
     body: postBody,
     link: postLink,
   };
-  console.log(JSON.stringify(postData))
 
   const options = {
     method: "POST",
@@ -57,7 +56,6 @@ function createPost() {
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
     .then(data => {
-      console.log(data)
       getAllPosts()
     })
     .catch(console.warn);
@@ -269,17 +267,33 @@ function appendPost(postData) {
         commentDiv.insertAdjacentElement("afterBegin", thisComment)
         commentDiv.insertAdjacentElement("afterBegin", thisDate)
         commentForm.insertAdjacentElement("afterEnd", commentDiv);
+
+        console.log(newPostComments.textContent.slice(10));
+
+        newPostComments.textContent = `Comments: ${parseInt(newPostComments.textContent.slice(10), 10) + 1}`;
       }
       commentInput.value = "";
     })
   }
 }
 
+function closeCreatePost() {
+  document.getElementById("createPost").style.display = 'none';
+  document.getElementById("formBg").style.display = 'none';
+  newPostBtn.classList.toggle("newPostBtnDisabled", false);
+  if (document.getElementById("newPostFormImg")) {
+      document.getElementById("newPostFormImg").remove();
+  }
+  document.getElementById("postTitle").value = "";
+  document.getElementById("postContent").value = "";
+}
+
 module.exports = {
   getAllPosts,
   createPost,
   sendReact,
-  appendPost
+  appendPost,
+  closeCreatePost
 }
 
 },{"./index.js":2}],2:[function(require,module,exports){
@@ -288,28 +302,26 @@ document.addEventListener("DOMContentLoaded", init);
 
 function init() {
     // Fetch all posts as soon as app is loaded
+
     app.getAllPosts();
     const newPostBtn = document.querySelector(".newPostBtn");
     const cancelPostBtn = document.querySelector("#cancelBtn");
     const addGifBtn = document.querySelector("#addGifBtn");
-
-    // giphy API key
-    let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
 
     // create post button
     newPostBtn.addEventListener('click', (e) => {
         document.getElementById("createPost").style.display = 'flex';
         document.getElementById("formBg").style.display = 'block';
         newPostBtn.classList.toggle("newPostBtnDisabled", true);
-        
+
         // send post data
         const postForm = document.querySelector("#createPost > #postForm > form")
-        postForm.addEventListener('submit',(e) => {
+        postForm.addEventListener('submit', (e) => {
             e.preventDefault();
             app.createPost();
-            closeCreatePost();
+            app.closeCreatePost();
         })
-        
+
         // giphy
         addGifBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -318,53 +330,49 @@ function init() {
 
         document.getElementById("btnSearch").addEventListener("click", e => {
             e.preventDefault(); //to stop the page reload
-            let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=1&q=`;
-            let str = document.getElementById("gifSearch").value.trim();
-            url = url.concat(str);
-            fetch(url)
-                .then(response => response.json())
-                .then(content => {
-                    //  data, pagination, meta
-                    if (document.getElementById("newPostFormImg")) {
-                        let img = document.getElementById("newPostFormImg");
-                        img.src = content.data[0].images.downsized.url;
-                        img.alt = content.data[0].title;
-                    }
-                    else {
-                        let img = document.createElement("img");
-                        img.id = 'newPostFormImg';
-                        img.src = content.data[0].images.downsized.url;
-                        img.alt = content.data[0].title;
-                        let out = document.querySelector("#gifForm");
-                        out.insertAdjacentElement("afterend", img);
-                    }
-                    document.querySelector("#gifSearch").value = "";
-                })
-                .catch(err => {
-                    console.error(err);
-                });
+            giphySearch();
         });
 
         cancelPostBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            closeCreatePost();
+            app.closeCreatePost();
         });
-    });    
+    });
 
-    function closeCreatePost(){
-        document.getElementById("createPost").style.display = 'none';
-        document.getElementById("formBg").style.display = 'none';
-        newPostBtn.classList.toggle("newPostBtnDisabled", false);
-        if (document.getElementById("newPostFormImg")) {
-            document.getElementById("newPostFormImg").remove();
-        }
-        document.getElementById("postTitle").value = "";
-        document.getElementById("postContent").value = "";
-    }
+    return;
+}
+function giphySearch() {
+    // giphy API key
+    let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
 
-    module.exports = { closeCreatePost,  init }
+    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=1&q=`;
+    let str = document.getElementById("gifSearch").value.trim();
+    url = url.concat(str);
+    fetch(url)
+        .then(response => response.json())
+        .then(content => {
+            //  data, pagination, meta
+            if (document.getElementById("newPostFormImg")) {
+                let img = document.getElementById("newPostFormImg");
+                img.src = content.data[0].images.downsized.url;
+                img.alt = content.data[0].title;
+            }
+            else {
+                let img = document.createElement("img");
+                img.id = 'newPostFormImg';
+                img.src = content.data[0].images.downsized.url;
+                img.alt = content.data[0].title;
+                let out = document.querySelector("#gifForm");
+                out.insertAdjacentElement("afterend", img);
+            }
+            document.querySelector("#gifSearch").value = "";
+        })
+        .catch(err => {
+            console.error(err);
+        });
 }
 
+module.exports = {  giphySearch, init}
 
 
 },{"./app":1}]},{},[2]);
