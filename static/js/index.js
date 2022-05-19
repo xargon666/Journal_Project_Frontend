@@ -31,7 +31,7 @@ function init() {
 
         document.getElementById("btnSearch").addEventListener("click", e => {
             e.preventDefault(); //to stop the page reload
-            giphySearch();
+            app.giphySearch();
         });
 
         cancelPostBtn.addEventListener('click', (e) => {
@@ -42,36 +42,6 @@ function init() {
 
     return;
 }
-function giphySearch() {
-    // giphy API key
-    let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
 
-    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=1&q=`;
-    let str = document.getElementById("gifSearch").value.trim();
-    url = url.concat(str);
-    fetch(url)
-        .then(response => response.json())
-        .then(content => {
-            //  data, pagination, meta
-            if (document.getElementById("newPostFormImg")) {
-                let img = document.getElementById("newPostFormImg");
-                img.src = content.data[0].images.downsized.url;
-                img.alt = content.data[0].title;
-            }
-            else {
-                let img = document.createElement("img");
-                img.id = 'newPostFormImg';
-                img.src = content.data[0].images.downsized.url;
-                img.alt = content.data[0].title;
-                let out = document.querySelector("#gifForm");
-                out.insertAdjacentElement("afterend", img);
-            }
-            document.querySelector("#gifSearch").value = "";
-        })
-        .catch(err => {
-            console.error(err);
-        });
-}
-
-module.exports = {  giphySearch, init}
+module.exports = {  init}
 

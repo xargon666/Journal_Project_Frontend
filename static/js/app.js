@@ -172,22 +172,22 @@ function appendPost(postData) {
   hankey.className = "hankeyCount";
   hankey.classList.add("reaction");
 
-   // adding a deleteButton
-   let deleteButton = document.createElement('div')
-   deleteButton.classList.add('delete-edit-btns')
-   deleteButton.classList.add('delete-btn')
-   deleteButton.textContent = '❌'
-   deleteButton.addEventListener('click', (e) => {
-     deletePost({ id: e.target.parentElement.id })
-   })
-   // adding an edit button
-   let editButton = document.createElement('div')
-   editButton.classList.add('delete-edit-btns')
-   editButton.classList.add('edit-btn')
-   editButton.textContent = '🖋'
-   editButton.addEventListener('click', () => {
-     console.log('edit clicked!')
-   })
+  // adding a deleteButton
+  let deleteButton = document.createElement('div')
+  deleteButton.classList.add('delete-edit-btns')
+  deleteButton.classList.add('delete-btn')
+  deleteButton.textContent = '❌'
+  deleteButton.addEventListener('click', (e) => {
+    deletePost({ id: e.target.parentElement.id })
+  })
+  // adding an edit button
+  let editButton = document.createElement('div')
+  editButton.classList.add('delete-edit-btns')
+  editButton.classList.add('edit-btn')
+  editButton.textContent = '🖋'
+  editButton.addEventListener('click', () => {
+    console.log('edit clicked!')
+  })
 
 
   let commentsBody = document.createElement('div');
@@ -322,10 +322,41 @@ function appendPost(postData) {
   }
 }
 
+function giphySearch() {
+  // giphy API key
+  let APIKEY = "T20UHWhHXbf47QtXnYSnHXJrYkeOXam3";
+
+  let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=1&q=`;
+  let str = document.getElementById("gifSearch").value.trim();
+  url = url.concat(str);
+  fetch(url)
+    .then(response => response.json())
+    .then(content => {
+      //  data, pagination, meta
+      if (document.getElementById("newPostFormImg")) {
+        let img = document.getElementById("newPostFormImg");
+        img.src = content.data[0].images.downsized.url;
+        img.alt = content.data[0].title;
+      }
+      else {
+        let img = document.createElement("img");
+        img.id = 'newPostFormImg';
+        img.src = content.data[0].images.downsized.url;
+        img.alt = content.data[0].title;
+        let out = document.querySelector("#gifForm");
+        out.insertAdjacentElement("afterend", img);
+      }
+      document.querySelector("#gifSearch").value = "";
+    })
+    .catch(err => {
+      return
+    });
+}
+
 function closeCreatePost() {
   document.getElementById("createPost").style.display = 'none';
   document.getElementById("formBg").style.display = 'none';
-  newPostBtn.classList.toggle("newPostBtnDisabled", false);
+  document.querySelector(".newPostBtn").classList.toggle("newPostBtnDisabled", false);
   if (document.getElementById("newPostFormImg")) {
     document.getElementById("newPostFormImg").remove();
   }
@@ -338,5 +369,6 @@ module.exports = {
   createPost,
   sendReact,
   appendPost,
-  closeCreatePost
+  closeCreatePost,
+  giphySearch,
 }
