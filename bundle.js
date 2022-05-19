@@ -2,128 +2,161 @@
 // search button script
 // index.html
 const ind = require('./index.js')
-const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
-// const siteBackendUrl = `http://localhost:3000`;
+// const siteBackendUrl = `https://journal-project-backend.herokuapp.com`
+const siteBackendUrl = `http://localhost:3000`
 
 // index
 function getAllPosts() {
-  //remove existing posts
-  while (document.querySelector(".wrapper").firstElementChild) {
-    document.querySelector(".wrapper").firstElementChild.remove();
+  // remove existing posts
+  while (document.querySelector('.wrapper').firstElementChild) {
+    document.querySelector('.wrapper').firstElementChild.remove()
   }
   // pull data and run appendPosts
-  const route = "/posts";
+  const route = '/posts'
   fetch(`${siteBackendUrl}${route}`)
     .then((r) => r.json())
     .then(appendPosts)
-    .catch(console.warn);
+    .catch(console.warn)
 }
+
 // *************** unused functions ***************
-// function for delete button
-function deletePost(postId) {
-  const route = "/posts";
+function getPost(id) {
+  const route = `/posts/:${id}`
+  fetch(`${siteBackendUrl}${route}`)
+    .then((r) => r.json())
+    .then(appendPosts)
+    .catch(console.warn)
 }
-// function for edit button
+
+
 function editPost(postId) {
-  const route = "/posts";
+  const route = '/posts'
 }
-// **************************************************
+
+// ************************************************
+
+function deletePost(postIdObj) {
+  console.log('POSTIDOBJ -> ', postIdObj)
+  const route = '/posts'
+  const options = {
+    method: 'DELETE',
+    cors: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(postIdObj),
+  }
+
+  fetch(`${siteBackendUrl}${route}`, options)
+    .then((response) =>
+      // console.log('response.json() :', response.json())
+      response.json()
+    )
+    .then((data) => {
+      console.log('DATA -> ', data)
+      if (!data.error) {
+        appendPosts(data)
+      }
+      getAllPosts()
+    })
+}
+
 // create
 function createPost() {
-  const route = "/posts";
-  const np = document.querySelector('#postForm');
-  let postTitle;
-  let postBody;
-  let postLink;
+  const route = '/posts'
+  const np = document.querySelector('#postForm')
+  let postTitle
+  let postBody
+  let postLink
   try {
-    postTitle = np.querySelector('#postTitle').value;
-    postBody = np.querySelector('#postContent').value;
+    postTitle = np.querySelector('#postTitle').value
+    postBody = np.querySelector('#postContent').value
     if (!postTitle || !postBody) {
-      throw new Error("The post contains no text content")
+      throw new Error('The post contains no text content')
     }
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return
   }
 
-  np.querySelector('#newPostFormImg') && (postLink = np.querySelector('#newPostFormImg').src);
+  np.querySelector('#newPostFormImg') &&
+    (postLink = np.querySelector('#newPostFormImg').src)
 
   let postData = {
     title: postTitle,
     body: postBody,
     link: postLink,
-  };
+  }
   console.log(JSON.stringify(postData))
 
   const options = {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(postData),
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-  };
+  }
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
-    .then(data => {
+    .then((data) => {
       console.log(data)
       getAllPosts()
     })
-    .catch(console.warn);
+    .catch(console.warn)
 }
 
 function createComment(postId, commentBodyText) {
-  const route = "/posts/comments";
+  const route = '/posts/comments'
 
   const postData = {
     post: {
-      "id": postId
+      id: postId,
     },
     comment: {
-      "body": commentBodyText
+      body: commentBodyText,
     },
-  };
+  }
 
   const options = {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(postData),
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-  };
+  }
 
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
-    .catch(console.warn);
+    .catch(console.warn)
 }
 
 function sendReact(postId, emojiId) {
-  const route = "/posts/emojis";
+  const route = '/posts/emojis'
 
   const postData = {
     post: {
       id: postId,
     },
     emoji: String(emojiId),
-  };
+  }
 
   const options = {
-    method: "POST",
+    method: 'POST',
     // body: postData,
     body: JSON.stringify(postData),
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-  };
+  }
 
   fetch(`${siteBackendUrl}${route}`, options)
     .then((r) => r.json())
-    .catch(console.warn);
+    .catch(console.warn)
 }
 
 // helpers
 function appendPosts(posts) {
-  posts.forEach(appendPost);
+  posts.forEach(appendPost)
 }
 
 function appendPost(postData) {
@@ -209,6 +242,9 @@ function appendPost(postData) {
     sendReact(postData.id, 1);
     thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`;
   },{once:true});
+
+  postBodyDiv.appendChild(newPostBody)
+
   hankey.textContent += `${postData.reactions.poo} 💩`;
   hankey.addEventListener("click", () => {
     sendReact(postData.id, 2);
@@ -249,47 +285,48 @@ function appendPost(postData) {
     commentsBody.appendChild(header);
     commentsBody.appendChild(commentForm);
     for (let i = 0; i < postData.comments.length; i++) {
-      let comment = postData.comments[i];
-      let thisComment = document.createElement("p");
-      let commentDiv = document.createElement("div");
-      commentDiv.className = 'commentDiv';
-      thisComment.textContent = comment.body;
-      thisComment.className = 'comment';
-      let thisDate = document.createElement("p");
-      thisDate.textContent = 'Commented on ' + comment.date;
-      thisDate.className = 'commentDates';
-      commentDiv.insertAdjacentElement("afterBegin", thisComment)
-      commentDiv.insertAdjacentElement("afterBegin", thisDate)
-      commentForm.insertAdjacentElement("afterEnd", commentDiv);
+      let comment = postData.comments[i]
+      let thisComment = document.createElement('p')
+      let commentDiv = document.createElement('div')
+      commentDiv.className = 'commentDiv'
+      thisComment.textContent = comment.body
+      thisComment.className = 'comment'
+      let thisDate = document.createElement('p')
+      thisDate.textContent = 'Commented on ' + comment.date
+      thisDate.className = 'commentDates'
+      commentDiv.insertAdjacentElement('afterBegin', thisComment)
+      commentDiv.insertAdjacentElement('afterBegin', thisDate)
+      commentForm.insertAdjacentElement('afterEnd', commentDiv)
     }
 
-    newPost.insertAdjacentElement("beforeEnd", commentsBody);
+    newPost.insertAdjacentElement('beforeEnd', commentsBody)
 
-    mainWrapper.insertAdjacentElement("afterBegin", newPost);
+    mainWrapper.insertAdjacentElement('afterBegin', newPost)
     // add comments interface
-    newPostComments.addEventListener("click", e => {
-      commentsBody.classList.toggle('commentsBody');
+    newPostComments.addEventListener('click', (e) => {
+      commentsBody.classList.toggle('commentsBody')
     })
 
-    commentSubmitBtn.addEventListener("click", e => {
-      e.preventDefault();
-      if (commentInput.value != "") {
-        createComment(postData.id, commentInput.value);
+    commentSubmitBtn.addEventListener('click', (e) => {
+      e.preventDefault()
+      if (commentInput.value != '') {
+        createComment(postData.id, commentInput.value)
 
-        let currentdate = new Date();
-        let thisComment = document.createElement("p");
-        let commentDiv = document.createElement("div");
-        commentDiv.className = 'commentDiv';
-        thisComment.textContent = commentInput.value;
-        thisComment.className = 'comment';
-        let thisDate = document.createElement("p");
-        thisDate.textContent = 'Commented on ' + currentdate.toString().slice(0, 24);
-        thisDate.className = 'commentDates';
-        commentDiv.insertAdjacentElement("afterBegin", thisComment)
-        commentDiv.insertAdjacentElement("afterBegin", thisDate)
-        commentForm.insertAdjacentElement("afterEnd", commentDiv);
+        let currentdate = new Date()
+        let thisComment = document.createElement('p')
+        let commentDiv = document.createElement('div')
+        commentDiv.className = 'commentDiv'
+        thisComment.textContent = commentInput.value
+        thisComment.className = 'comment'
+        let thisDate = document.createElement('p')
+        thisDate.textContent =
+          'Commented on ' + currentdate.toString().slice(0, 24)
+        thisDate.className = 'commentDates'
+        commentDiv.insertAdjacentElement('afterBegin', thisComment)
+        commentDiv.insertAdjacentElement('afterBegin', thisDate)
+        commentForm.insertAdjacentElement('afterEnd', commentDiv)
       }
-      commentInput.value = "";
+      commentInput.value = ''
     })
   }
 }
@@ -298,7 +335,7 @@ module.exports = {
   getAllPosts,
   createPost,
   sendReact,
-  appendPost
+  appendPost,
 }
 
 },{"./index.js":2}],2:[function(require,module,exports){

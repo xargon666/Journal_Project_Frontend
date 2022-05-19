@@ -105,24 +105,48 @@ body {
 }
 /* ------------------------ Post Stuff ------------------------ */
 .post {
+    position: relative;
     border-radius: 10px;
     background-color: #303134;
     margin-bottom: 3vh;
 }
 
 .postWrapper {
-    padding: 5px 25px 20px 25px;
+    padding: 5px 0px 20px 25px;
     display: grid;
 
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     grid-template-areas:
         "postTitle"
-        "dateTime"
+        
         "preview"
+<<<<<<< HEAD
         "controls"
         "comments";
+=======
+        "reactions"
+        "comments"
+        "dateTime";
+>>>>>>> development
 
+}
+
+.delete-edit-btns {
+  
+  position: absolute;
+  
+  cursor: pointer;
+}
+
+.delete-btn {
+  top: 20px;
+  right: 20px;
+}
+
+.edit-btn {
+  top: 20px;
+  right: 50px;
 }
 
 .postTitle {
@@ -132,7 +156,9 @@ body {
 
 .dateTime {
     grid-area: dateTime;
-    color: #a9aaab
+    color: #a9aaab;
+    text-align: end;
+    padding-right: 10px;
 }
 
 .preview {
@@ -167,9 +193,18 @@ body {
     padding: 15px 20px 15px 20px;
 }
 
+<<<<<<< HEAD
 .controls {
     grid-area: controls;
+=======
+
+.reactions {
+
+    grid-area: reactions;
+>>>>>>> development
     display: inline-flex;
+    justify-content: center;
+
 }
 .controls .reactions {
     display: inline-flex;
@@ -297,6 +332,19 @@ textarea,
     .newPostBtn {
         content: url('https://i.imgur.com/RaG4q4e.png');
     }
+
+    .dateTime {
+      grid-template-columns: 1/2;
+      grid-template-rows: 2/3;
+    }
+
+    .reactions {
+      justify-content: start;
+    }
+
+    .wrapper {
+      min-width: 90vw;
+    }
 }
 
 @media screen and (min-width:750px) {
@@ -308,8 +356,12 @@ textarea,
             "comments dateTime";
 
     }
-}
 
+    
+
+   
+}
+/* 
 @media screen and (min-width:1100px) {
     .postWrapper {
         grid-template-columns: 2fr 1fr;
@@ -337,4 +389,4 @@ textarea,
     .previewText{
         max-width: 59vw;
     }
-}
+} */
