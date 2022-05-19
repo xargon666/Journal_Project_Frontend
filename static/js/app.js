@@ -355,6 +355,7 @@ function appendPost(postData) {
       });
     }
   }
+}
 
   function closeCreatePost() {
     document.getElementById("createPost").style.display = "none";
@@ -366,7 +367,7 @@ function appendPost(postData) {
     document.getElementById("postTitle").value = "";
     document.getElementById("postContent").value = "";
   }
-}
+
 
 module.exports = {
   getAllPosts,
