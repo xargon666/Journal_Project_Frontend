@@ -358,5 +358,7 @@ module.exports = {
   sendReact,
   appendPost,
   closeCreatePost,
-  giphySearch
+  giphySearch,
+  deletePost,
+  createComment
 }

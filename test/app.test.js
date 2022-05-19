@@ -47,32 +47,36 @@ describe('app.js', () => {
         expect(fetch).toHaveBeenCalled()
     })
 
-    test('getAllPosts makes a fetch',  () => {
-        let postData = {
-            title: testPost.title,
-            body: testPost.body,
-            link: testPost.link,
-        };
+    test('createPost fetches',  () => {
+        const np = document.querySelector('#postForm');
+        np.querySelector('#postTitle').value = testPost.title;
+        np.querySelector('#postContent').value = testPost.body;
+        app.createPost();
+        expect(fetch).toHaveBeenCalled();
+    })
 
-        const route = '/posts'
-        const options = {
-            method: "POST",
-            body: JSON.stringify(postData),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
+    test('createPost fetches',  () => {
+        const newPostBtn = document.querySelector(".newPostBtn");
 
-        fetch(`${siteBackendUrl}${route}`, options)
-            .then((r) => r.json())
-            .then(data => {
-                app.getAllPosts()
-            })
-            .catch(console.warn);
-        
-        console.log(document.querySelector(".wrapper").firstElementChild);
+        // dispatch click event to listener
+        const addEvt = new Event('click');
+        newPostBtn.dispatchEvent(addEvt);
 
-        expect(fetch).toHaveBeenCalled()
+        const np = document.querySelector('#postForm');
+        np.querySelector('#postTitle').value = testPost.title;
+        np.querySelector('#postContent').value = testPost.body;
+        app.createPost();
+        expect(fetch).toHaveBeenCalled();
+    })
+
+    test('createComment fetches',  () => {
+        app.createComment('09dfe905-422a-4515-ad3a-971b314868c1', 'Testing comment');
+        expect(fetch).toHaveBeenCalled();
+    })
+
+    test('sendReact fetches',  () => {
+        app.sendReact('09dfe905-422a-4515-ad3a-971b314868c1', 0);
+        expect(fetch).toHaveBeenCalled();
     })
 
     test('append post', () => {
