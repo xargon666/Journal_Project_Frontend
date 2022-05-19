@@ -230,11 +230,27 @@ function appendPost(postData) {
     console.log("editing clicked!");
   });
   // *** Reaction Section ***
+  // guard clause
+  if(!postData.reactions){ 
+    laugh.textContent += `0 🤣`;
+    laugh.addEventListener("click",() => {sendReact(postData.id, 0);
+          laugh.textContent = `${parseInt(laugh.textContent, 10) + 1} 🤣`;
+        },{ once: true })
+        thumbsUp.textContent += `0 👍`;
+        thumbsUp.addEventListener("click",() => {sendReact(postData.id, 0);
+          thumbsUp.textContent = `${parseInt(laugh.textContent, 10) + 1} 👍`;
+          },{ once: true });
+          hankey.textContent += `0 💩`;
+  hankey.addEventListener("click", () => {
+    sendReact(postData.id, 2);
+    hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
+  });
+
+  }
+
+  if (postData.reactions){
   laugh.textContent += `${postData.reactions.laugh} 🤣`;
-  laugh.addEventListener(
-    "click",
-    () => {
-      sendReact(postData.id, 0);
+  laugh.addEventListener("click",() => {sendReact(postData.id, 0);
       laugh.textContent = `${parseInt(laugh.textContent, 10) + 1} 🤣`;
     },
     { once: true }
@@ -264,7 +280,7 @@ function appendPost(postData) {
     },
     { once: true }
   );
-
+}
   // *** Giphy Section ***
   if (postData.link) {
     let newGiphy = document.createElement("img");
@@ -276,6 +292,10 @@ function appendPost(postData) {
     // --------------------------------------------------------------------------
     // ------------------------- Append New Elements ----------------------------
     // *** Post Section ***
+    if (!newPostText.textContent && !newPostTitle.textContent) {
+      newPostText.textContent = "Sample Content"
+      newPostTitle.textContent = "Sample Content"
+    }
     if (newPostText.textContent && newPostTitle.textContent) {
       newPostWrapper.appendChild(newPostTitle);
       newPostWrapper.appendChild(newPostBody);
