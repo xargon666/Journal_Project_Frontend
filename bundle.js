@@ -169,8 +169,8 @@ function appendPost(postData) {
   let newPost = document.createElement("div");
   let newPostWrapper = document.createElement("div");
   let newPostTitle = document.createElement("h2");
-  let newPostText = document.createElement("p");
   let newPostBody = document.createElement("div");
+  let newPostText = document.createElement("p");
   let newPostComments = document.createElement("p");
   let newPostDateTime = document.createElement("p");
   let newPostControls = document.createElement("div")
@@ -197,14 +197,13 @@ function appendPost(postData) {
   newPost.classList.add("post");
   newPostWrapper.classList.add("postWrapper");
   newPostTitle.className = "postTitle";
-  newPostText.className = "post-text";
   newPostBody.className = "post-body";
+  newPostText.className = "post-text";
   newPostComments.classList.add("commentsText");
   newPostCommentsDiv.classList.add("comments");
   newPostDateTime.classList.add("dateTime");
   newPostReactions.classList.add("reactions");
   newPostControls.classList.add("controls")
-  // newPostEditDel.classList.add("edit-del-section")
   newPostEditBtn.classList.add("edit-btn")
   newPostEditBtn.classList.add('delete-edit-btns')
   newPostDeleteBtn.classList.add("del-btn")
