@@ -338,6 +338,11 @@ textarea,
       "post-body post-body"
       "comments dateTime";
   }
+
+  #postForm {
+    width: 65vw;
+  }
+
 }
 
 @media screen and (min-width: 1100px) {
