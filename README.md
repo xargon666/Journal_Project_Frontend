@@ -1,4 +1,3 @@
-
 # 🖥 Journal Project Frontend
 Project made as a week-long group project by the students of the FutureProof Bootcamp (Auguste cohort) on LAP 1.
 
@@ -37,7 +36,7 @@ Used:
 - (remote) mob-programming.
 
 ## 🪪 Licence
-ISC
+https://img.shields.io/badge/license-ISC-ffffff
 
 From [Wikipedia](https://en.wikipedia.org/wiki/ISC_license):
 - The ISC license is a permissive free software license published by the Internet Software Consortium, now called Internet Systems Consortium (ISC). It is functionally equivalent to the simplified BSD and MIT licenses, but without language deemed unnecessary following the Berne Convention
