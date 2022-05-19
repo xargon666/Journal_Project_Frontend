@@ -359,7 +359,9 @@ module.exports = {
   sendReact,
   appendPost,
   closeCreatePost,
-  giphySearch
+  giphySearch,
+  deletePost,
+  createComment
 }
 
 },{"./index.js":2}],2:[function(require,module,exports){
