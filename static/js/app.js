@@ -2,7 +2,6 @@
 // index.html
 const ind = require('./index.js')
 const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
-// const siteBackendUrl = `http://localhost:3000`;
 
 // index
 function getAllPosts() {
@@ -16,6 +15,33 @@ function getAllPosts() {
     .then((r) => r.json())
     .then(appendPosts)
     .catch(console.warn);
+}
+
+//delete post
+function deletePost(postIdObj) {
+  console.log('POSTIDOBJ -> ', postIdObj)
+  const route = '/posts'
+  const options = {
+    method: 'DELETE',
+    cors: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(postIdObj),
+  }
+
+  fetch(`${siteBackendUrl}${route}`, options)
+    .then((response) =>
+      // console.log('response.json() :', response.json())
+      response.json()
+    )
+    .then((data) => {
+      console.log('DATA -> ', data)
+      if (!data.error) {
+        appendPosts(data)
+      }
+      getAllPosts()
+    })
 }
 
 // create
@@ -146,6 +172,24 @@ function appendPost(postData) {
   hankey.className = "hankeyCount";
   hankey.classList.add("reaction");
 
+   // adding a deleteButton
+   let deleteButton = document.createElement('div')
+   deleteButton.classList.add('delete-edit-btns')
+   deleteButton.classList.add('delete-btn')
+   deleteButton.textContent = '❌'
+   deleteButton.addEventListener('click', (e) => {
+     deletePost({ id: e.target.parentElement.id })
+   })
+   // adding an edit button
+   let editButton = document.createElement('div')
+   editButton.classList.add('delete-edit-btns')
+   editButton.classList.add('edit-btn')
+   editButton.textContent = '🖋'
+   editButton.addEventListener('click', () => {
+     console.log('edit clicked!')
+   })
+
+
   let commentsBody = document.createElement('div');
   commentsBody.className = 'commentsBodyHidden';
   let header = document.createElement('h3');
@@ -193,10 +237,10 @@ function appendPost(postData) {
     hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
   });
 
-  
+
   postBodyDiv.appendChild(newPostBody);
 
-  if(postData.link){
+  if (postData.link) {
     let newGiphy = document.createElement("img");
 
     newGiphy.src = postData.link;
@@ -209,22 +253,26 @@ function appendPost(postData) {
   // Append
   //   newPostTitle.appendChild("a");
   if (newPostBody.textContent && newPostTitle.textContent) {
-    newPostWrapper.appendChild(newPostTitle);  
-    newPostWrapper.appendChild(postBodyDiv);
-    newPostCommentsDiv.appendChild(newPostComments);
-    newPostWrapper.appendChild(newPostCommentsDiv);
-    newPostWrapper.appendChild(newPostDateTime);
-    newPostReactions.appendChild(laugh);
-    newPostReactions.appendChild(thumbsUp);
-    newPostReactions.appendChild(hankey);
-    newPostWrapper.appendChild(newPostReactions);
-    newPost.appendChild(newPostWrapper);
+    newPostWrapper.appendChild(newPostTitle)
+    newPostWrapper.appendChild(postBodyDiv)
+    newPostCommentsDiv.appendChild(newPostComments)
+    newPostWrapper.appendChild(newPostCommentsDiv)
+    newPostWrapper.appendChild(newPostDateTime)
 
-    commentForm.appendChild(commentLabel);
-    commentForm.appendChild(commentInput);
-    commentForm.appendChild(commentSubmitBtn);
-    commentsBody.appendChild(header);
-    commentsBody.appendChild(commentForm);
+    newPostReactions.appendChild(laugh)
+    newPostReactions.appendChild(thumbsUp)
+    newPostReactions.appendChild(hankey)
+    newPostWrapper.appendChild(newPostReactions)
+
+    newPost.appendChild(newPostWrapper)
+    newPost.appendChild(deleteButton)
+    newPost.appendChild(editButton)
+
+    commentForm.appendChild(commentLabel)
+    commentForm.appendChild(commentInput)
+    commentForm.appendChild(commentSubmitBtn)
+    commentsBody.appendChild(header)
+    commentsBody.appendChild(commentForm)
 
     for (let i = 0; i < postData.comments.length; i++) {
       let comment = postData.comments[i];
@@ -267,8 +315,6 @@ function appendPost(postData) {
         commentDiv.insertAdjacentElement("afterBegin", thisDate)
         commentForm.insertAdjacentElement("afterEnd", commentDiv);
 
-        console.log(newPostComments.textContent.slice(10));
-
         newPostComments.textContent = `Comments: ${parseInt(newPostComments.textContent.slice(10), 10) + 1}`;
       }
       commentInput.value = "";
@@ -281,7 +327,7 @@ function closeCreatePost() {
   document.getElementById("formBg").style.display = 'none';
   newPostBtn.classList.toggle("newPostBtnDisabled", false);
   if (document.getElementById("newPostFormImg")) {
-      document.getElementById("newPostFormImg").remove();
+    document.getElementById("newPostFormImg").remove();
   }
   document.getElementById("postTitle").value = "";
   document.getElementById("postContent").value = "";
