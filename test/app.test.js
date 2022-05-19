@@ -8,6 +8,8 @@ global.fetch = require('jest-fetch-mock');
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf-8')
 let js;
 let app;
+const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
+
 
 const testPost = {
     id: "ajdj-sds2-sdsd",
@@ -31,13 +33,50 @@ const testPost = {
     }
 };
 
-describe('app.js',()=>{
+describe('app.js', () => {
     beforeEach(() => {
         document.documentElement.innerHTML = html.toString();
         title = document.querySelector('title');
         js = require('../static/js/index');
         app = require('../static/js/app');
         fetch.resetMocks();
+    })
+
+    test('getAllPosts makes a fetch', async () => {
+        await app.getAllPosts();
+        expect(fetch).toHaveBeenCalled()
+    })
+
+    test('createPost fetches',  () => {
+        const np = document.querySelector('#postForm');
+        np.querySelector('#postTitle').value = testPost.title;
+        np.querySelector('#postContent').value = testPost.body;
+        app.createPost();
+        expect(fetch).toHaveBeenCalled();
+    })
+
+    test('createPost fetches',  () => {
+        const newPostBtn = document.querySelector(".newPostBtn");
+
+        // dispatch click event to listener
+        const addEvt = new Event('click');
+        newPostBtn.dispatchEvent(addEvt);
+
+        const np = document.querySelector('#postForm');
+        np.querySelector('#postTitle').value = testPost.title;
+        np.querySelector('#postContent').value = testPost.body;
+        app.createPost();
+        expect(fetch).toHaveBeenCalled();
+    })
+
+    test('createComment fetches',  () => {
+        app.createComment('09dfe905-422a-4515-ad3a-971b314868c1', 'Testing comment');
+        expect(fetch).toHaveBeenCalled();
+    })
+
+    test('sendReact fetches',  () => {
+        app.sendReact('09dfe905-422a-4515-ad3a-971b314868c1', 0);
+        expect(fetch).toHaveBeenCalled();
     })
 
     test('append post', () => {
@@ -55,5 +94,20 @@ describe('app.js',()=>{
         document.getElementById("gifSearch").value = "test";
         await app.giphySearch();
         expect(fetch).toHaveBeenCalledWith('https://api.giphy.com/v1/gifs/search?api_key=T20UHWhHXbf47QtXnYSnHXJrYkeOXam3&limit=1&q=test')
+    })
+
+    test('closeBtn removes newPostFormImg', () => {
+        const newPostBtn = document.querySelector(".newPostBtn");
+
+        // dispatch click event to listener
+        const addEvt = new Event('click');
+        newPostBtn.dispatchEvent(addEvt);
+
+        document.getElementById("gifSearch").value = "test";
+        app.giphySearch();
+
+        app.closeCreatePost();
+
+        expect(document.getElementById("newPostFormImg")).not.toBeTruthy();
     })
 })
