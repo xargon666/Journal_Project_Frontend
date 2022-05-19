@@ -20,7 +20,6 @@ function getAllPosts() {
 
 //delete post
 function deletePost(postIdObj) {
-  console.log('POSTIDOBJ -> ', postIdObj)
   const route = '/posts'
   const options = {
     method: 'DELETE',
@@ -33,11 +32,9 @@ function deletePost(postIdObj) {
 
   fetch(`${siteBackendUrl}${route}`, options)
     .then((response) =>
-      // console.log('response.json() :', response.json())
       response.json()
     )
     .then((data) => {
-      console.log('DATA -> ', data)
       if (!data.error) {
         appendPosts(data)
       }
