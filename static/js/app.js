@@ -17,33 +17,16 @@ function getAllPosts() {
     .then(appendPosts)
     .catch(console.warn);
 }
-
 // *************** unused functions ***************
-function getPost(id) {
-  const route = `/posts/:${id}`;
-  fetch(`${siteBackendUrl}${route}`)
-    .then((r) => r.json())
-    .then(appendPosts)
-    .catch(console.warn);
-}
-
+// function for delete button
 function deletePost(postId) {
   const route = "/posts";
 }
-
+// function for edit button
 function editPost(postId) {
   const route = "/posts";
 }
-
-function hideMainToggle() {
-  if (mainWrapper.style.display != "none") {
-    mainWrapper.style.display = "none";
-  } else {
-    mainWrapper.style.display = mainWrapperDisplayState;
-  }
-}
 // **************************************************
-
 // create
 function createPost() {
   const route = "/posts";
@@ -314,4 +297,5 @@ module.exports = {
   getAllPosts,
   createPost,
   sendReact,
+  appendPost
 }
