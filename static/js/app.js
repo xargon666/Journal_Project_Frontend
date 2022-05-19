@@ -180,14 +180,6 @@ function appendPost(postData) {
    deleteButton.addEventListener('click', (e) => {
      deletePost({ id: e.target.parentElement.id })
    })
-   // adding an edit button
-   let editButton = document.createElement('div')
-   editButton.classList.add('delete-edit-btns')
-   editButton.classList.add('edit-btn')
-   editButton.textContent = '🖋'
-   editButton.addEventListener('click', () => {
-     console.log('edit clicked!')
-   })
 
 
   let commentsBody = document.createElement('div');
@@ -266,7 +258,6 @@ function appendPost(postData) {
 
     newPost.appendChild(newPostWrapper)
     newPost.appendChild(deleteButton)
-    newPost.appendChild(editButton)
 
     commentForm.appendChild(commentLabel)
     commentForm.appendChild(commentInput)
