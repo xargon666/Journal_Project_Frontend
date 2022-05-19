@@ -13,10 +13,11 @@ The fontend app has been deployed on Netlify at [this link](https://journal-proj
 ![Netlify Status](https://api.netlify.com/api/v1/badges/acbe7129-01a3-43b8-ba0c-a35536ea7798/deploy-status)
 ## 🎮 Installation & usage
 While installation is not required, the site may be deployed locally:
-```
+
 1. Open a shell environment *e.g. git bash*
 2. Clone this repo: git clone https://github.com/xargon666/Journal_Project_Frontend.git
 3. Run the following commands:
+```
 	npm install
 	npm start
 ```
