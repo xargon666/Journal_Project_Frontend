@@ -266,12 +266,6 @@ function appendPost(postData) {
   );
 
   hankey.textContent += `${postData.reactions.poo} 💩`;
-  hankey.addEventListener("click", () => {
-    sendReact(postData.id, 2);
-    hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
-  });
-
-  hankey.textContent += `${postData.reactions.poo} 💩`;
   hankey.addEventListener(
     "click",
     () => {
