@@ -47,7 +47,7 @@ describe('app.js', () => {
         expect(fetch).toHaveBeenCalled()
     })
 
-    test('getAllPosts makes a fetch',  () => {
+    test('deletePost works',  () => {
         let postData = {
             title: testPost.title,
             body: testPost.body,
