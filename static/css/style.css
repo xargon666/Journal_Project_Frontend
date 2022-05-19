@@ -4,374 +4,351 @@
 *,
 *::before,
 *::after {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
-}
-
-:root {
-  --background: #202124;
-  --foreground: #303134;
-  --theme-1: #e8eaed;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
 
 html {
-  background-color: var(--background);
-  color: var(--theme-1);
-  box-sizing: border-box;
-  min-width: 250px;
+    background-color: #202124;
+    color: #e8eaed;
+    box-sizing: border-box;
+    min-width: 250px;
 }
 
-.wrapper{
-    width: 90vw;
-}
-
-h3 {
-  margin-bottom: 20px;
+h3{
+    margin-bottom: 20px;
 }
 
 #logo {
-  width: 3rem;
+    width: 3rem;
 }
 
-.postGiphy {
-  max-width: 400px;
+.postGiphy{
+    max-width:400px;
 }
 
 .newPostBtn {
-  width: 5vw;
-  min-width: 70px;
-  float: bottom;
-  position: fixed;
-  top: 80vh;
-  right: 10vw;
-  cursor: pointer;
-  content: url("https://i.imgur.com/U5O34Lk.png");
+    width: 5vw;
+    min-width: 70px;
+    float: bottom;
+    position: fixed;
+    top: 80vh;
+    right: 10vw;
+    cursor: pointer;
+    content: url('https://i.imgur.com/U5O34Lk.png');
 }
 
 .newPostBtn:hover {
-  content: url("https://i.imgur.com/RaG4q4e.png");
+    content: url('https://i.imgur.com/RaG4q4e.png');
 }
 
 .newPostBtnDisabled {
-  content: url("https://i.imgur.com/y7QStEj.png");
-  cursor: default;
+    content: url('https://i.imgur.com/y7QStEj.png');
+    cursor: default;
 }
 
 .newPostBtnDisabled:hover {
-  content: url("https://i.imgur.com/y7QStEj.png");
+    content: url('https://i.imgur.com/y7QStEj.png');
 }
 
 .roflCount,
 .thumbsUpCount,
 .hankeyCount {
-  padding: 15px;
+    padding: 15px;
 }
 
 .roflCount:hover,
 .thumbsUpCount:hover,
 .hankeyCount:hover {
-  padding: 15px;
-  cursor: pointer;
-  background-color: var(--background);
-  border-radius: 5px;
+    padding: 15px;
+    cursor: pointer;
+    background-color: #202124;
+    border-radius: 5px;
 }
 
+
 header {
-  float: top;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 7vh;
-  left: 0;
-  background-color: var(--background);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    float: top;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 7vh;
+    left: 0;
+    background-color: #202124;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 body {
-  margin-top: 7vh;
-  padding-top: 3vh;
-  display: flex;
-  justify-content: center;
+    margin-top: 7vh;
+    padding-top: 3vh;
+    display: flex;
+    justify-content: center;
 }
 
 .wrapper {
-  width: 90vw;
-  min-width: 250px;
+    width: 60vw;
+    min-width: 250px;
 }
 
+
 #newPostBtn {
-  width: 5vw;
-  min-width: 70px;
-  float: bottom;
-  position: fixed;
-  top: 80vh;
-  left: 80vw;
+    width: 5vw;
+    min-width: 70px;
+    float: bottom;
+    position: fixed;
+    top: 80vh;
+    left: 80vw;
 }
 /* ------------------------ Post Stuff ------------------------ */
 .post {
-  position: relative;
-  border-radius: 10px;
-  background-color: var(--foreground);
-  margin-bottom: 3vh;
+    position: relative;
+    border-radius: 10px;
+    background-color: #303134;
+    margin-bottom: 3vh;
 }
 
-.wrapper .postWrapper {
-  width: 100%;
-  padding: 5px 20px 20px 25px;
-  display: grid;
-  word-wrap: anywhere;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "postTitle postTitle controls"
-    "post-body post-body post-body"
-    "reactions reactions reactions"
-    "comments dateTime dateTime";
+.postWrapper {
+    padding: 5px 25px 20px 25px;
+    display: grid;
+
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "postTitle"
+        "dateTime"
+        "preview"
+        "reactions"
+        "comments";
+
 }
 
 
 .delete-edit-btns {
+
+    position: absolute;
+  
     cursor: pointer;
   }
   
+  .delete-btn {
+    top: 20px;
+    right: 20px;
+  }
+  
+  .edit-btn {
+    top: 20px;
+    right: 50px;
+  }
+
+
 .postTitle {
-  grid-area: postTitle;
-  padding: 15px 0 5px 0;
-  display: flex;
+    grid-area: postTitle;
+    padding: 15px 0 5px 0;
 }
 
 .dateTime {
-  grid-area: dateTime;
-  align-self: center;
-  color: #a9aaab;
-  text-align: end;
-  padding-right: 2rem;
-  font-size: 0.8rem;
+    grid-area: dateTime;
+    color: #a9aaab
 }
 
-.post-body {
-  grid-area: post-body;
-  margin: 10px 0 10px 0;
-  width: 100%;
+.preview {
+    grid-area: preview;
+    margin: 10px 0 10px 0;
+    max-width: 60vw;
 }
 
-.post-body .post-text {
-  width: 100%;
-  height: fit-content;
-  word-wrap: break-word;
-  padding-bottom: 10px;
+.previewText{
+    max-width: 50vw;
+    height: fit-content;
+    word-wrap: break-word;
+    padding-bottom: 10px;
 }
 
 .comments {
-  grid-area: comments;
-  cursor: pointer;
-  justify-content:flex-start;
+    grid-area: comments;
+    cursor: pointer;
 }
 
-.commentsText {
-  padding: 10px 15px 10px 15px;
-  width: max-content;
+.commentsText{
+    padding:10px 15px 10px 15px;
+    width: max-content;
 }
 
 .commentsText:hover {
-  border-radius: 5px;
-  background-color: var(--background);
+    border-radius: 5px;
+    background-color: #202124;
 }
 
 .commentsBody {
-  padding: 15px 20px 15px 20px;
+    padding: 15px 20px 15px 20px;
 }
 
-.controls {
-  grid-area: controls;
-  display: inline-flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding-top: 1rem;
-}
-.controls > .edit-btn {
-  margin-right: 0.3rem;
-}
+
 .reactions {
-  grid-area: reactions;
-  display: inline-flex;
-  justify-content:flex-start;
+    grid-area: reactions;
+    display: inline-flex;
 }
 
 .commentDiv {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .commentSubmitBtn {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .commentDates {
-  color: #a9aaab;
+    color: #a9aaab
 }
 
-.reactions > .reaction:hover {
-  cursor: pointer;
-}
-
-#createPost {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: none;
-  float: left;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+.reactions>.reaction:hover {
+    cursor: pointer
 }
 
 #postForm {
-  border-radius: 10px;
-  background-color: var(--foreground);
-  opacity: 1;
-  padding: 1rem 1rem;
-  width: 95vw;
+    border-radius: 10px;
+    background-color: #303134;
+    opacity: 1;
+    padding: 30px 50px 30px 50px;
+}
+
+#createPost {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    float: left;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 #formBg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: none;
-  float: left;
-  height: 100%;
-  width: 100%;
-  background-color: var(--background);
-  opacity: 0.9;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    float: left;
+    height: 100%;
+    width: 100%;
+    background-color: #202124;
+    opacity: 0.9;
 }
 
 input,
 textarea,
 #formTitle {
-  margin-bottom: 10px;
-  width: 100%;
-}
-#postForm button,
-#submitBtn {
-  height: 2rem;
-}
-#addGifBtn,
-#cancelBtn {
-  min-width: 4rem;
-}
-#cancelBtn {
-  float: right;
+    margin-bottom: 10px;
 }
 
+
 .commentsBodyHidden {
-  display: none;
+    display: none;
 }
 
 .commentInput {
-  width: 100%;
+    width: 100%;
 }
 
 .commentsBody {
-  display: block;
-  padding: 15px 20px 15px 20px;
+    display: block;
+    padding: 15px 20px 15px 20px;
+}
+
+#postForm {
+    border-radius: 10px;
+    background-color: #303134;
+    opacity: 1;
+    padding: 30px 50px 30px 50px;
 }
 
 #createPost {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: none;
-  float: left;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    float: left;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 #formBg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: none;
-  float: left;
-  height: 100%;
-  width: 100%;
-  background-color: var(--background);
-  opacity: 0.9;
-}
-
-@media (max-width: 750px) {
-  .postGiphy {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    float: left;
+    height: 100%;
     width: 100%;
-  }
-
-  .newPostBtn {
-    content: url("https://i.imgur.com/RaG4q4e.png");
-  }
-
-  .dateTime {
-    grid-template-columns: 1/2;
-    grid-template-rows: 2/3;
-  }
-
-  .reactions {
-    justify-content: start;
-  }
-
+    background-color: #202124;
+    opacity: 0.9;
 }
 
-@media screen and (min-width: 750px) {
-  .wrapper {
-    min-width:673px;
-    width:70vw; 
-  }
-  
-    .postWrapper {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "postTitle controls"
-      "post-body post-body"
-      "comments dateTime";
-  }
 
-  #postForm {
-    width: 65vw;
-  }
 
+input,
+textarea,
+#formTitle {
+    margin-bottom: 10px;
 }
 
-@media screen and (min-width: 1100px) {
-  .wrapper {
-      max-width:800px;
-  }
-  
-    .postWrapper {
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-areas:
-    "postTitle reactions controls"
-    "post-body post-body post-body"
-    "comments comments dateTime";
-  }
-
-}
-
-@media screen and (min-width: 1400px) {
-    .wrapper {
-        width: 61vw;
-        max-width: 800px;
+@media (max-width:750px){
+    .postGiphy{
+        width:100%;
     }
 
-  .postWrapper {
-    grid-template-columns: 3fr 1fr 1fr;
-    grid-template-areas:
-      "postTitle reactions controls"
-      "post-body post-body post-body"
-      "comments comments dateTime";
-  }
+    .newPostBtn {
+        content: url('https://i.imgur.com/RaG4q4e.png');
+    }
 
+    .wrapper {
+        min-width: 90vw;
+      }
+}
+
+@media screen and (min-width:750px) {
+    .postWrapper {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "postTitle reactions"
+            "preview preview"
+            "comments dateTime";
+
+    }
+}
+
+@media screen and (min-width:1100px) {
+    .postWrapper {
+        grid-template-columns: 2fr 1fr;
+        grid-template-areas:
+            "postTitle reactions"
+            "preview preview"
+            "comments dateTime";
+
+    }
+
+    .previewText{
+        max-width: 56vw;
+    }
+}
+
+@media screen and  (min-width:1400px) {
+    .postWrapper {
+        grid-template-columns: 3fr 1fr;
+        grid-template-areas:
+            "postTitle reactions"
+            "preview preview"
+            "comments dateTime";
+    }
+
+    .previewText{
+        max-width: 59vw;
+    }
 }
