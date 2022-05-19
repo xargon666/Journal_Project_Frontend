@@ -8,6 +8,8 @@ global.fetch = require('jest-fetch-mock');
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf-8')
 let js;
 let app;
+const siteBackendUrl = `https://journal-project-backend.herokuapp.com`;
+
 
 const testPost = {
     id: "ajdj-sds2-sdsd",
@@ -31,13 +33,46 @@ const testPost = {
     }
 };
 
-describe('app.js',()=>{
+describe('app.js', () => {
     beforeEach(() => {
         document.documentElement.innerHTML = html.toString();
         title = document.querySelector('title');
         js = require('../static/js/index');
         app = require('../static/js/app');
         fetch.resetMocks();
+    })
+
+    test('getAllPosts makes a fetch', async () => {
+        await app.getAllPosts();
+        expect(fetch).toHaveBeenCalled()
+    })
+
+    test('getAllPosts makes a fetch',  () => {
+        let postData = {
+            title: testPost.title,
+            body: testPost.body,
+            link: testPost.link,
+        };
+
+        const route = '/posts'
+        const options = {
+            method: "POST",
+            body: JSON.stringify(postData),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+
+        fetch(`${siteBackendUrl}${route}`, options)
+            .then((r) => r.json())
+            .then(data => {
+                app.getAllPosts()
+            })
+            .catch(console.warn);
+        
+        console.log(document.querySelector(".wrapper").firstElementChild);
+
+        expect(fetch).toHaveBeenCalled()
     })
 
     test('append post', () => {
@@ -55,5 +90,20 @@ describe('app.js',()=>{
         document.getElementById("gifSearch").value = "test";
         await app.giphySearch();
         expect(fetch).toHaveBeenCalledWith('https://api.giphy.com/v1/gifs/search?api_key=T20UHWhHXbf47QtXnYSnHXJrYkeOXam3&limit=1&q=test')
+    })
+
+    test('closeBtn removes newPostFormImg', () => {
+        const newPostBtn = document.querySelector(".newPostBtn");
+
+        // dispatch click event to listener
+        const addEvt = new Event('click');
+        newPostBtn.dispatchEvent(addEvt);
+
+        document.getElementById("gifSearch").value = "test";
+        app.giphySearch();
+
+        app.closeCreatePost();
+
+        expect(document.getElementById("newPostFormImg")).not.toBeTruthy();
     })
 })
