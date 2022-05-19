@@ -1,8 +1,8 @@
 // search button script
 // index.html
 const ind = require('./index.js')
-// const siteBackendUrl = `https://journal-project-backend.herokuapp.com`
-const siteBackendUrl = `http://localhost:3000`
+const siteBackendUrl = `https://journal-project-backend.herokuapp.com`
+// const siteBackendUrl = `http://localhost:3000`
 
 // index
 function getAllPosts() {
@@ -60,7 +60,7 @@ function deletePost(postIdObj) {
     })
 }
 
-// create
+// ========================= Create / Delete / Edit ===========================
 function createPost() {
   const route = '/posts'
   const np = document.querySelector('#postForm')
@@ -153,32 +153,34 @@ function sendReact(postId, emojiId) {
     .catch(console.warn)
 }
 
-// helpers
+// ========================= helpers ==========================================
 function appendPosts(posts) {
   posts.forEach(appendPost)
 }
 
 function appendPost(postData) {
   const mainWrapper = document.querySelector(".wrapper");
-  // -------------------------------------------------------------------------- 
+
+  // --------------------------------------------------------------------------
   // ------------------------- Create Post Elements ---------------------------
+
   // *** Post Section *** 
   let newPost = document.createElement("div");
   let newPostWrapper = document.createElement("div");
   let newPostTitle = document.createElement("h2");
-  let newPostBody = document.createElement("p");
-  let postBodyDiv = document.createElement("div");
+  let newPostText = document.createElement("p");
+  let newPostBody = document.createElement("div");
   let newPostComments = document.createElement("p");
   let newPostDateTime = document.createElement("p");
   let newPostControls = document.createElement("div")
-  let newPostEditDel = document.createElement("div")
   let newPostReactions = document.createElement("div");
   let newPostCommentsDiv = document.createElement("div");
-  let newPostEditBtn = document.createElement("button")
-  let newPostDeleteBtn = document.createElement("button")
+  let newPostEditBtn = document.createElement("p")
+  let newPostDeleteBtn = document.createElement("p")
   let laugh = document.createElement("p");
   let thumbsUp = document.createElement("p");
   let hankey = document.createElement("p");
+
   // *** Comments Section ***
   let header = document.createElement('h3');
   let commentsBody = document.createElement('div');
@@ -186,20 +188,22 @@ function appendPost(postData) {
   let commentLabel = document.createElement('label');
   let commentInput = document.createElement('textarea');
   let commentSubmitBtn = document.createElement('button');
+
   // -------------------------------------------------------------------------- 
   // ------------------------- Apply Classes ----------------------------------
+
   // *** Post Section *** 
   newPost.classList.add("post");
   newPostWrapper.classList.add("postWrapper");
   newPostTitle.className = "postTitle";
-  newPostBody.className = "previewText";
-  postBodyDiv.className = "preview";
+  newPostText.className = "post-text";
+  newPostBody.className = "post-body";
   newPostComments.classList.add("commentsText");
   newPostCommentsDiv.classList.add("comments");
   newPostDateTime.classList.add("dateTime");
   newPostReactions.classList.add("reactions");
   newPostControls.classList.add("controls")
-  newPostEditDel.classList.add("edit-del-section")
+  // newPostEditDel.classList.add("edit-del-section")
   newPostEditBtn.classList.add("edit-btn")
   newPostDeleteBtn.classList.add("del-btn")
   laugh.classList.add("roflCount");
@@ -208,6 +212,7 @@ function appendPost(postData) {
   thumbsUp.classList.add("reaction");
   hankey.className = "hankeyCount";
   hankey.classList.add("reaction");
+
   // *** Comments Section ***
   header.textContent = 'Comments';
   commentsBody.className = 'commentsBodyHidden';
@@ -225,10 +230,10 @@ function appendPost(postData) {
   // *** Post Section *** 
   postData.id && newPost.setAttribute("id", postData.id);
   postData.title && (newPostTitle.textContent = postData.title);
-  postData.body && (newPostBody.textContent = postData.body); // create preview from message body
+  postData.body && (newPostText.textContent = postData.body); // create preview from message body
   postData.comments && (newPostComments.textContent = `Comments: ${postData.comments.length}`);
   postData.date && (newPostDateTime.textContent = postData.date);
-  postBodyDiv.appendChild(newPostBody);
+  newPostBody.appendChild(newPostText);
   
   // *** Reaction Section ***
   laugh.textContent += `${postData.reactions.laugh} 🤣`;
@@ -242,7 +247,7 @@ function appendPost(postData) {
     thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`;
   },{once:true});
 
-  postBodyDiv.appendChild(newPostBody)
+  newPostBody.appendChild(newPostText)
 
   hankey.textContent += `${postData.reactions.poo} 💩`;
   hankey.addEventListener("click", () => {
@@ -256,26 +261,25 @@ function appendPost(postData) {
     newGiphy.src = postData.link;
     newGiphy.className = 'postGiphy';
     newGiphy.alt = 'Gif for post titled ' + postData.title;
-    postBodyDiv.appendChild(newGiphy);
+    newPostBody.appendChild(newGiphy);
   }
   
   // --------------------------------------------------------------------------
   // ------------------------- Append New Elements ----------------------------
   // *** Post Section *** 
-  if (newPostBody.textContent && newPostTitle.textContent) {
+  if (newPostText.textContent && newPostTitle.textContent) {
     newPostWrapper.appendChild(newPostTitle);  
-    newPostWrapper.appendChild(postBodyDiv);
+    newPostWrapper.appendChild(newPostBody);
     newPostCommentsDiv.appendChild(newPostComments);
     newPostWrapper.appendChild(newPostCommentsDiv);
     newPostWrapper.appendChild(newPostDateTime);
     newPostReactions.appendChild(laugh);
     newPostReactions.appendChild(thumbsUp);
     newPostReactions.appendChild(hankey);
-    newPostEditDel.appendChild(newPostEditBtn);
-    newPostEditDel.appendChild(newPostDeleteBtn);
-    newPostControls.appendChild(newPostEditDel);
-    newPostControls.appendChild(newPostReactions);
+    newPostControls.appendChild(newPostEditBtn);
+    newPostControls.appendChild(newPostDeleteBtn);
     newPostWrapper.appendChild(newPostControls);
+    newPostWrapper.appendChild(newPostReactions);
     newPost.appendChild(newPostWrapper);
     // *** Comments Section ***
     commentForm.appendChild(commentLabel);
@@ -283,6 +287,7 @@ function appendPost(postData) {
     commentForm.appendChild(commentSubmitBtn);
     commentsBody.appendChild(header);
     commentsBody.appendChild(commentForm);
+    // -=- Create Comments Loop -=-
     for (let i = 0; i < postData.comments.length; i++) {
       let comment = postData.comments[i]
       let thisComment = document.createElement('p')

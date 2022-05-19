@@ -115,21 +115,13 @@ body {
     padding: 5px 0px 20px 25px;
     display: grid;
 
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     grid-template-areas:
-        "postTitle"
-        
-        "preview"
-<<<<<<< HEAD
-        "controls"
-        "comments";
-=======
-        "reactions"
-        "comments"
-        "dateTime";
->>>>>>> development
-
+        "postTitle controls"
+        "post-body post-body"
+        "comments comments"
+        "reactions dateTime"
 }
 
 .delete-edit-btns {
@@ -161,13 +153,13 @@ body {
     padding-right: 10px;
 }
 
-.preview {
+.post-body {
     grid-area: preview;
     margin: 10px 0 10px 0;
     max-width: 60vw;
 }
 
-.previewText{
+.post-text{
     max-width: 50vw;
     height: fit-content;
     word-wrap: break-word;
@@ -193,15 +185,13 @@ body {
     padding: 15px 20px 15px 20px;
 }
 
-<<<<<<< HEAD
 .controls {
     grid-area: controls;
-=======
+    display: inline-flex;
+}
 
 .reactions {
-
     grid-area: reactions;
->>>>>>> development
     display: inline-flex;
     justify-content: center;
 
@@ -361,7 +351,7 @@ textarea,
 
    
 }
-/* 
+
 @media screen and (min-width:1100px) {
     .postWrapper {
         grid-template-columns: 2fr 1fr;
@@ -389,4 +379,4 @@ textarea,
     .previewText{
         max-width: 59vw;
     }
-} */
+}
