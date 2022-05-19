@@ -239,10 +239,12 @@ function appendPost(postData) {
   newPostBody.appendChild(newPostText);
   
   // *** Edit & Delete Button Section ***
+  newPostDeleteBtn.textContent = '❌'
   newPostDeleteBtn.addEventListener('click', (e) =>{
     console.log("deleting post")
     deletePost({ id: e.target.parentElement.id })
   })
+  newPostEditBtn.textContent = '🖊'
   newPostEditBtn.addEventListener('click', (e) =>{
     console.log("editing clicked!")
 
