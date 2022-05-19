@@ -133,10 +133,11 @@ body {
     "comments dateTime dateTime";
 }
 
-.delete-edit-btns {
-  cursor: pointer;
-}
 
+.delete-edit-btns {
+    cursor: pointer;
+  }
+  
 .postTitle {
   grid-area: postTitle;
   padding: 15px 0 5px 0;
@@ -352,9 +353,6 @@ textarea,
     "comments comments dateTime";
   }
 
-  /* .previewText {
-    max-width: 56vw;
-  } */
 }
 
 @media screen and (min-width: 1400px) {
@@ -371,7 +369,4 @@ textarea,
       "comments comments dateTime";
   }
 
-  /* .previewText {
-    max-width: 59vw;
-  } */
 }

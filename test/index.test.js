@@ -4,9 +4,11 @@
 
 const fs = require('fs');
 const path = require('path');
+global.fetch = require('jest-fetch-mock');
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf-8')
 let js;
-let app;
+const app = require('../static/js/app');
+jest.mock('../static/js/app');
 
 const testPost = {
     id: "ajdj-sds2-sdsd",
@@ -39,7 +41,8 @@ describe('index.html', () => {
         document.documentElement.innerHTML = html.toString();
         title = document.querySelector('title');
         js = require('../static/js/index');
-        app = require('../static/js/app');
+        // app = require('../static/js/app');
+        fetch.resetMocks();
     })
 
     describe('Tests title', () => {
@@ -71,19 +74,69 @@ describe('index.html', () => {
             expect(containAlt).toEqual(image.length);
         })
     })
+
+    //test form is correct
 });
 
-describe('app.js',()=>{
+describe('index.js',()=>{
     beforeEach(() => {
         document.documentElement.innerHTML = html.toString();
         title = document.querySelector('title');
         js = require('../static/js/index');
-        app = require('../static/js/app');
+        // app = require('../static/js/app');
+        fetch.resetMocks();
     })
 
-    test('append post', () => {
-        let initialPosts = document.querySelectorAll('.post').length;
-        app.appendPost(testPost);
-        expect(document.querySelectorAll('.post').length).toEqual(initialPosts + 1);
+    test('init calls getAllPosts', ()=>{
+        js.init();
+        expect(app.getAllPosts).toHaveBeenCalled();
+    })
+
+    test('newPostBtn addEventListener works', ()=>{
+        js.init();
+
+        const newPostBtn = document.querySelector(".newPostBtn"); 
+        
+        // dispatch click event to listener
+        const addEvt = new Event('click');
+        newPostBtn.dispatchEvent(addEvt);
+                
+        expect(document.getElementById("createPost").style.display).toEqual('flex')
+    })
+
+    test(' addEventListener works', ()=>{
+        js.init();
+
+        const cancelPostBtn = document.querySelector("#cancelBtn");
+        
+        // dispatch click event to listener
+        const addEvt = new Event('click');
+        cancelPostBtn.dispatchEvent(addEvt);
+                
+        expect(app.closeCreatePost).toHaveBeenCalled();
+    })
+
+    // test(' addEventListener works', ()=>{
+    //     js.init();
+
+    //     eventTrigger
+        
+    //     // dispatch click event to listener
+    //     const addEvt = new Event('click');
+    //     eventTrigger.dispatchEvent(addEvt);
+                
+    //     expect(document.getElementById("createPost").style.display).toEqual('flex')
+    // })
+
+    test('giphySearch makes a fetch', async () => {
+        await js.giphySearch();
+        expect(fetch).toHaveBeenCalled()
+    })
+
+    test('giphySearch makes a fetch call with search term', async () => {
+        document.getElementById("gifSearch").value = "test";
+        await js.giphySearch();
+        console.log(document.getElementById("gifSearch").value)
+        expect(fetch).toHaveBeenCalledWith('https://api.giphy.com/v1/gifs/search?api_key=T20UHWhHXbf47QtXnYSnHXJrYkeOXam3&limit=1&q=test')
     })
 })
