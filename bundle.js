@@ -211,21 +211,21 @@ function appendPost(postData) {
   laugh.addEventListener("click", () => {
     sendReact(postData.id, 0);
     laugh.textContent = `${parseInt(laugh.textContent, 10) + 1} 🤣`;
-  });
+  },{once:true});
 
 
   thumbsUp.textContent += `${postData.reactions.thumbUp} 👍`;
   thumbsUp.addEventListener("click", () => {
     sendReact(postData.id, 1);
     thumbsUp.textContent = `${parseInt(thumbsUp.textContent, 10) + 1} 👍`;
-  });
+  },{once:true});
 
 
   hankey.textContent += `${postData.reactions.poo} 💩`;
   hankey.addEventListener("click", () => {
     sendReact(postData.id, 2);
     hankey.textContent = `${parseInt(hankey.textContent, 10) + 1} 💩`;
-  });
+  },{once:true});
 
 
   postBodyDiv.appendChild(newPostBody);
